@@ -182,9 +182,11 @@ const Navbar = () => {
                     <NavLink href="#contact" >Contact</NavLink>
                 </NavItems>
                 <ButtonContainer>
-                    <GithubButton>
-                        Github Profile 
-                    </GithubButton>
+                    <a href="https://github.com/riz081">
+                        <GithubButton>
+                            Github Profile 
+                        </GithubButton>
+                    </a>
                 </ButtonContainer>
             </NavContainer>
             {

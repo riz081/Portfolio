@@ -108,14 +108,14 @@ const CardContainer = styled.div`
     }
 `;
 
-const Projects = () => {
+const Projects = ({ openModal, setOpenModal }) => {
     const [toggle, setToggle] = useState('all');
     return (
       <Container id="projects">
         <Wrapper>
           <Title>Projects</Title>
           <Desc>
-            I have worked on a wide range of projects. From web apps to android apps. Here are some of my projects.
+            I have worked on various projects. From web applications to mobile applications. Here are some of my projects.
           </Desc>
           <ToogleGroup >
             {
@@ -157,13 +157,13 @@ const Projects = () => {
           <CardContainer>
             {toggle === 'all' && projects
               .map((project) => (
-                <ProjectCard project={project}/>
+                <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal}/>
               ))}
             {projects
               .filter((item) => item.category == toggle)
               .map((project) => (
-                <ProjectCard project={project}/>
-            ))}
+                <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal}/>
+              ))}
           </CardContainer>
         </Wrapper>
       </Container>

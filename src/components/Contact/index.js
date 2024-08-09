@@ -119,7 +119,13 @@ const ContactButton = styled.input`
   color: ${({ theme }) => theme.text_primary};
   font-size: 18px;
   font-weight: 600;
+  cursor: default;  /* Default cursor */
+
+  &:hover {
+    cursor: pointer;  /* Change to hand cursor on hover */
+  }
 `
+
 
 
 
@@ -131,7 +137,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    emailjs.sendForm('service_tox7kqs', 'template_nv7k7mj', form.current, 'SybVGsYS52j2TfLbi')
+    emailjs.sendForm('service_eaf9pn2', 'template_1ogp9nh', form.current, 'hj9MgM_RrPtozqjmk')
       .then((result) => {
         setOpen(true);
         form.current.reset();

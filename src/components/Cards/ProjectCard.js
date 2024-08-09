@@ -1,4 +1,3 @@
-
 import React from 'react'
 import styled from 'styled-components'
 
@@ -123,13 +122,13 @@ const Avatar = styled.img`
     border: 3px solid ${({ theme }) => theme.card};
 `
 
-const ProjectCard = ({ project }) => {
+const ProjectCards = ({project,setOpenModal}) => {
     return (
-        <Card>
+        <Card onClick={() => setOpenModal({state: true, project: project})}>
             <Image src={project.image}/>
             <Tags>
                 {project.tags?.map((tag, index) => (
-                <Tag key={tag}>{tag}</Tag>
+                <Tag>{tag}</Tag>
                 ))}
             </Tags>
             <Details>
@@ -141,9 +140,10 @@ const ProjectCard = ({ project }) => {
                 {project.member?.map((member) => (
                     <Avatar src={member.img}/>
                 ))}
-            </Members>           
+            </Members>
+            {/* <Button>View Project</Button> */}
         </Card>
     )
 }
 
-export default ProjectCard
+export default ProjectCards

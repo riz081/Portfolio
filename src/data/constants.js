@@ -8,14 +8,12 @@ export const Bio = {
       "Programmer",
     ],
     description:
-      "I am a motivated and versatile individual, always eager to take on new challenges. With a passion for learning I am dedicated to delivering high-quality results. With a positive attitude and a growth mindset, I am ready to make a meaningful contribution and achieve great things.",
-    github: "https://github.com/rishavchanda",
-    resume:
-      "https://drive.google.com/file/d/1ffZrcMcn8UatXGIaautbbqpV7ADNaETA/view?usp=sharing",
-    linkedin: "https://www.linkedin.com/in/rishav-chanda-b89a791b3/",
-    twitter: "https://twitter.com/RishavChanda",
-    insta: "https://www.instagram.com/rishav_chanda/",
-    facebook: "https://www.facebook.com/rishav.chanda.165/",
+      "I am a final-year Information Systems student at Telkom University Surabaya with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
+    github: "https://github.com/riz081",
+    resume: "https://drive.google.com/file/d/1VTVFAr_7XwtumBBmSgy1Vi-2apckuWK1/view?usp=sharing",
+    linkedin: "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",
+    insta: "https://www.instagram.com/rizqika_i.k/#",
+    facebook: "https://www.facebook.com/rizqika.ningendo",
   };
   
   export const skills = [
@@ -193,7 +191,7 @@ export const Bio = {
       title: "Monevco",
       date: "Aug 2022",
       description:
-        "Monevco ...",
+        "Monevco, is a web app that acts as a website for managing data from motor sensors for leg stroke patients. Monevco was built using the Codeigniter 3 framework, MySQL, Bootstrap and others.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/dashboard.png?alt=media&token=5ab01ce9-967d-46f1-b0cd-cf2b6c6c0cd8",
       tags: [
@@ -206,6 +204,7 @@ export const Bio = {
       github: "https://github.com/riz081/CI3-Monevco",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -215,7 +214,7 @@ export const Bio = {
       title: "IWES - Pinjam Asset",
       date: "Feb 2024",
       description:
-        "IWEZ ...",
+        "IWES is a web application that is used as a media or platform as a means of lending assets. The assets loaned include rooms, cars, tools and goods, and so on. IWES was built using Laravel 10, Bootstrap, MySQL and others.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/IWEZ.png?alt=media&token=a591d6a8-22d4-436b-af38-434e8b63a49d",
       tags: [
@@ -228,9 +227,11 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
         {
+          name: "TUS - Sisfo Akademik",
           img: "https://ypt.or.id/wp-content/uploads/2019/01/TU-logogram.jpg",         
         },
       ],
@@ -240,7 +241,7 @@ export const Bio = {
       title: "INPES Excellent",
       date: "Okt - Dec 2023",
       description:
-        "Inpes ...",
+        "INPES Web is a website-based information system designed to assist PT INPES in providing service information to prospective clients and simplify the management of ongoing services. This system uses the prototyping method in its development and utilizes technologies such as PHP, HTML, CSS, MySQL, Laravel, and Bootstrap.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/inpes.png?alt=media&token=40fc1a57-0835-454a-8121-d03195c45495",
       tags: [
@@ -250,14 +251,26 @@ export const Bio = {
         "PHP",
       ],
       category: "web app",
-      github: "",
+      webapp:"https://inpexcellentservice.com/aboutind",
+      member: [
+        {
+          name: "Rizqika Ibnu K",
+          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",    
+          linkedin: "",     
+        },
+        {
+          name: "Ramadhani Aimmatur Rasyid",
+          img: "https://media.licdn.com/dms/image/D4E03AQEW-x_Qm_ofBA/profile-displayphoto-shrink_200_200/0/1714765672492?e=2147483647&v=beta&t=wODO6ri1135aah_znsZoFPNXymy3YkRBOkv4Cpa8aWo",   
+          linkedin: "https://www.linkedin.com/in/ramadhani-aimmatur-rasyid-9a9017307/?originalSubdomain=id",      
+        },
+      ],
     },
     {
       id: 0,
       title: "Age Care",
       date: "July 2023",
       description:
-        "Agecare ...",
+        "Agecare is a web application built with CodeIgniter 3, along with technologies like PHP, HTML, CSS, Bootstrap, MySQL, and JavaScript, to streamline the check-up process for doctors and patients through an integrated form system.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/agecare.png?alt=media&token=1e9716c1-4d93-4669-8151-67b8ce9a229a",
       tags: [
@@ -274,7 +287,7 @@ export const Bio = {
       title: "BC Care",
       date: "Mar - May 2023",
       description:
-        "BC Care ...",
+        "BC Care is the latest innovation for BLogistics customers. An application that can help you to track containers registered with Bclogistics, view the status of tracking activities and you can place orders and look for delivery schedules, BC Care is built with a React Native tech stack.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/bccare.png?alt=media&token=ab974c7e-5c02-4df8-a38e-8a5da6c6261c",
       tags: [
@@ -293,9 +306,11 @@ export const Bio = {
       github: "https://github.com/riz081/RN-BC-Care",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
         {
+          name: "M. Danny Setiawan",
           img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCAvE4NQuOnrjboZSCZCOfDv7ry3l4yysuLg&s",         
         },
       ],
@@ -305,10 +320,10 @@ export const Bio = {
       title: "Melon Plant Disease Detection",
       date: "Dec 2023 - Mar 2024",
       description:
-        "Lorem ipsum...",
+        "Melon plant disease detection, is a project that aims to identify or classify the health conditions of melon plants using machine learning. The libraries used are TensorFlow for image processing and several libraries such as Uvicorn for creating APIs that can be used to develop web or mobile applications.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/deteksimelon.png?alt=media&token=4e25de44-a5b0-4e42-a6e3-3949eb8b0047",
-      tags: ["Python", "Keras", "TensorFlow", "Matplotlib", "Numpy", "Jupyter", "Google Collab"],
+      tags: ["Python", "Keras", "TensorFlow", "Matplotlib", "Numpy", "Jupyter", "Google Collab", "OpenCV"],
       category: "machine learning",
       github: "",
       member: [
@@ -322,7 +337,7 @@ export const Bio = {
       title: "Furniture Apps",
       date: "Nov 2023",
       description:
-        "Furniture Apps ...",
+        "Furniture Apps is an e-commerce application built using React Native that can run on both iOS and Android. The design begins with creating an engaging user interface (UI), including features to view and manage items in the shopping cart. It utilizes RESTful APIs with Node.js and MongoDB, incorporating JWT authentication and payment integration with Stripe. The application is deployed by hosting on the Railway server and producing an APK for Android.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Untitled.png?alt=media&token=16e13d6c-076d-4aa9-82b7-16833a07c4b9",
       tags: ["React Native", "MongoDB", "NodeJS", "ExpressJS", "API", "Postman", "Stripe"],
@@ -330,9 +345,11 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
         {
+          name: "dbStech and Udemy",
           img: "https://www.dbestech.com/images/logo_nav.png",         
         },
       ],
@@ -342,7 +359,7 @@ export const Bio = {
       title: "Job Finding App",
       date: "Sep 2023",
       description:
-        "Job Finding Apps.",
+        "Job Finding Apps, is a mobile application that can help users find a job. This application was built using React Native and Rapid API as an information provider as well as a database.",
       image:
         "https://cdn.dribbble.com/users/1314493/screenshots/11867493/media/951d38dfec24ac00bd894286932299fb.png?resize=1000x750&vertical=center",
       tags: ["React Native", "JavaScript", "Axios", "Rapid API", "Postman", "Github"],
@@ -362,7 +379,7 @@ export const Bio = {
       title: "HouseDev Apps",
       date: "Dec 2023 - Present",
       description:
-        "House Dev ...",
+        "HouseDev Apps, is a mobile application that can help customers, investors and housing developers, in carrying out the business process of buying and selling houses and monitoring the progress of house construction. With admin assistance, the application can process data as needed. This application itself was built using React Native, Expo, Firebase and others.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Group%201.png?alt=media&token=b9b8696f-326e-4f9e-83f9-603fdd5df570",
       tags: ["Figma", "React Native", "Javascript", "Expo", "Laravel", "API", "Firebase"],
@@ -379,7 +396,7 @@ export const Bio = {
       title: "Moon - Monitoring Melon Apps",
       date: "Sep 2023 - Jul 2024",
       description:
-        "Moon ...",
+        "Moon is a mobile app for monitoring melon plant growth in urban farming, using IoT and machine learning to analyze data from sensors. It helps manage plant growth efficiently by providing real-time insights into soil fertility and other key parameters.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Classification.png?alt=media&token=b735a4c4-2d32-401a-8023-6b8e3f66e8e3",
       tags: ["Figma", "React Native", "Javascript", "Expo", "Python", "API", "Firebase", "Antares"],
@@ -396,7 +413,7 @@ export const Bio = {
       title: "Soil Classification of Melon Plants",
       date: "Dec 2023 - Mar 2024",
       description:
-        "Lorem ipsum...",
+        "Soil Classification of Melon Plants, is a project that aims to classify soil fertility conditions in melon plants using machine learning. The algorithm used is Support Vector Machine and several libraries such as uvicorn to create APIs that can be used to develop web or mobile applications.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/prediksi.png?alt=media&token=4acadca7-734a-4293-b0d4-318d037e56ae",
       tags: ["Python", "Pandas", "Scikit Learn", "Numpy", "Jupyter", "Google Collab"],
@@ -410,13 +427,13 @@ export const Bio = {
     },
     {
       id: 11,
-      title: "Root Data Classification using SVM",
+      title: "TGS Training Dataset",
       date: "Aug 2024",
       description:
-        "Lorem ipsum...",
+        "TGS Training Dataset, is a project that aims to classify roots using deep learning. The algorithms used are Support Vector Machine, Naive Bayes and Convolutional Neural Network. Where this data processing aims to determine the architecture of the layers used in managing data using the help of the VisualKeras library.",
       image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/prediksi.png?alt=media&token=4acadca7-734a-4293-b0d4-318d037e56ae",
-      tags: ["Python", "Pandas", "Scikit Learn", "Numpy", "Jupyter", "Google Collab"],
+        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Akar.png?alt=media&token=72b792f4-ea4f-4d39-b1a3-10b0aa6b5c9f",
+      tags: ["Python", "Jupyter", "Support Vector Machine", "Naive Bayes", "CNN"],
       category: "machine learning",
       github: "",
       member: [
@@ -427,13 +444,13 @@ export const Bio = {
     },
     {
       id: 12,
-      title: "Root Data Classification using Naive Bayes",
-      date: "Aug 2024",
+      title: "Custom Object Detection",
+      date: "Aug 2021",
       description:
-        "Lorem ipsum...",
+        "Custom Object Detection, is a project that aims to detect objects from 3D printing which are used to detect the camera in the hexabot fire extinguishing robot. The detection process is carried out using the OpenCV and Yolo libraries.",
       image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/akar-naive.png?alt=media&token=e42731b4-3a9c-4a48-b6d3-f3f73bb10043",
-      tags: ["Python", "Pandas", "Seaborn", "Numpy", "Jupyter", "Google Collab"],
+        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/yolo.jpeg?alt=media&token=c7cdc540-6aa7-47bd-b6ea-841b9fa97e21",
+      tags: ["Python", "OpenCV", "YoloV5"],
       category: "machine learning",
       github: "",
       member: [
@@ -441,22 +458,5 @@ export const Bio = {
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
-    },
-    {
-      id: 12,
-      title: "Root Data Training using CNN",
-      date: "Aug 2024",
-      description:
-        "Lorem ipsum...",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/akar-cnn.png?alt=media&token=162a461d-c725-494d-9f1b-50350a31589b",
-      tags: ["Python", "Pandas", "Scikit Learn", "Numpy", "Jupyter", "Google Collab", "Tensorflow", "Keras", "KerasVisual"],
-      category: "machine learning",
-      github: "",
-      member: [
-        {
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
+    }
   ];
