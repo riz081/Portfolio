@@ -10,7 +10,7 @@ export const Bio = {
     description:
       "I am a final-year Information Systems student at Telkom University Surabaya with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
     github: "https://github.com/riz081",
-    resume: "https://drive.google.com/file/d/1VTVFAr_7XwtumBBmSgy1Vi-2apckuWK1/view?usp=sharing",
+    resume: "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",
     insta: "https://www.instagram.com/rizqika_i.k/#",
     facebook: "https://www.facebook.com/rizqika.ningendo",
@@ -328,6 +328,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -364,13 +365,17 @@ export const Bio = {
         "https://cdn.dribbble.com/users/1314493/screenshots/11867493/media/951d38dfec24ac00bd894286932299fb.png?resize=1000x750&vertical=center",
       tags: ["React Native", "JavaScript", "Axios", "Rapid API", "Postman", "Github"],
       category: "mobile app",
-      github: "https://github.com/riz081?tab=repositories",
+      github: "https://github.com/adrianhajdin/project_react_native_jobs",
       member: [
         {
+          name: "adrianhajdln",
           img: "https://cdn.dribbble.com/users/1314493/avatars/small/71b5c8db354a635c8a3561c349bb7b0e.jpg?1650572578",
+          github: "https://github.com/adrianhajdin"
         },
         {
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",
+          name: "Rizqika Ibnu K",
+          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",          
+          github: "https://github.com/riz081?tab=repositories"
         },
       ],
     },
@@ -387,6 +392,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -404,6 +410,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -421,6 +428,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -438,6 +446,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
@@ -455,6 +464,7 @@ export const Bio = {
       github: "",
       member: [
         {
+          name: "Rizqika Ibnu K",
           img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
         },
       ],
