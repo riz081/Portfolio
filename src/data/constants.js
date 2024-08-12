@@ -211,10 +211,10 @@ export const Bio = {
     },
     {
       id: 6,
-      title: "IWES - Pinjam Asset",
+      title: "Logistics - TUS (Prototype)",
       date: "Feb 2024",
       description:
-        "IWES is a web application that is used as a media or platform as a means of lending assets. The assets loaned include rooms, cars, tools and goods, and so on. IWES was built using Laravel 10, Bootstrap, MySQL and others.",
+        "Logistics - TUS (Prototype) is a web application that is used as a media or platform as a means of lending assets. The assets loaned include rooms, cars, tools and goods, and so on. IWES was built using Laravel 10, Bootstrap, MySQL and others.",
       image:
         "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/IWEZ.png?alt=media&token=a591d6a8-22d4-436b-af38-434e8b63a49d",
       tags: [
