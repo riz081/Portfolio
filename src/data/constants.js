@@ -63,6 +63,10 @@ export const Bio = {
           name: "Firebase",
           image: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
         },
+        {
+          name: "PostgreSQL",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/993px-Postgresql_elephant.svg.png",
+        },
       ],
     },
     {
