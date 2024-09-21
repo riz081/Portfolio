@@ -153,6 +153,14 @@ const Projects = ({ openModal, setOpenModal }) => {
                     <ToogleButton onClick={() => setToggle("machine learning")}>MACHINE LEARNING</ToogleButton>
                 )
             } 
+            <Divider/>
+            {
+                toggle === "rest api" ? (
+                    <ToogleButton active onClick={() => setToggle("rest api")}>REST API</ToogleButton>
+                ) : (
+                    <ToogleButton onClick={() => setToggle("rest api")}>REST API</ToogleButton>
+                )
+            } 
           </ToogleGroup>
           <CardContainer>
             {toggle === 'all' && projects

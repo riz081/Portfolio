@@ -1,5 +1,5 @@
 export const Bio = {
-    name: "Rizqika Ibnu Khattab",
+    name: "Rizqika Ibnu",
     roles: [
       "Full Stack Developer",
       "Mobile Developer",
@@ -8,7 +8,7 @@ export const Bio = {
       "Programmer",
     ],
     description:
-      "I am a final-year Information Systems student at Telkom University Surabaya with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
+      "I am a Freshgraduated Information Systems student at Telkom University Surabaya with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
     github: "https://github.com/riz081",
     resume: "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",
@@ -132,6 +132,10 @@ export const Bio = {
           image:
             "https://www.svgrepo.com/show/354987/figma.svg",
         },
+        {
+          name: "Docker",
+          image: "https://code.benco.io/icon-collection/logos/docker-whale.svg",
+        },
       ],
     },
   ];
@@ -139,6 +143,24 @@ export const Bio = {
   export const experiences = [
     {
       id: 0,
+      img: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/pikti.jpg?alt=media&token=c5466f88-2488-4b67-8674-62f8f024a156",
+      role: "One Year Applied Skills Program in Applied Computer Applications and Informatics",
+      company: "PIKTI, ITS",
+      date: "Feb 2023 - May 2023",
+      desc: "Attend applied skills education for one year and fulfill all the requirements specified to obtain a certificate along with the rights and obligations attached to the certificate",
+      skills: [
+        "Web Development with Codeigniter",
+        "Game Development with Gamemaker and GDevelop",
+        "Database",
+        "Visual Basic with C#",
+        "Android with Java",
+        "Office Tools",
+        "Design Vector Tools like Corel/Inkscape",        
+      ],
+      doc: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Sertif_page-0001.jpg?alt=media&token=9abb604a-6422-4c57-8c90-1e3c01539df7",
+    },
+    {
+      id: 1,
       img: "https://media.licdn.com/dms/image/C560BAQGD2z6PuUSUKg/company-logo_200_200/0/1630663778801/bclogistik_logo?e=2147483647&v=beta&t=Orgx4Lzyd1Qo5ef39N_kcw4IgzMbCTIrpzkEqFOwVS8",
       role: "Fullstack Developer Intern",
       company: "PT. Berkat Cipta Logistics",
@@ -159,7 +181,7 @@ export const Bio = {
       doc: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/image%20(1).png?alt=media&token=52d9a5ba-d707-4060-8c74-122fd9e3f617",
     },
     {
-      id: 1,
+      id: 2,
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCAvE4NQuOnrjboZSCZCOfDv7ry3l4yysuLg&s",
       role: "Freelance Programmer",
       company: "Telkom University Surabaya",
@@ -180,6 +202,15 @@ export const Bio = {
   export const education = [
     {
       id: 0,
+      img: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/pikti.jpg?alt=media&token=c5466f88-2488-4b67-8674-62f8f024a156",
+      school: "",
+      date: "Oct 2018 - Oct 2019",
+      grade: "3.61 GPA",
+      desc: "I am a diploma student in applied informatics at ITS Surabaya, focusing on web programming with PHP and Codeigniter 3. I also have experience with Android programming in Java, C# for Visual Basic, and game development using Gamemaker or GDevelop3. Additionally, I am skilled in using design tools, Microsoft Office, and managing databases like MySQL.",
+      degree: "Applied Informatics Education, Faculty of Informatics",
+    },
+    {
+      id: 1,
       img: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/logo.jpg?alt=media&token=7029cc94-88ae-4baa-9627-454e1d8ac346",
       school: "Telkom University Surabaya",
       date: "Oct 2020 - Aug 2024",
