@@ -215,7 +215,7 @@ export const Bio = {
       school: "Telkom University Surabaya",
       date: "Oct 2020 - Aug 2024",
       grade: "3.4 GPA",
-      desc: "Currently I am a fresh graduate with a Bachelor's degree in Computers at Telkom University Surabaya, Surabaya. I have completed 8 semesters and have a GPA of 3.4. I have taken final projects regarding Algorithms, Mobile Application Design, Interaction Design, Application Development Architecture, Data Mining, Machine Learning and others. I am also a Research and Technology Student at the Research Lab, which is where I learn and work on interesting projects with a team of other talented developers.",
+      desc: "Currently I am a programmer at PT. Allbest Solution Systems, where I am involved in the development of a mobile application for the company's clients. I am also actively involved in the development of a web application for a client, which is currently in the testing phase. I am also involved in the development of a web application for a client, which is currently in the testing phase.",
       degree: "Bachelor of Computer Science, Department of Information System",
     },
   ];
