@@ -8,7 +8,7 @@ export const Bio = {
       "Programmer",
     ],
     description:
-      "I am a Freshgraduated Information Systems student at Telkom University Surabaya with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
+      "I am a Programmer at PT. Allbest Solutions System with two years of experience in React Native and Laravel, driven by a passion for web and mobile application development. My goal is to create impactful, user-focused solutions while continuing to learn and contribute to innovative projects.",
     github: "https://github.com/riz081",
     resume: "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",
