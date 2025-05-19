@@ -38,6 +38,16 @@ export const Bio = {
           name: "Bootstrap",
           image:
             "https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png",
+        },
+        {
+          name: "ReactJS",
+          image:
+            "https://dabeng.github.io/img/reactjs.png",
+        },
+        {
+          name: "NextJS",
+          image:
+            "https://buildwithangga.com/storage/photos/shares/0-0-syaeful/berkenalan-nextjs/logo-berkenalan-dengan-next_js-untuk-web-develompment-buildwithangga.png",
         }
       ],
     },
@@ -48,25 +58,22 @@ export const Bio = {
           name: "Python",
           image:
             "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
-        },
-        {
-          name: "MySQL",
-          image:
-            "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg",
-        },
+        },        
         {
           name: "PHP",
           image:
             "https://www.svgrepo.com/show/373969/php2.svg",
+        },        
+        {
+          name: "Laravel",
+          image:
+            "https://www.svgrepo.com/show/353985/laravel.svg",
         },
         {
-          name: "Firebase",
-          image: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
-        },
-        {
-          name: "PostgreSQL",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/993px-Postgresql_elephant.svg.png",
-        },
+          name: "Golang",
+          image:
+            "https://w7.pngwing.com/pngs/566/160/png-transparent-golang-hd-logo.png",
+        },        
       ],
     },
     {
@@ -82,6 +89,11 @@ export const Bio = {
           image:
             "https://www.svgrepo.com/show/374293/expo-opened.svg",
         },
+        {
+          name: "Flutter",
+          image:
+            "https://w7.pngwing.com/pngs/67/315/png-transparent-flutter-hd-logo-thumbnail.png",
+        }
       ],
     },
     {
@@ -136,6 +148,24 @@ export const Bio = {
           name: "Docker",
           image: "https://code.benco.io/icon-collection/logos/docker-whale.svg",
         },
+        {
+          name: "MySQL",
+          image:
+            "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg",
+        },
+        {
+          name: "Firebase",
+          image: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+        },
+        {
+          name: "PostgreSQL",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/993px-Postgresql_elephant.svg.png",
+        },
+        {
+          name: "AWS S3 Storage",
+          image:
+            "https://miro.medium.com/v2/resize:fit:1280/1*B9CIOrxdROHvtdmouQA1_A.png",
+        }
       ],
     },
   ];
@@ -221,287 +251,349 @@ export const Bio = {
   ];
   
   export const projects = [
-    {
-      id: 9,
-      title: "Monevco",
-      date: "Aug 2022",
-      description:
-        "Monevco, is a web app that acts as a website for managing data from motor sensors for leg stroke patients. Monevco was built using the Codeigniter 3 framework, MySQL, Bootstrap and others.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/dashboard.png?alt=media&token=5ab01ce9-967d-46f1-b0cd-cf2b6c6c0cd8",
-      tags: [
-        "Codeigniter 3",
-        "Bootstrap",
-        "MySQL",
-        "PHP",
-      ],
-      category: "web app",
-      github: "https://github.com/riz081/CI3-Monevco",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 6,
-      title: "Logistics - TUS (Prototype)",
-      date: "Feb 2024",
-      description:
-        "Logistics - TUS (Prototype) is a web application that is used as a media or platform as a means of lending assets. The assets loaned include rooms, cars, tools and goods, and so on. IWES was built using Laravel 10, Bootstrap, MySQL and others.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/IWEZ.png?alt=media&token=a591d6a8-22d4-436b-af38-434e8b63a49d",
-      tags: [
-        "Laravel 10",
-        "Bootstrap",
-        "MySQL",
-        "PHP",
-      ],
-      category: "web app",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-        {
-          name: "TUS - Sisfo Akademik",
-          img: "https://ypt.or.id/wp-content/uploads/2019/01/TU-logogram.jpg",         
-        },
-      ],
-    },
-    {
-      id: 7,
-      title: "INPES Excellent",
-      date: "Okt - Dec 2023",
-      description:
-        "INPES Web is a website-based information system designed to assist PT INPES in providing service information to prospective clients and simplify the management of ongoing services. This system uses the prototyping method in its development and utilizes technologies such as PHP, HTML, CSS, MySQL, Laravel, and Bootstrap.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/inpes.png?alt=media&token=40fc1a57-0835-454a-8121-d03195c45495",
-      tags: [
-        "Laravel 10",
-        "Bootstrap",
-        "MySQL",
-        "PHP",
-      ],
-      category: "web app",
-      webapp:"https://inpexcellentservice.com/aboutind",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",    
-          linkedin: "",     
-        },
-        {
-          name: "Ramadhani Aimmatur Rasyid",
-          img: "https://media.licdn.com/dms/image/D4E03AQEW-x_Qm_ofBA/profile-displayphoto-shrink_200_200/0/1714765672492?e=2147483647&v=beta&t=wODO6ri1135aah_znsZoFPNXymy3YkRBOkv4Cpa8aWo",   
-          linkedin: "https://www.linkedin.com/in/ramadhani-aimmatur-rasyid-9a9017307/?originalSubdomain=id",      
-        },
-      ],
-    },
-    {
-      id: 0,
-      title: "Age Care",
-      date: "July 2023",
-      description:
-        "Agecare is a web application built with CodeIgniter 3, along with technologies like PHP, HTML, CSS, Bootstrap, MySQL, and JavaScript, to streamline the check-up process for doctors and patients through an integrated form system.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/agecare.png?alt=media&token=1e9716c1-4d93-4669-8151-67b8ce9a229a",
-      tags: [
-        "Codeigniter 3",
-        "Bootstrap",
-        "MySQL",
-        "PHP",
-      ],
-      category: "web app",
-      github: "https://github.com/riz081?tab=repositories",      
-    },
-    {
-      id: 1,
-      title: "BC Care",
-      date: "Mar - May 2023",
-      description:
-        "BC Care is the latest innovation for BLogistics customers. An application that can help you to track containers registered with Bclogistics, view the status of tracking activities and you can place orders and look for delivery schedules, BC Care is built with a React Native tech stack.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/bccare.png?alt=media&token=ab974c7e-5c02-4df8-a38e-8a5da6c6261c",
-      tags: [
-        "React Native",
-        "MySQL",
-        "Laravel",
-        "PHP",
-        "Javascript",
-        "Yarn",
-        "JQuery",
-        "Postman",
-        "Git",
-        "GitLab",
-      ],
-      category: "mobile app",
-      github: "https://github.com/riz081/RN-BC-Care",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-        {
-          name: "M. Danny Setiawan",
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCAvE4NQuOnrjboZSCZCOfDv7ry3l4yysuLg&s",         
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: "Melon Plant Disease Detection",
-      date: "Dec 2023 - Mar 2024",
-      description:
-        "Melon plant disease detection, is a project that aims to identify or classify the health conditions of melon plants using machine learning. The libraries used are TensorFlow for image processing and several libraries such as Uvicorn for creating APIs that can be used to develop web or mobile applications.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/deteksimelon.png?alt=media&token=4e25de44-a5b0-4e42-a6e3-3949eb8b0047",
-      tags: ["Python", "Keras", "TensorFlow", "Matplotlib", "Numpy", "Jupyter", "Google Collab", "OpenCV"],
-      category: "machine learning",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: "Furniture Apps",
-      date: "Nov 2023",
-      description:
-        "Furniture Apps is an e-commerce application built using React Native that can run on both iOS and Android. The design begins with creating an engaging user interface (UI), including features to view and manage items in the shopping cart. It utilizes RESTful APIs with Node.js and MongoDB, incorporating JWT authentication and payment integration with Stripe. The application is deployed by hosting on the Railway server and producing an APK for Android.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Untitled.png?alt=media&token=16e13d6c-076d-4aa9-82b7-16833a07c4b9",
-      tags: ["React Native", "MongoDB", "NodeJS", "ExpressJS", "API", "Postman", "Stripe"],
-      category: "mobile app",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-        {
-          name: "dbStech and Udemy",
-          img: "https://www.dbestech.com/images/logo_nav.png",         
-        },
-      ],
-    },
-    {
-      id: 10,
-      title: "Job Finding App",
-      date: "Sep 2023",
-      description:
-        "Job Finding Apps, is a mobile application that can help users find a job. This application was built using React Native and Rapid API as an information provider as well as a database.",
-      image:
-        "https://cdn.dribbble.com/users/1314493/screenshots/11867493/media/951d38dfec24ac00bd894286932299fb.png?resize=1000x750&vertical=center",
-      tags: ["React Native", "JavaScript", "Axios", "Rapid API", "Postman", "Github"],
-      category: "mobile app",
-      github: "https://github.com/adrianhajdin/project_react_native_jobs",
-      member: [
-        {
-          name: "adrianhajdln",
-          img: "https://cdn.dribbble.com/users/1314493/avatars/small/71b5c8db354a635c8a3561c349bb7b0e.jpg?1650572578",
-          github: "https://github.com/adrianhajdin"
-        },
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",          
-          github: "https://github.com/riz081?tab=repositories"
-        },
-      ],
-    },
-    {
-      id: 4,
-      title: "HouseDev Apps",
-      date: "Dec 2023 - Present",
-      description:
-        "HouseDev Apps, is a mobile application that can help customers, investors and housing developers, in carrying out the business process of buying and selling houses and monitoring the progress of house construction. With admin assistance, the application can process data as needed. This application itself was built using React Native, Expo, Firebase and others.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Group%201.png?alt=media&token=b9b8696f-326e-4f9e-83f9-603fdd5df570",
-      tags: ["Figma", "React Native", "Javascript", "Expo", "Laravel", "API", "Firebase"],
-      category: "mobile app",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 5,
-      title: "Moon - Monitoring Melon Apps",
-      date: "Sep 2023 - Jul 2024",
-      description:
-        "Moon is a mobile app for monitoring melon plant growth in urban farming, using IoT and machine learning to analyze data from sensors. It helps manage plant growth efficiently by providing real-time insights into soil fertility and other key parameters.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Classification.png?alt=media&token=b735a4c4-2d32-401a-8023-6b8e3f66e8e3",
-      tags: ["Figma", "React Native", "Javascript", "Expo", "Python", "API", "Firebase", "Antares"],
-      category: "mobile app",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 8,
-      title: "Soil Classification of Melon Plants",
-      date: "Dec 2023 - Mar 2024",
-      description:
-        "Soil Classification of Melon Plants, is a project that aims to classify soil fertility conditions in melon plants using machine learning. The algorithm used is Support Vector Machine and several libraries such as uvicorn to create APIs that can be used to develop web or mobile applications.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/prediksi.png?alt=media&token=4acadca7-734a-4293-b0d4-318d037e56ae",
-      tags: ["Python", "Pandas", "Scikit Learn", "Numpy", "Jupyter", "Google Collab"],
-      category: "machine learning",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 11,
-      title: "TGS Training Dataset",
-      date: "Aug 2024",
-      description:
-        "TGS Training Dataset, is a project that aims to classify roots using deep learning. The algorithms used are Support Vector Machine, Naive Bayes and Convolutional Neural Network. Where this data processing aims to determine the architecture of the layers used in managing data using the help of the VisualKeras library.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Akar.png?alt=media&token=72b792f4-ea4f-4d39-b1a3-10b0aa6b5c9f",
-      tags: ["Python", "Jupyter", "Support Vector Machine", "Naive Bayes", "CNN"],
-      category: "machine learning",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    },
-    {
-      id: 12,
-      title: "Custom Object Detection",
-      date: "Aug 2021",
-      description:
-        "Custom Object Detection, is a project that aims to detect objects from 3D printing which are used to detect the camera in the hexabot fire extinguishing robot. The detection process is carried out using the OpenCV and Yolo libraries.",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/yolo.jpeg?alt=media&token=c7cdc540-6aa7-47bd-b6ea-841b9fa97e21",
-      tags: ["Python", "OpenCV", "YoloV5"],
-      category: "machine learning",
-      github: "",
-      member: [
-        {
-          name: "Rizqika Ibnu K",
-          img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
-        },
-      ],
-    }
-  ];
+  {
+    id: 9,
+    title: "Monevco",
+    date: "Aug 2022",
+    description:
+      "Monevco, is a web app that acts as a website for managing data from motor sensors for leg stroke patients. Monevco was built using the Codeigniter 3 framework, MySQL, Bootstrap and others.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/dashboard.png?alt=media&token=5ab01ce9-967d-46f1-b0cd-cf2b6c6c0cd8",
+    tags: [
+      "Codeigniter 3",
+      "Bootstrap",
+      "MySQL",
+      "PHP",
+    ],
+    category: "fullstack developer",
+    github: "https://github.com/riz081/CI3-Monevco",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Logistics - TUS (Prototype)",
+    date: "Feb 2024",
+    description:
+      "Logistics - TUS (Prototype) is a web application that is used as a media or platform as a means of lending assets. The assets loaned include rooms, cars, tools and goods, and so on. IWES was built using Laravel 10, Bootstrap, MySQL and others.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/IWEZ.png?alt=media&token=a591d6a8-22d4-436b-af38-434e8b63a49d",
+    tags: [
+      "Laravel 10",
+      "Bootstrap",
+      "MySQL",
+      "PHP",
+    ],
+    category: "fullstack developer",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+      {
+        name: "TUS - Sisfo Akademik",
+        img: "https://ypt.or.id/wp-content/uploads/2019/01/TU-logogram.jpg",         
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: "INPES Excellent",
+    date: "Okt - Dec 2023",
+    description:
+      "INPES Web is a website-based information system designed to assist PT INPES in providing service information to prospective clients and simplify the management of ongoing services. This system uses the prototyping method in its development and utilizes technologies such as PHP, HTML, CSS, MySQL, Laravel, and Bootstrap.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/inpes.png?alt=media&token=40fc1a57-0835-454a-8121-d03195c45495",
+    tags: [
+      "Laravel 10",
+      "Bootstrap",
+      "MySQL",
+      "PHP",
+    ],
+    category: "fullstack developer",
+    webapp:"https://inpexcellentservice.com/aboutind",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",    
+        linkedin: "",     
+      },
+      {
+        name: "Ramadhani Aimmatur Rasyid",
+        img: "https://media.licdn.com/dms/image/D4E03AQEW-x_Qm_ofBA/profile-displayphoto-shrink_200_200/0/1714765672492?e=2147483647&v=beta&t=wODO6ri1135aah_znsZoFPNXymy3YkRBOkv4Cpa8aWo",   
+        linkedin: "https://www.linkedin.com/in/ramadhani-aimmatur-rasyid-9a9017307/?originalSubdomain=id",      
+      },
+    ],
+  },
+  {
+    id: 0,
+    title: "Age Care",
+    date: "July 2023",
+    description:
+      "Agecare is a web application built with CodeIgniter 3, along with technologies like PHP, HTML, CSS, Bootstrap, MySQL, and JavaScript, to streamline the check-up process for doctors and patients through an integrated form system.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/agecare.png?alt=media&token=1e9716c1-4d93-4669-8151-67b8ce9a229a",
+    tags: [
+      "Codeigniter 3",
+      "Bootstrap",
+      "MySQL",
+      "PHP",
+    ],
+    category: "fullstack developer",
+    github: "https://github.com/riz081?tab=repositories",      
+  },
+  {
+    id: 1,
+    title: "BC Care",
+    date: "Mar - May 2023",
+    description:
+      "BC Care is the latest innovation for BLogistics customers. An application that can help you to track containers registered with Bclogistics, view the status of tracking activities and you can place orders and look for delivery schedules, BC Care is built with a React Native tech stack.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/bccare.png?alt=media&token=ab974c7e-5c02-4df8-a38e-8a5da6c6261c",
+    tags: [
+      "React Native",
+      "MySQL",
+      "Laravel",
+      "PHP",
+      "Javascript",
+      "Yarn",
+      "JQuery",
+      "Postman",
+      "Git",
+      "GitLab",
+    ],
+    category: "mobile frontend",
+    github: "https://github.com/riz081/RN-BC-Care",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+      {
+        name: "M. Danny Setiawan",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCAvE4NQuOnrjboZSCZCOfDv7ry3l4yysuLg&s",         
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Furniture Apps",
+    date: "Nov 2023",
+    description:
+      "Furniture Apps is an e-commerce application built using React Native that can run on both iOS and Android. The design begins with creating an engaging user interface (UI), including features to view and manage items in the shopping cart. It utilizes RESTful APIs with Node.js and MongoDB, incorporating JWT authentication and payment integration with Stripe. The application is deployed by hosting on the Railway server and producing an APK for Android.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Untitled.png?alt=media&token=16e13d6c-076d-4aa9-82b7-16833a07c4b9",
+    tags: ["React Native", "MongoDB", "NodeJS", "ExpressJS", "API", "Postman", "Stripe"],
+    category: "mobile frontend",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+      {
+        name: "dbStech and Udemy",
+        img: "https://www.dbestech.com/images/logo_nav.png",         
+      },
+    ],
+  },
+  {
+    id: 10,
+    title: "Job Finding App",
+    date: "Sep 2023",
+    description:
+      "Job Finding Apps, is a mobile application that can help users find a job. This application was built using React Native and Rapid API as an information provider as well as a database.",
+    image:
+      "https://cdn.dribbble.com/users/1314493/screenshots/11867493/media/951d38dfec24ac00bd894286932299fb.png?resize=1000x750&vertical=center",
+    tags: ["React Native", "JavaScript", "Axios", "Rapid API", "Postman", "Github"],
+    category: "mobile frontend",
+    github: "https://github.com/adrianhajdin/project_react_native_jobs",
+    member: [
+      {
+        name: "adrianhajdln",
+        img: "https://cdn.dribbble.com/users/1314493/avatars/small/71b5c8db354a635c8a3561c349bb7b0e.jpg?1650572578",
+        github: "https://github.com/adrianhajdin"
+      },
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",          
+        github: "https://github.com/riz081?tab=repositories"
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "HouseDev Apps",
+    date: "Dec 2023 - Present",
+    description:
+      "HouseDev Apps, is a mobile application that can help customers, investors and housing developers, in carrying out the business process of buying and selling houses and monitoring the progress of house construction. With admin assistance, the application can process data as needed. This application itself was built using React Native, Expo, Firebase and others.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Group%201.png?alt=media&token=b9b8696f-326e-4f9e-83f9-603fdd5df570",
+    tags: ["Figma", "React Native", "Javascript", "Expo", "Laravel", "API", "Firebase"],
+    category: "mobile frontend",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Moon - Monitoring Melon Apps",
+    date: "Sep 2023 - Jul 2024",
+    description:
+      "Moon is a mobile app for monitoring melon plant growth in urban farming, using IoT and machine learning to analyze data from sensors. It helps manage plant growth efficiently by providing real-time insights into soil fertility and other key parameters.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/Classification.png?alt=media&token=b735a4c4-2d32-401a-8023-6b8e3f66e8e3",
+    tags: ["Figma", "React Native", "Javascript", "Expo", "Python", "API", "Firebase", "Antares"],
+    category: "mobile frontend",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+    ],
+  },
+  // New projects for additional categories
+  {
+    id: 13,
+    title: "Finance Apps",
+    date: "Jan 2024",
+    description:
+      "Finance Apps is a comprehensive mobile application design created using Figma, featuring a sleek and intuitive user interface for financial management. The design encompasses multiple screens including onboarding, sign-up, login, home dashboard, top-up, transfer, and profile sections. It utilizes a modern color palette with a focus on user experience, providing seamless navigation and clear information hierarchy for financial transactions and account management.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/ui_screenshot_export.png?alt=media&token=ad2f63cc-3014-4f1a-9feb-cad5c4d4e636",
+    tags: ["Figma", "UI/UX Design", "Wireframing", "Prototyping"],
+    category: "ui/ux",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+    ],
+  },
+  {
+    id: 14,
+    title: "Finance Apps",
+    date: "Jan 2024",
+    description:
+      "A Flutter mobile application for financial management, developed with a focus on responsive design and smooth user interactions. The app features comprehensive functionality including user authentication, balance tracking, top-up services, fund transfers, and transaction history. Implemented using modern mobile development practices with intuitive navigation and secure transaction flows.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/flutter_signin_ui_screenshot.png?alt=media&token=e0e0d52d-1b3f-4ed9-985e-4474202d53f4",
+    tags: ["Flutter", "Mobile Development", "Financial App", "Mobile UI"],
+    category: "mobile frontend",
+    github: "",
+    member: [
+      {
+        name: "Rizqika Ibnu K",
+        img: "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4",         
+      },
+    ],
+  },
+  {
+    "id": 15,
+    "title": "E-Commerce Wishlist Screen",
+    "date": "May 2025",
+    "description": "A Flutter-based wishlist screen for an e-commerce mobile application. The UI includes both light and dark themes with a responsive product grid layout. It features favorite item toggling, product price displays, and seamless user interaction design, tailored for shopping apps.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/ChatGPT%20Image%20May%2019%2C%202025%2C%2010_24_46%20PM.png?alt=media&token=36b10c85-7eab-4773-b97c-46542ff0aaf7",
+    "tags": ["Flutter", "Mobile Development", "E-Commerce App", "Wishlist UI"],
+    "category": "mobile frontend",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  },
+  {
+  "id": 20,
+    "title": "EDC Monitoring System",
+    "date": "May 2025",
+    "description": "A responsive and data-driven web dashboard interface for monitoring EDC (Electronic Data Capture) devices. Built with a focus on real-time visualization, it includes key metrics such as online/offline device status, transaction summaries, and graphical analytics. The UI implements intuitive filtering by date, location, and merchant, optimizing administrative oversight and performance tracking.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/edc.png?alt=media&token=e836da12-8f11-4693-bc8b-5ac82dd5feb4",
+    "tags": ["React", "Dashboard UI", "Frontend Development", "Data Visualization", "Admin Panel"],
+    "category": "frontend developer",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Management Dokumen",
+    "date": "May 2025",
+    "description": "A modern and interactive web dashboard interface for managing digital documents such as e-Meterai, e-Signature, and e-Stamp. It provides visual insights through circular progress indicators and bar charts for document purchase and usage trends. Features include internal/external user tracking, progress monitoring, and intuitive document analytics over time.",
+    "image": "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/doku.png?alt=media&token=5ea1d232-0263-4e0e-85bb-b9d687efa7a9",
+    "tags": ["Next", "Dashboard UI", "Frontend Development", "Document Management", "Data Visualization"],
+    "category": "frontend developer",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "MRT Jakarta Schedule API",
+    "date": "May 2025",
+    "description": "REST API to display MRT Jakarta train schedule data. This API allows users to check train positions, departure schedules, routes and lines, and fares. Created using the Go programming language and tested using Postman.",
+    "image": "https://buildwithangga.com/storage/assets/thumbnails/Buildwithangga-course-OgZwV-mini-project-golang-golang%20bwa%20101.jpg",
+    "tags": ["Go", "Postman", "REST API", "Backend Development", "MRT Jakarta"],
+    "category": "backend developer",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Simple Contact Form API",
+    "date": "Feb 2025",
+    "description": "A comprehensive full-stack REST API for managing contact information, developed using Go and Laravel. The system provides robust CRUD operations with real-time data management, featuring seamless integration between frontend and backend services.",
+    "image": "https://buildwithangga.com/storage/assets/thumbnails/Buildwithangga-course-8tdEX-simple-contact-form-full-stack-api-web-cms-and-docker-multi-container-architecture-Thumbnail-Full-for-BWA.png",
+    "tags": ["Go", "Laravel", "React", "Next.js", "MariaDB", "REST API", "Backend Development"],
+    "category": "backend developer",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Mini Soccer Booking System API",
+    "date": "Mar 2025",
+    "description": "A sophisticated backend system for mini soccer field booking, implementing real-time scheduling and pricing management. Developed using Go and leveraging cloud technologies for scalable and efficient service delivery.",
+    "image": "https://buildwithangga.com/storage/assets/thumbnail/197267/thumbnail1.png",
+    "tags": ["Go", "Docker", "Google Cloud", "AWS S3", "Kafka", "REST API", "Backend Development"],
+    "category": "backend developer",
+    "github": "",
+    "member": [
+      {
+        "name": "Rizqika Ibnu K",
+        "img": "https://avatars.githubusercontent.com/u/49875729?s=400&u=e1407fd2712720c5b4b8a56e056592c3ebcddae8&v=4"
+      }
+    ]
+  }
+
+]

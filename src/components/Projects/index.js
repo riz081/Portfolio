@@ -62,6 +62,8 @@ const ToogleGroup = styled.div`
     border-radius: 12px;
     font-weight: 500;
     margin: 22px 0px;
+    flex-wrap: wrap;
+    justify-content: center;
     @media (max-width: 768px) {
         font-size: 12px;
     }
@@ -87,8 +89,10 @@ const ToogleButton = styled.div`
 const Divider = styled.div`
     width: 1.5px;
     background: ${({ theme }) => theme.primary};
+    @media (max-width: 768px) {
+        display: none;
+    }
 `
-
 
 const CardContainer = styled.div`
     display: flex;
@@ -110,67 +114,65 @@ const CardContainer = styled.div`
 
 const Projects = ({ openModal, setOpenModal }) => {
     const [toggle, setToggle] = useState('all');
+    
+    // Define all possible categories
+    const categories = [
+        'all', 
+        'ui/ux',
+        // 'machine learning', 
+        'frontend developer', 
+        'mobile frontend', 
+        'backend developer', 
+        'fullstack developer',
+    ];
+
     return (
       <Container id="projects">
         <Wrapper>
           <Title>Projects</Title>
           <Desc>
-            I have worked on various projects. From web applications to mobile applications. Here are some of my projects.
+            I have worked on various projects across different domains and technologies. Here are some of my projects.
           </Desc>
-          <ToogleGroup >
-            {
-                toggle === 'all' ? (
-                    <ToogleButton active value="all" onClick={() => setToggle("all")} >
-                        ALL
-                    </ToogleButton>
-                ) : (
-                    <ToogleButton valie="all" onClick={() => setToggle("all")}>ALL</ToogleButton>
-                )
-            }
-            <Divider/>
-            {
-                toggle === "web app" ? (
-                    <ToogleButton active onClick={() => setToggle("web app")}>WEB APP'S</ToogleButton>
-                ) : (
-                    <ToogleButton onClick={() => setToggle("web app")}>
-                        WEB APP'S
-                    </ToogleButton>
-                )
-            }
-            <Divider/>
-            {
-                toggle === "mobile app" ? (
-                    <ToogleButton active onClick={() => setToggle("mobile app")}>MOBILE APP'S</ToogleButton>
-                ) : (
-                    <ToogleButton onClick={() => setToggle("mobile app")}>MOBILE APP'S</ToogleButton>
-                )
-            }            
-            <Divider/>
-            {
-                toggle === "machine learning" ? (
-                    <ToogleButton active onClick={() => setToggle("machine learning")}>MACHINE LEARNING</ToogleButton>
-                ) : (
-                    <ToogleButton onClick={() => setToggle("machine learning")}>MACHINE LEARNING</ToogleButton>
-                )
-            } 
-            <Divider/>
-            {
-                toggle === "rest api" ? (
-                    <ToogleButton active onClick={() => setToggle("rest api")}>REST API</ToogleButton>
-                ) : (
-                    <ToogleButton onClick={() => setToggle("rest api")}>REST API</ToogleButton>
-                )
-            } 
+          <ToogleGroup>
+            {categories.map((category, index) => (
+                <React.Fragment key={category}>
+                    {toggle === category ? (
+                        <ToogleButton 
+                            active 
+                            onClick={() => setToggle(category)}
+                        >
+                            {category.toUpperCase()}
+                        </ToogleButton>
+                    ) : (
+                        <ToogleButton 
+                            onClick={() => setToggle(category)}
+                        >
+                            {category.toUpperCase()}
+                        </ToogleButton>
+                    )}
+                    {index < categories.length - 1 && <Divider/>}
+                </React.Fragment>
+            ))}
           </ToogleGroup>
           <CardContainer>
             {toggle === 'all' && projects
-              .map((project) => (
-                <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal}/>
+              .map((project, index) => (
+                <ProjectCard 
+                    key={index} 
+                    project={project} 
+                    openModal={openModal} 
+                    setOpenModal={setOpenModal}
+                />
               ))}
             {projects
-              .filter((item) => item.category == toggle)
-              .map((project) => (
-                <ProjectCard project={project} openModal={openModal} setOpenModal={setOpenModal}/>
+              .filter((item) => item.category === toggle)
+              .map((project, index) => (
+                <ProjectCard 
+                    key={index} 
+                    project={project} 
+                    openModal={openModal} 
+                    setOpenModal={setOpenModal}
+                />
               ))}
           </CardContainer>
         </Wrapper>
