@@ -105,11 +105,6 @@ export const Bio = {
             "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
         },                
         {
-          name: "Laravel",
-          image:
-            "https://www.svgrepo.com/show/353985/laravel.svg",
-        },
-        {
           name: "Codeigniter",
           image:
             "https://www.svgrepo.com/show/303425/codeigniter-logo.svg",
@@ -233,7 +228,7 @@ export const Bio = {
     {
       id: 0,
       img: "https://firebasestorage.googleapis.com/v0/b/myblog-ca633.appspot.com/o/pikti.jpg?alt=media&token=c5466f88-2488-4b67-8674-62f8f024a156",
-      school: "",
+      school: "ITS Surabaya",
       date: "Oct 2018 - Oct 2019",
       grade: "3.61 GPA",
       desc: "I am a diploma student in applied informatics at ITS Surabaya, focusing on web programming with PHP and Codeigniter 3. I also have experience with Android programming in Java, C# for Visual Basic, and game development using Gamemaker or GDevelop3. Additionally, I am skilled in using design tools, Microsoft Office, and managing databases like MySQL.",
@@ -245,7 +240,7 @@ export const Bio = {
       school: "Telkom University Surabaya",
       date: "Oct 2020 - Aug 2024",
       grade: "3.4 GPA",
-      desc: "Currently I am a programmer at PT. Allbest Solution Systems, where I am involved in the development of a mobile application for the company's clients. I am also actively involved in the development of a web application for a client, which is currently in the testing phase. I am also involved in the development of a web application for a client, which is currently in the testing phase.",
+      desc: "Completed a Bachelor of Computer Science in Information Systems at Telkom University Surabaya, covering software engineering, database systems, and information system development.",
       degree: "Bachelor of Computer Science, Department of Information System",
     },
   ];
@@ -465,7 +460,7 @@ export const Bio = {
   // New projects for additional categories
   {
     id: 13,
-    title: "Finance Apps",
+    title: "Finance App UI Design",
     date: "Jan 2024",
     description:
       "Finance Apps is a comprehensive mobile application design created using Figma, featuring a sleek and intuitive user interface for financial management. The design encompasses multiple screens including onboarding, sign-up, login, home dashboard, top-up, transfer, and profile sections. It utilizes a modern color palette with a focus on user experience, providing seamless navigation and clear information hierarchy for financial transactions and account management.",
@@ -483,7 +478,7 @@ export const Bio = {
   },
   {
     id: 14,
-    title: "Finance Apps",
+    title: "Finance App (Flutter)",
     date: "Jan 2024",
     description:
       "A Flutter mobile application for financial management, developed with a focus on responsive design and smooth user interactions. The app features comprehensive functionality including user authentication, balance tracking, top-up services, fund transfers, and transaction history. Implemented using modern mobile development practices with intuitive navigation and secure transaction flows.",
