@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# Portfolio — Dinamis + CMS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Portfolio pribadi dengan backend CMS (Go + Echo). Konten dikelola lewat dashboard admin, disimpan di PostgreSQL, media di S3/MinIO.
 
-## Available Scripts
+## Struktur
 
-In the project directory, you can run:
+```
+frontend/   React 19 + Vite (situs publik + dashboard /admin)
+backend/    Go + Echo (+ GORM + PostgreSQL + MinIO/S3)
+scripts/    export-cms-data.cjs (konversi data lama → JSON seed)
+```
 
-### `npm start`
+## Prasyarat
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js 20+
+- Go 1.22+
+- Docker + Docker Compose (untuk PostgreSQL & MinIO)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Menjalankan (development)
 
-### `npm test`
+### 1. Nyalakan database & object storage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+docker compose up -d postgres minio
+```
 
-### `npm run build`
+Daftar port host (hindari bentrok dengan service lokal):
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Service | Host port |
+|---|---|
+| PostgreSQL | 5435 |
+| MinIO API | 9010 |
+| MinIO Console | 9011 |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Override via env: `POSTGRES_PORT`, `MINIO_PORT`, `MINIO_CONSOLE_PORT`.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Backend
 
-### `npm run eject`
+```bash
+cd backend
+# salin contoh env bila perlu
+# (nilai default di config.go sudah cukup untuk dev)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+exec env \
+  DB_HOST=localhost DB_PORT=5435 DB_USER=portfolio DB_PASSWORD=portfolio DB_NAME=portfolio \
+  S3_ENDPOINT=localhost:9010 S3_ACCESS_KEY=minioadmin S3_SECRET_KEY=minioadmin S3_BUCKET=portfolio \
+  S3_PUBLIC_URL=http://localhost:9010/portfolio \
+  JWT_SECRET=devsecret ADMIN_USER=admin ADMIN_PASS=admin123 \
+  go run ./cmd/server
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Backend jalan di `http://localhost:8080`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Migrasi data lama (seed, opsional)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+cd backend
+DB_HOST=localhost DB_PORT=5435 DB_USER=portfolio DB_PASSWORD=portfolio DB_NAME=portfolio \
+SEED_FILE=seed/data.json go run ./cmd/seed
+```
 
-## Learn More
+> Regenerate `seed/data.json` dari `frontend/src/data/constants.jsx`:
+> `node scripts/export-cms-data.cjs`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4. Frontend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd frontend
+cp .env.example .env   # isi EmailJS
+npm install
+npm run dev            # http://localhost:9999 (proxy /api → :8080)
+```
 
-### Code Splitting
+Dashboard admin: `http://localhost:9999/admin` (login `admin` / `admin123`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Production (VPS + Docker)
 
-### Analyzing the Bundle Size
+```bash
+cp .env.example .env    # isi JWT_SECRET, ADMIN_*, S3_*
+docker compose up -d --build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Frontend (nginx): `:9999`
+- Backend: `:8080`
+- PostgreSQL / MinIO: internal network
 
-### Making a Progressive Web App
+## API
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Lihat `/Users/<kamu>/.opencode/plan/API-Contract.md` untuk spesifikasi lengkap endpoint & payload.
 
-### Advanced Configuration
+Ringkas:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `GET /api/v1/portfolio` — aggregat semua konten (1 request).
+- `GET /api/v1/{projects,experiences,education,skills,bio}` — publik.
+- `POST /api/v1/admin/auth/login` — login (JWT via httpOnly cookie).
+- `*/api/v1/admin/*` — CRUD (butuh auth).
+- `POST /api/v1/admin/upload` — upload gambar → S3/MinIO → URL.
 
-### Deployment
+## Dokumen perencanaan
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- PRD, SDD, PDD, API Contract — di `.opencode/plan/`.
