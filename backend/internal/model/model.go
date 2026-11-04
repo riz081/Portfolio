@@ -105,6 +105,18 @@ type Member struct {
 	UpdatedAt   time.Time `json:"-"`
 }
 
+type Certification struct {
+	ID            uint      `gorm:"primaryKey" json:"id"`
+	Title         string    `json:"title"`
+	Issuer        string    `json:"issuer"`
+	Date          string    `json:"date"`
+	Credential    string    `json:"credential"`
+	CredentialURL string    `json:"credential_url"`
+	Sort          int       `gorm:"default:0" json:"sort"`
+	CreatedAt     time.Time `json:"-"`
+	UpdatedAt     time.Time `json:"-"`
+}
+
 type Admin struct {
 	ID           uint           `gorm:"primaryKey" json:"id"`
 	Username     string         `gorm:"uniqueIndex" json:"username"`
@@ -123,6 +135,7 @@ func MigrateModels() []any {
 		&Experience{},
 		&Education{},
 		&Project{},
+		&Certification{},
 		&Tag{},
 		&Member{},
 		&Admin{},

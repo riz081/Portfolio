@@ -244,3 +244,45 @@ func (h *Handler) DeleteProject(c echo.Context) error {
 	}
 	return c.NoContent(http.StatusNoContent)
 }
+
+// ---------- Certifications ----------
+
+func (h *Handler) CreateCertification(c echo.Context) error {
+	var in model.Certification
+	if err := c.Bind(&in); err != nil {
+		return writeError(c, http.StatusBadRequest, "VALIDATION_ERROR", "invalid request body")
+	}
+	if in.Title == "" {
+		return writeError(c, http.StatusBadRequest, "VALIDATION_ERROR", "title is required")
+	}
+	if err := h.repo.CreateCertification(&in); err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to create certification")
+	}
+	return writeData(c, http.StatusCreated, in)
+}
+
+func (h *Handler) UpdateCertification(c echo.Context) error {
+	id, err := parseID(c)
+	if err != nil {
+		return writeError(c, http.StatusBadRequest, "VALIDATION_ERROR", "invalid id")
+	}
+	var in model.Certification
+	if err := c.Bind(&in); err != nil {
+		return writeError(c, http.StatusBadRequest, "VALIDATION_ERROR", "invalid request body")
+	}
+	if err := h.repo.UpdateCertification(id, &in); err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to update certification")
+	}
+	return writeData(c, http.StatusOK, echo.Map{"id": id})
+}
+
+func (h *Handler) DeleteCertification(c echo.Context) error {
+	id, err := parseID(c)
+	if err != nil {
+		return writeError(c, http.StatusBadRequest, "VALIDATION_ERROR", "invalid id")
+	}
+	if err := h.repo.DeleteCertification(id); err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to delete certification")
+	}
+	return c.NoContent(http.StatusNoContent)
+}

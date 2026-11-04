@@ -14,6 +14,7 @@ const maxUploadSize = 5 << 20 // 5 MB
 var allowedExt = map[string]bool{
 	".jpg": true, ".jpeg": true, ".png": true,
 	".webp": true, ".svg": true, ".gif": true,
+	".pdf": true,
 }
 
 func (h *Handler) Upload(c echo.Context) error {
@@ -76,6 +77,8 @@ func detectContentType(file multipart.File, ext string) string {
 		return "image/gif"
 	case ".png":
 		return "image/png"
+	case ".pdf":
+		return "application/pdf"
 	default:
 		return "image/jpeg"
 	}

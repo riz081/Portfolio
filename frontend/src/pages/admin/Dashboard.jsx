@@ -7,6 +7,7 @@ import SkillsPanel from './panels/SkillsPanel';
 import ExperiencesPanel from './panels/ExperiencesPanel';
 import EducationPanel from './panels/EducationPanel';
 import ProjectsPanel from './panels/ProjectsPanel';
+import CertificationsPanel from './panels/CertificationsPanel';
 
 const Layout = styled.div`
   display: flex;
@@ -65,6 +66,7 @@ const PANELS = {
   experiences: { label: 'Experiences', component: ExperiencesPanel },
   education: { label: 'Education', component: EducationPanel },
   projects: { label: 'Projects', component: ProjectsPanel },
+  certifications: { label: 'Certifications', component: CertificationsPanel },
 };
 
 export default function Dashboard() {

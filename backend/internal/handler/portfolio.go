@@ -30,13 +30,18 @@ func (h *Handler) GetPortfolio(c echo.Context) error {
 	if err != nil {
 		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load projects")
 	}
+	certifications, err := h.repo.ListCertifications()
+	if err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load certifications")
+	}
 
 	return writeData(c, http.StatusOK, echo.Map{
-		"bio":          bio,
-		"skill_groups": skillGroups,
-		"experiences":  experiences,
-		"education":    education,
-		"projects":     projects,
+		"bio":            bio,
+		"skill_groups":   skillGroups,
+		"experiences":    experiences,
+		"education":      education,
+		"projects":       projects,
+		"certifications": certifications,
 	})
 }
 
@@ -97,4 +102,12 @@ func (h *Handler) GetBio(c echo.Context) error {
 		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load bio")
 	}
 	return writeData(c, http.StatusOK, bio)
+}
+
+func (h *Handler) ListCertifications(c echo.Context) error {
+	items, err := h.repo.ListCertifications()
+	if err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load certifications")
+	}
+	return writeData(c, http.StatusOK, items)
 }

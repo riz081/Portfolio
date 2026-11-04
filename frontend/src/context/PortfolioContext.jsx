@@ -7,6 +7,7 @@ const EMPTY = {
   experiences: [],
   education: [],
   projects: [],
+  certifications: [],
 };
 
 const PortfolioContext = createContext({

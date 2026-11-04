@@ -230,6 +230,29 @@ func resolveTags(tx *gorm.DB, names []string) ([]model.Tag, error) {
 	return tags, nil
 }
 
+// ---------- Certifications ----------
+
+func (r *Repository) ListCertifications() ([]model.Certification, error) {
+	var items []model.Certification
+	err := r.db.Order("sort asc, id asc").Find(&items).Error
+	return items, err
+}
+
+func (r *Repository) CreateCertification(c *model.Certification) error {
+	return r.db.Create(c).Error
+}
+
+func (r *Repository) UpdateCertification(id uint, c *model.Certification) error {
+	return r.db.Model(&model.Certification{}).Where("id = ?", id).Updates(map[string]any{
+		"title": c.Title, "issuer": c.Issuer, "date": c.Date,
+		"credential": c.Credential, "credential_url": c.CredentialURL, "sort": c.Sort,
+	}).Error
+}
+
+func (r *Repository) DeleteCertification(id uint) error {
+	return r.db.Delete(&model.Certification{}, id).Error
+}
+
 // ---------- Admin ----------
 
 func (r *Repository) GetAdminByUsername(username string) (*model.Admin, error) {

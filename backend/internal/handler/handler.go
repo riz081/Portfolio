@@ -93,6 +93,7 @@ func (h *Handler) Register(e *echo.Echo) {
 	api.GET("/education", h.ListEducation)
 	api.GET("/skills", h.ListSkills)
 	api.GET("/bio", h.GetBio)
+	api.GET("/certifications", h.ListCertifications)
 
 	// admin auth (public)
 	admin := api.Group("/admin")
@@ -123,4 +124,8 @@ func (h *Handler) Register(e *echo.Echo) {
 	admin.DELETE("/skills/:id", h.DeleteSkillGroup)
 
 	admin.POST("/upload", h.Upload)
+
+	admin.POST("/certifications", h.CreateCertification)
+	admin.PUT("/certifications/:id", h.UpdateCertification)
+	admin.DELETE("/certifications/:id", h.DeleteCertification)
 }
