@@ -46,6 +46,19 @@ const Image = styled.img`
     box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
 `
 
+const CoverPlaceholder = styled.div`
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, ${({ theme }) => theme.primary + '44'}, ${({ theme }) => theme.primary + '88'});
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.white};
+`
+
 const Tags = styled.div`
     width: 100%;
     display: flex;
@@ -125,7 +138,10 @@ const Avatar = styled.img`
 const ProjectCards = ({project,setOpenModal}) => {
     return (
         <Card onClick={() => setOpenModal({state: true, project: project})}>
-            <Image src={project.image_url}/>
+            {project.image_url
+              ? <Image src={project.image_url}/>
+              : <CoverPlaceholder>{project.title?.charAt(0)}</CoverPlaceholder>
+            }
             <Tags>
                 {project.tags?.map((tag, index) => (
                 <Tag key={index}>{tag.name}</Tag>

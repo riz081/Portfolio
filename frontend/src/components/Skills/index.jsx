@@ -124,6 +124,27 @@ const SkillImage = styled.img`
   height: 24px;
 `
 
+const SkillPlaceholder = styled.span`
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: ${({ theme }) => theme.primary};
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+`
+
+function SkillIcon({ name, src }) {
+  const [failed, setFailed] = React.useState(false);
+  if (src && !failed) {
+    return <SkillImage src={src} onError={() => setFailed(true)} />;
+  }
+  return <SkillPlaceholder>{(name || '?').charAt(0).toUpperCase()}</SkillPlaceholder>;
+}
+
 const Skills = () => {
   const { data } = usePortfolio();
   const skills = data?.skill_groups || [];
@@ -142,7 +163,7 @@ const Skills = () => {
                 {
                   item.skills.map((skill) => (
                     <SkillItem key={skill.name}>
-                      <SkillImage src={skill.image_url} />
+                      <SkillIcon name={skill.name} src={skill.image_url} />
                       {skill.name}
                     </SkillItem>
                   ))

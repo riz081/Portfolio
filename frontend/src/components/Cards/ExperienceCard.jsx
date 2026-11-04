@@ -149,7 +149,7 @@ const ExperienceCard = ({ experience }) => {
     return (
         <Card>
             <Top>
-                <Image src={experience.img_url} />
+                {experience.img_url && <Image src={experience.img_url} />}
                 <Body>
                     <Role>{experience.role}</Role>
                     <Company>{experience.company}</Company>

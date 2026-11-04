@@ -132,7 +132,7 @@ const EducationCard = ({ education }) => {
     return (
         <Card>
             <Top>
-                <Image src={education.img_url} />
+                {education.img_url && <Image src={education.img_url} />}
                 <Body>
                     <Name>{education.school}</Name>
                     <Degree>{education.degree}</Degree>

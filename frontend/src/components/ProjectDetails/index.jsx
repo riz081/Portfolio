@@ -197,7 +197,7 @@ const index = ({ openModal, setOpenModal }) => {
                         }}
                         onClick={() => setOpenModal({ state: false, project: null })}
                     />
-                    <Image src={project?.image_url} />
+                    {project?.image_url && <Image src={project?.image_url} />}
                     <Title>{project?.title}</Title>
                     <Date>{project.date}</Date>
                     <Tags>
