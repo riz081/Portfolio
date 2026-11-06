@@ -1,0 +1,7 @@
+.git
+.gitignore
+cmd/server/tmp
+seed/data.json
+.env
+Dockerfile
+*.md
