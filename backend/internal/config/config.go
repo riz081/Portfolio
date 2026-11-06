@@ -45,7 +45,7 @@ type S3Config struct {
 
 func Load() *Config {
 	return &Config{
-		Port: getEnv("APP_PORT", "8080"),
+		Port: getEnv("APP_PORT", "9998"),
 		Database: DatabaseConfig{
 			Host:     getEnv("DB_HOST", "localhost"),
 			Port:     getEnv("DB_PORT", "5432"),

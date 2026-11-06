@@ -2,7 +2,7 @@
 """Upload new CV to MinIO, point bio.resume to it, and seed certifications."""
 import json, urllib.request, urllib.error, http.cookiejar, uuid
 
-BASE = "http://localhost:8080/api/v1"
+BASE = "http://localhost:9998/api/v1"
 USER, PASS = "admin", "admin123"
 CV_PATH = "Rizqika_Ibnu_Khattab_CV_ATS.pdf"
 

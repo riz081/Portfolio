@@ -33,7 +33,7 @@ services:
     build: ./backend
     restart: unless-stopped
     environment:
-      APP_PORT: "8080"
+      APP_PORT: "9998"
       DB_HOST: postgres
       DB_PORT: "5432"
       DB_USER: ${DB_USER:-portfolio}
@@ -49,10 +49,10 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY:-minioadmin}
       S3_BUCKET: ${S3_BUCKET:-portfolio}
       S3_USE_SSL: "false"
-      S3_PUBLIC_URL: http://localhost:9000/portfolio
+      S3_PUBLIC_URL: http://localhost:${MINIO_PORT:-9010}/portfolio
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:9999,http://localhost:5173}
     ports:
-      - "8080:8080"
+      - "9998:9998"
     depends_on:
       postgres:
         condition: service_healthy

@@ -49,7 +49,7 @@ exec env \
   go run ./cmd/server
 ```
 
-Backend jalan di `http://localhost:8080`.
+Backend jalan di `http://localhost:9998`.
 
 ### 3. Migrasi data lama (seed, opsional)
 
@@ -68,7 +68,7 @@ SEED_FILE=seed/data.json go run ./cmd/seed
 cd frontend
 cp .env.example .env   # isi EmailJS
 npm install
-npm run dev            # http://localhost:9999 (proxy /api → :8080)
+npm run dev            # http://localhost:9999 (proxy /api → :9998)
 ```
 
 Dashboard admin: `http://localhost:9999/admin` (login `admin` / `admin123`).
@@ -81,7 +81,7 @@ docker compose up -d --build
 ```
 
 - Frontend (nginx): `:9999`
-- Backend: `:8080`
+- Backend: `:9998`
 - PostgreSQL / MinIO: internal network
 
 ## API

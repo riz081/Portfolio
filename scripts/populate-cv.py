@@ -2,7 +2,7 @@
 """Populate portfolio CMS with CV-derived content via the admin API."""
 import json, urllib.request, urllib.error, http.cookiejar
 
-BASE = "http://localhost:8080/api/v1"
+BASE = "http://localhost:9998/api/v1"
 USER, PASS = "admin", "admin123"
 
 cj = http.cookiejar.CookieJar()
