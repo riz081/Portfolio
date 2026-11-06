@@ -228,3 +228,18 @@ Bagian ini tidak bisa dikerjakan dari kode:
 - **Belum diuji:** pengiriman form (agar tidak mengirim email sungguhan), perangkat fisik, screen reader sungguhan, tampilan `/admin`, dan lingkungan production.
 - Skor Lighthouse belum diambil. Waktu muat di localhost (FCP sekitar 1 detik) tidak mewakili kondisi production, jadi jadikan Lighthouse pada Fase 4 sebagai baseline resmi.
 - Warna token, estimasi waktu, dan draf hero adalah usulan yang perlu divalidasi saat implementasi.
+
+## 8. Status implementasi
+
+- **Fase 0 dan 1:** selesai.
+- **Fase 2:** selesai, dengan perubahan dari usulan di bagian 3:
+  - **Warna:** latar biru tinta `#101826` dengan primary ungu `#854CE6` sesuai permintaan, dan `#A78BFA` untuk teks serta garis aksen di atas latar gelap.
+  - **Load:** splash screen lalu staggered fade-up, polanya mengikuti rekandoku.com/e-kyc.
+  - **Font:** Bricolage Grotesque dan Hanken Grotesk, self-hosted, bukan Inter.
+  - **Hero:** diagram 3D "exploded stack" (Three.js, chunk terpisah) dengan fallback SVG untuk reduced motion, data saver, dan browser tanpa WebGL.
+  - **Struktur:** Hero, Work, Experience, Skills, Credentials, Contact. Certifications dan Education digabung jadi Credentials.
+  - **Footer:** hanya GitHub dan LinkedIn.
+- **Temuan Fase 3 dan 4 yang ikut selesai:** kartu tanpa tinggi tetap (PJ8), cover diagram sebagai pengganti sementara screenshot asli (PJ1 sebagian), `@mui/lab` dan `@mui/icons-material` dilepas, font self-hosted (S4), favicon SVG, `loading="lazy"` pada gambar (S5 sebagian).
+- **C4 (email langsung):** tampil jika `VITE_CONTACT_EMAIL` diisi.
+- **Fase 4 yang sudah selesai:** gzip nginx (S1). Key EmailJS kini ikut ter-build di Docker lewat BuildKit secret dari `frontend/.env`.
+- **Belum:** Fase 3 (studi kasus, field backend, deep link) dan sisa Fase 4 (lazy admin, meta SEO, URL resume publik).

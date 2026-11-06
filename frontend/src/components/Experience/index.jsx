@@ -1,104 +1,109 @@
 import React from 'react'
 import styled from 'styled-components'
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import ExperienceCard from '../Cards/ExperienceCard';
 import { usePortfolio } from '../../context/PortfolioContext';
+import { c } from '../../utils/Themes'
+import { Section } from '../ui'
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-  align-items: center;  
-  padding: 40px 0 80px 0;
-
-  @media (max-width: 960px) {
-      padding: 0;
-  }
-`
-
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1100px;
-  gap: 12px;
-  margin-bottom: 50px;
-
-  @media (max-width: 960px) {
-      flex-direction: column;
-  }
-`
-
-const Title = styled.h2`
-  font-size: 42px;
-  text-align: center;
-  font-weight: 600;
-  margin-top: 12px;
-  color: ${({ theme }) => theme.text_primary};
-
-  @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 32px;
-  }
+const Timeline = styled.ol`
+    list-style: none;
 `;
 
-const Desc = styled.div`
-  font-size: 18px;
-  text-align: center;
-  max-width: 600px;
-  color: ${({ theme }) => theme.text_secondary};
+const Item = styled.li`
+    position: relative;
+    padding: 0 0 44px 28px;
+    border-left: 1px solid ${c('line')};
 
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
+    &:last-child {
+        padding-bottom: 0;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: -6px;
+        top: 8px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: ${({ $current, theme }) => ($current ? theme.accent : theme.ink)};
+        border: 2px solid ${({ $current, theme }) => ($current ? theme.accent : theme.muted)};
+    }
 `;
 
-const TimelineSection = styled.div`
-    width: 100%;
-    max-width: 1000px;
-    margin-top: 10px;
+const Heading = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+`;
+
+const Role = styled.h3`
+    font-family: ${c('fontDisplay')};
+    font-size: 22px;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+`;
+
+const Date = styled.p`
+    color: ${c('muted')};
+    font-size: 15px;
+`;
+
+const Company = styled.p`
+    margin-top: 2px;
+    font-weight: 500;
+`;
+
+const Desc = styled.p`
+    margin-top: 12px;
+    max-width: 68ch;
+    color: ${c('muted')};
+`;
+
+const Stack = styled.p`
+    margin-top: 10px;
+    font-size: 15px;
+`;
+
+const Logo = styled.img`
+    display: block;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+`;
+
+const Doc = styled.a`
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
+    min-height: 44px;
+    color: ${c('accent')};
 `;
 
 const Experience = () => {
   const { data } = usePortfolio();
   const experiences = data?.experiences || [];
   return (
-    <Container id="experience" aria-labelledby="experience-title">
-        <Wrapper>
-            <Title id="experience-title">Experience</Title>
-            <Desc>Here is my professional experience so far.</Desc>
-            <TimelineSection>
-              <Timeline>
-                {experiences.map((experience, index) => (
-                    <TimelineItem key={index}>
-                        <TimelineSeparator>
-                            <TimelineDot variant="outlined" color="secondary" />
-                            {index !== experiences.length - 1 && <TimelineConnector style={{ background: '#854CE6' }} />}
-                        </TimelineSeparator>
-                        <TimelineContent sx={{ py: '12px', px: 2 }}>
-                            <ExperienceCard experience={experience}/>
-                        </TimelineContent>
-                    </TimelineItem>
-                ))}
-              </Timeline>
-            </TimelineSection>
-        </Wrapper>
-    </Container>
+    <Section id="experience" title="Experience">
+        <Timeline>
+            {experiences.map((experience) => (
+                <Item key={experience.id ?? experience.role} $current={/present/i.test(experience.date || '')}>
+                    {experience.img_url && <Logo src={experience.img_url} alt="" loading="lazy" />}
+                    <Heading>
+                        <Role>{experience.role}</Role>
+                        <Date>{experience.date}</Date>
+                    </Heading>
+                    <Company>{experience.company}</Company>
+                    {experience.desc && <Desc>{experience.desc}</Desc>}
+                    {experience.skills?.length > 0 && <Stack>{experience.skills.join(', ')}</Stack>}
+                    {experience.doc_url && (
+                        <Doc href={experience.doc_url} target="_blank" rel="noopener noreferrer">Open supporting document</Doc>
+                    )}
+                </Item>
+            ))}
+        </Timeline>
+    </Section>
   )
 }
 

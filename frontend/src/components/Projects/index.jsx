@@ -1,194 +1,121 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
-import _default from '../../themes/default';
-import { useState } from 'react'
 import ProjectCard from '../Cards/ProjectCard'
 import { usePortfolio } from '../../context/PortfolioContext'
+import { c } from '../../utils/Themes'
+import { Section } from '../ui'
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-  align-items: center;
-`
+const FILTERS = [
+    { value: 'mobile frontend', label: 'Mobile' },
+    { value: 'frontend developer', label: 'Web' },
+    { value: 'fullstack developer', label: 'Full stack' },
+    { value: 'backend developer', label: 'Backend' },
+    { value: 'ui/ux', label: 'UI/UX' },
+];
 
-const Wrapper = styled.div`
-  max-width: 1100px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  gap: 12px;
-  padding: 10px 0 100px 0;
-
-  @media (max-width: 960px) {
-      flex-direction: column;
-  }
-`
-
-const Title = styled.h2`
-  font-size: 42px;
-  text-align: center;
-  font-weight: 600;
-  margin-top: 12px;
-  color: ${({ theme }) => theme.text_primary};
-
-  @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 32px;
-  }
-`;
-
-const Desc = styled.div`
-  font-size: 18px;
-  text-align: center;
-  max-width: 600px;
-  color: ${({ theme }) => theme.text_secondary};
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
-
-const ToogleGroup = styled.div`
+const FilterGroup = styled.div`
     display: flex;
-    border: 1.5px solid ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.text_accent};
-    font-size: 16px;
-    border-radius: 12px;
-    font-weight: 500;
-    margin: 22px 0px;
     flex-wrap: wrap;
-    justify-content: center;
-    @media (max-width: 768px) {
-        font-size: 14px;
-    }
-`
+    gap: 4px 8px;
+    margin-bottom: 32px;
+`;
 
-const ToogleButton = styled.button`
+const FilterButton = styled.button`
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     min-width: 44px;
     min-height: 44px;
-    padding: 8px 18px;
-    background: transparent;
-    border: none;
+    padding: 8px 14px;
+    background: ${({ $active, theme }) => ($active ? theme.raised : 'transparent')};
+    border: 1px solid ${({ $active, theme }) => ($active ? theme.accent : theme.line)};
     border-radius: 6px;
-    color: inherit;
-    font: inherit;
+    color: ${c('text')};
+    font-weight: 500;
     cursor: pointer;
-    ${({ $active, theme }) =>
-        $active && `
-    background: ${theme.primary + 20};
-    `
-    }
-    &:hover {
-        background: ${({ $active, theme }) => theme.primary + ($active ? '20' : '10')};
-    }
-    @media (max-width: 768px) {
-        padding: 6px 8px;
-        border-radius: 4px;
-    }
-`
-const Divider = styled.div`
-    width: 1.5px;
-    background: ${({ theme }) => theme.primary};
-    @media (max-width: 768px) {
-        display: none;
-    }
-`
+    transition: border-color 180ms ease, background-color 180ms ease;
 
-const CardContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 32px;
-    grid-auto-rows: minmax(100px, auto);
-    @media (max-width: 960px) {
-        grid-template-columns: repeat(2, 1fr);
+    &:hover {
+        border-color: ${c('accent')};
     }
+`;
+
+const Count = styled.span`
+    color: ${c('muted')};
+    font-size: 14px;
+`;
+
+const CardGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 32px;
+
     @media (max-width: 640px) {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
     }
 `;
 
 const EmptyState = styled.p`
-    padding: 48px 16px;
-    font-size: 16px;
-    text-align: center;
-    color: ${({ theme }) => theme.text_secondary};
+    padding: 48px 0;
+    color: ${c('muted')};
 `;
 
 const Projects = ({ openModal, setOpenModal }) => {
     const { data } = usePortfolio();
     const projects = data?.projects || [];
     const [toggle, setToggle] = useState('all');
-    
-    // Define all possible categories
-    const allCategories = [
-        'ui/ux',
-        // 'machine learning',
-        'frontend developer',
-        'mobile frontend',
-        'backend developer',
-        'fullstack developer',
-    ];
-    // Only offer filters that have at least one project behind them
-    const categories = [
-        'all',
-        ...allCategories.filter((category) => projects.some((item) => item.category === category)),
+
+    const filters = [
+        { value: 'all', label: 'All', count: projects.length },
+        ...FILTERS
+            .map((filter) => ({
+                ...filter,
+                count: projects.filter((item) => item.category === filter.value).length,
+            }))
+            .filter((filter) => filter.count > 0),
     ];
     const visibleProjects = toggle === 'all'
         ? projects
         : projects.filter((item) => item.category === toggle);
 
     return (
-      <Container id="projects" aria-labelledby="projects-title">
-        <Wrapper>
-          <Title id="projects-title">Projects</Title>
-          <Desc>
-            I have worked on various projects across different domains and technologies. Here are some of my projects.
-          </Desc>
-          <ToogleGroup role="group" aria-label="Filter projects by category">
-            {categories.map((category, index) => (
-                <React.Fragment key={category}>
-                    <ToogleButton
+        <Section
+            id="projects"
+            title="Work"
+            lede="Apps and platforms I've shipped. Each diagram shows the layers of the stack I worked on."
+        >
+            <FilterGroup role="group" aria-label="Filter projects by category">
+                {filters.map(({ value, label, count }) => (
+                    <FilterButton
+                        key={value}
                         type="button"
-                        $active={toggle === category}
-                        aria-pressed={toggle === category}
-                        onClick={() => setToggle(category)}
+                        $active={toggle === value}
+                        aria-pressed={toggle === value}
+                        onClick={() => setToggle(value)}
                     >
-                        {category.toUpperCase()}
-                    </ToogleButton>
-                    {index < categories.length - 1 && <Divider/>}
-                </React.Fragment>
-            ))}
-          </ToogleGroup>
-          <p className="sr-only" aria-live="polite">
-            {visibleProjects.length} {visibleProjects.length === 1 ? 'project' : 'projects'} shown
-          </p>
-          {visibleProjects.length === 0 ? (
-            <EmptyState>No projects to show yet.</EmptyState>
-          ) : (
-            <CardContainer>
-              {visibleProjects.map((project) => (
-                <ProjectCard
-                    key={project.id}
-                    project={project}
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
-                />
-              ))}
-            </CardContainer>
-          )}
-        </Wrapper>
-      </Container>
+                        {label} <Count>{count}</Count>
+                    </FilterButton>
+                ))}
+            </FilterGroup>
+            <p className="sr-only" aria-live="polite">
+                {visibleProjects.length} {visibleProjects.length === 1 ? 'project' : 'projects'} shown
+            </p>
+            {visibleProjects.length === 0 ? (
+                <EmptyState>No projects to show yet.</EmptyState>
+            ) : (
+                <CardGrid>
+                    {visibleProjects.map((project) => (
+                        <ProjectCard
+                            key={project.id}
+                            project={project}
+                            openModal={openModal}
+                            setOpenModal={setOpenModal}
+                        />
+                    ))}
+                </CardGrid>
+            )}
+        </Section>
     )
 }
 

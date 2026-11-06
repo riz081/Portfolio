@@ -1,95 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
+import { c } from '../../utils/Themes'
+import useInView from '../../hooks/useInView'
+import StackDiagram, { layersForProject } from '../StackDiagram'
 
-
-const Button = styled.button`
-    display: none;
-    width: 100%;
-    padding: 10px;
-    background-color: ${({ theme }) => theme.white};
-    color: ${({ theme }) => theme.text_black};
-    font-size: 14px;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.8s ease-in-out;
-`
-const Card = styled.article`
+const Cover = styled.div`
     position: relative;
-    width: 330px;
-    height: 490px;
-    background-color: ${({ theme }) => theme.card};
-    cursor: pointer;
-    border-radius: 10px;
-    box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
-    overflow: hidden;
-    padding: 26px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: all 0.5s ease-in-out;
-    &:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 0 50px 4px rgba(0,0,0,0.6);
-        filter: brightness(1.1);
-    }
-    &:hover ${Button} {
-        display: block;
-    }
-`
-
-const Image = styled.img`
-    width: 100%;
-    height: 180px;
-    background-color: ${({ theme }) => theme.white};
-    border-radius: 10px;
-    box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
-`
-
-const CoverPlaceholder = styled.div`
-    width: 100%;
-    height: 180px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, ${({ theme }) => theme.primary + '44'}, ${({ theme }) => theme.primary + '88'});
+    aspect-ratio: 5 / 3;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 44px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.white};
-`
+    padding: 12px 20px;
+    background: ${c('surface')};
+    border: 1px solid ${c('line')};
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 200ms ease;
 
-const Tags = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-`
-
-const Tag = styled.span`
-    font-size: 12px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_accent};
-    background-color: ${({ theme }) => theme.primary + 15};
-    padding: 2px 8px;
-    border-radius: 10px;
-`
-
-const Details = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0px;
-    padding: 0px 2px;
-`
-const Title = styled.h3`
-    font-size: 20px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-`
+    img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 420ms ${c('ease')};
+    }
+`;
 
 // The ::after layer stretches the button over the card, so the whole card
 // stays clickable while keyboard and screen reader users get a real button.
@@ -101,86 +37,108 @@ const OpenButton = styled.button`
     font: inherit;
     text-align: left;
     cursor: pointer;
+    transition: color 180ms ease;
+
     &::after {
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: 10px;
+        border-radius: 6px;
     }
     &:focus-visible {
         outline: none;
     }
     &:focus-visible::after {
-        outline: 2px solid ${({ theme }) => theme.text_accent};
-        outline-offset: -2px;
+        outline: 2px solid ${c('accent')};
+        outline-offset: 4px;
     }
-`
+`;
 
-const Date = styled.div`
-    font-size: 12px;
-    margin-left: 2px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    @media only screen and (max-width: 768px){
-        font-size: 12px;
-    }
-`
-
-
-const Description = styled.div`
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    overflow: hidden;
-    margin-top: 8px;
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-`
-
-const Members = styled.div`
+const Card = styled.article`
+    position: relative;
     display: flex;
-    align-items: center;
-    padding-left: 10px;
-`
-const Avatar = styled.img`
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    margin-left: -10px;
-    background-color: ${({ theme }) => theme.white};
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    border: 3px solid ${({ theme }) => theme.card};
-`
+    flex-direction: column;
+    gap: 14px;
 
-const ProjectCards = ({project,setOpenModal}) => {
+    &:hover ${Cover}, &:focus-within ${Cover} {
+        border-color: ${c('accent')};
+    }
+    &:hover ${OpenButton} {
+        color: ${c('accent')};
+    }
+    &:hover .plate, &:focus-within .plate {
+        --spread: 38px;
+    }
+    &:hover ${Cover} img, &:focus-within ${Cover} img {
+        transform: scale(1.03);
+    }
+`;
+
+const Heading = styled.div`
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+`;
+
+const Title = styled.h3`
+    font-family: ${c('fontDisplay')};
+    font-size: 22px;
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+`;
+
+const Date = styled.p`
+    flex-shrink: 0;
+    color: ${c('muted')};
+    font-size: 14px;
+`;
+
+const Description = styled.p`
+    color: ${c('muted')};
+`;
+
+const Tags = styled.p`
+    font-size: 14px;
+`;
+
+const ProjectCards = ({ project, setOpenModal }) => {
+    const [ref, inView] = useInView();
+    const [imageFailed, setImageFailed] = React.useState(false);
+    const device = project.category?.includes('mobile') ? 'mobile' : 'web';
     return (
         <Card>
-            {project.image_url
-              ? <Image src={project.image_url} alt={`${project.title} preview`} />
-              : <CoverPlaceholder aria-hidden="true">{project.title?.charAt(0)}</CoverPlaceholder>
-            }
-            <Tags>
-                {project.tags?.map((tag, index) => (
-                <Tag key={index}>{tag.name}</Tag>
-                ))}
-            </Tags>
-            <Details>
+            <Cover ref={ref}>
+                {project.image_url && !imageFailed ? (
+                    <img
+                        src={project.image_url}
+                        alt={`${project.title} preview`}
+                        loading="lazy"
+                        decoding="async"
+                        onError={() => setImageFailed(true)}
+                    />
+                ) : (
+                    <StackDiagram
+                        active={layersForProject(project)}
+                        device={device}
+                        title={project.title}
+                        open={inView}
+                    />
+                )}
+            </Cover>
+            <Heading>
                 <Title>
-                    <OpenButton type="button" onClick={() => setOpenModal({state: true, project: project})}>
+                    <OpenButton type="button" onClick={() => setOpenModal({ state: true, project })}>
                         {project.title}
                     </OpenButton>
                 </Title>
                 <Date>{project.date}</Date>
-                <Description>{project.description}</Description>
-            </Details>
-            <Members>
-                {project.members?.map((member) => (
-                    <Avatar key={member.id ?? member.name} src={member.img_url} alt={member.name} />
-                ))}
-            </Members>
-            {/* <Button>View Project</Button> */}
+            </Heading>
+            <Description>{project.description}</Description>
+            {project.tags?.length > 0 && (
+                <Tags>{project.tags.map((tag) => tag.name).join(', ')}</Tags>
+            )}
         </Card>
     )
 }

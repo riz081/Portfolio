@@ -1,170 +1,21 @@
-
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { Snackbar } from '@mui/material';
+import { LuMail, LuSend } from 'react-icons/lu'
+import { SiGithub } from 'react-icons/si'
+import { FaLinkedinIn } from 'react-icons/fa'
+import { usePortfolio } from '../../context/PortfolioContext'
+import { c } from '../../utils/Themes'
+import { Button, Section } from '../ui'
 
-const Container = styled.section`
-display: flex;
-flex-direction: column;
-justify-content: center;
-position: relative;
-z-index: 1;
-align-items: center;
-@media (max-width: 960px) {
-    padding: 0px;
-}
-`
-
-const Wrapper = styled.div`
-position: relative;
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-direction: column;
-width: 100%;
-max-width: 1350px;
-padding: 0px 0px 80px 0px;
-gap: 12px;
-@media (max-width: 960px) {
-    flex-direction: column;
-}
-`
-
-const Title = styled.h2`
-font-size: 42px;
-text-align: center;
-font-weight: 600;
-margin-top: 20px;
-  color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 768px) {
-      margin-top: 12px;
-      font-size: 32px;
-  }
-`;
-
-const Desc = styled.div`
-    font-size: 18px;
-    text-align: center;
-    max-width: 600px;
-    color: ${({ theme }) => theme.text_secondary};
-    @media (max-width: 768px) {
-        margin-top: 12px;
-        font-size: 16px;
-    }
-`;
-
-
-const ContactForm = styled.form`
-  width: 95%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.card};
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
-  margin-top: 28px;
-  gap: 12px;
-`
-
-const ContactTitle = styled.div`
-  font-size: 24px;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_primary};
-`
-
-const Hint = styled.p`
-  font-size: 14px;
-  color: ${({ theme }) => theme.text_secondary};
-`
-
-const FieldGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`
-
-const Label = styled.label`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text_primary};
-`
-
-const ContactInput = styled.input`
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary};
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary};
-  border-radius: 12px;
-  padding: 12px 16px;
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.primary};
-  }
-  &[aria-invalid="true"] {
-    border-color: #fca5a5;
-  }
-`
-
-const ContactInputMessage = styled.textarea`
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.text_secondary};
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary};
-  border-radius: 12px;
-  padding: 12px 16px;
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.primary};
-  }
-  &[aria-invalid="true"] {
-    border-color: #fca5a5;
-  }
-`
-
-const ContactButton = styled.input`
-  width: 100%;
-  text-decoration: none;
-  text-align: center;
-  background: ${({ theme }) => theme.primary};
-  padding: 13px 16px;
-  margin-top: 2px;
-  border-radius: 12px;
-  border: none;
-  color: ${({ theme }) => theme.white};
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-`
-
-
-
-
-const FieldError = styled.p`
-  font-size: 14px;
-  line-height: 1.5;
-  color: #fca5a5;
-`
-
-const SendError = styled.p`
-  font-size: 14px;
-  line-height: 1.5;
-  color: #fca5a5;
-`
+const PUBLIC_EMAIL = import.meta.env.VITE_CONTACT_EMAIL;
 
 const FIELDS = [
   { name: 'from_email', label: 'Your email', type: 'email', autoComplete: 'email' },
   { name: 'from_name', label: 'Your name', type: 'text', autoComplete: 'name' },
-  { name: 'subject', label: 'Subject', type: 'text', autoComplete: 'off' },
-  { name: 'message', label: 'Message', multiline: true },
+  { name: 'subject', label: 'Subject', type: 'text', autoComplete: 'off', wide: true },
+  { name: 'message', label: 'Message', multiline: true, wide: true },
 ];
 
 const validateField = (name, value) => {
@@ -175,15 +26,116 @@ const validateField = (name, value) => {
     return '';
   }
   if (!trimmed) {
-    const label = FIELDS.find((field) => field.name === name).label.toLowerCase();
-    return `Enter ${label === 'message' ? 'a message' : label === 'subject' ? 'a subject' : label}.`;
+    if (name === 'from_name') return 'Enter your name.';
+    return name === 'subject' ? 'Enter a subject.' : 'Enter a message.';
   }
   return '';
 };
 
-const Contact = () => {
+const Form = styled.form`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+  max-width: 720px;
 
-  //hooks
+  @media (max-width: 560px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+`;
+
+const FieldGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  grid-column: ${({ $wide }) => ($wide ? '1 / -1' : 'auto')};
+
+  @media (max-width: 560px) {
+    grid-column: auto;
+  }
+`;
+
+const Label = styled.label`
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const controlStyles = ({ theme }) => `
+  width: 100%;
+  min-height: 48px;
+  padding: 11px 14px;
+  background: ${theme.surface};
+  border: 1px solid ${theme.line};
+  border-radius: 6px;
+  color: ${theme.text};
+  font-size: 16px;
+  transition: border-color 180ms ease;
+
+  &:hover {
+    border-color: ${theme.muted};
+  }
+  &:focus {
+    border-color: ${theme.accent};
+  }
+  &[aria-invalid="true"] {
+    border-color: ${theme.danger};
+  }
+`;
+
+const Input = styled.input`${controlStyles}`;
+const Textarea = styled.textarea`
+  ${controlStyles}
+  resize: vertical;
+`;
+
+const FieldError = styled.p`
+  font-size: 15px;
+  color: ${c('danger')};
+`;
+
+const Footer = styled.div`
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+
+  @media (max-width: 560px) {
+    grid-column: auto;
+  }
+`;
+
+const SendError = styled.p`
+  flex-basis: 100%;
+  color: ${c('danger')};
+`;
+
+const Direct = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin-top: 36px;
+  padding-top: 20px;
+  max-width: 720px;
+  border-top: 1px solid ${c('line')};
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: ${c('text')};
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+  a:hover {
+    color: ${c('accent')};
+  }
+`;
+
+const Contact = () => {
+  const { data } = usePortfolio();
+  const Bio = data?.bio || {};
   const [open, setOpen] = React.useState(false);
   const [sendFailed, setSendFailed] = React.useState(false);
   const [sending, setSending] = React.useState(false);
@@ -213,7 +165,7 @@ const Contact = () => {
         form.current,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
-      .then((result) => {
+      .then(() => {
         setOpen(true);
         form.current.reset();
         setErrors({});
@@ -233,52 +185,63 @@ const Contact = () => {
     setErrors((prev) => (prev[name] ? { ...prev, [name]: validateField(name, value) } : prev));
   };
 
-
-
   return (
-    <Container id="contact" aria-labelledby="contact-title">
-      <Wrapper>
-        <Title id="contact-title">Contact</Title>
-        <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
-        <ContactForm ref={form} onSubmit={handleSubmit} noValidate>
-          <ContactTitle>Email Me</ContactTitle>
-          <Hint>All fields are required.</Hint>
-          {FIELDS.map(({ name, label, multiline, ...inputProps }) => {
-            const Control = multiline ? ContactInputMessage : ContactInput;
-            const error = errors[name];
-            return (
-              <FieldGroup key={name}>
-                <Label htmlFor={name}>{label}</Label>
-                <Control
-                  id={name}
-                  name={name}
-                  required
-                  rows={multiline ? 4 : undefined}
-                  aria-invalid={Boolean(error)}
-                  aria-describedby={error ? `${name}-error` : undefined}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  {...inputProps}
-                />
-                {error && <FieldError id={`${name}-error`}>{error}</FieldError>}
-              </FieldGroup>
-            );
-          })}
-          <ContactButton type="submit" value={sending ? 'Sending…' : 'Send'} disabled={sending} />
+    <Section
+      id="contact"
+      title="Contact"
+      lede="Write to me about a role, a project, or a mobile app you want security tested. All fields are required."
+    >
+      <Form ref={form} onSubmit={handleSubmit} noValidate>
+        {FIELDS.map(({ name, label, multiline, wide, ...inputProps }) => {
+          const Control = multiline ? Textarea : Input;
+          const error = errors[name];
+          return (
+            <FieldGroup key={name} $wide={wide}>
+              <Label htmlFor={name}>{label}</Label>
+              <Control
+                id={name}
+                name={name}
+                required
+                rows={multiline ? 5 : undefined}
+                aria-invalid={Boolean(error)}
+                aria-describedby={error ? `${name}-error` : undefined}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                {...inputProps}
+              />
+              {error && <FieldError id={`${name}-error`}>{error}</FieldError>}
+            </FieldGroup>
+          );
+        })}
+        <Footer>
+          <Button as="button" type="submit" disabled={sending} style={{ border: 'none' }}>
+            <LuSend aria-hidden="true" /> {sending ? 'Sending…' : 'Send message'}
+          </Button>
           {sendFailed && (
             <SendError role="alert">
-              Your message couldn't be sent. Please try again, or reach out on LinkedIn.
+              Your message wasn't sent. Try again, or contact me on LinkedIn.
             </SendError>
           )}
-        </ContactForm>
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={()=>setOpen(false)}
-          message="Email sent successfully!"
-        />
-      </Wrapper>
-    </Container>
+        </Footer>
+      </Form>
+      <Direct>
+        {PUBLIC_EMAIL && (
+          <li><a href={`mailto:${PUBLIC_EMAIL}`}><LuMail aria-hidden="true" /> {PUBLIC_EMAIL}</a></li>
+        )}
+        {Bio.linkedin && (
+          <li><a href={Bio.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedinIn aria-hidden="true" /> LinkedIn</a></li>
+        )}
+        {Bio.github && (
+          <li><a href={Bio.github} target="_blank" rel="noopener noreferrer"><SiGithub aria-hidden="true" /> GitHub</a></li>
+        )}
+      </Direct>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        message="Message sent."
+      />
+    </Section>
   )
 }
 

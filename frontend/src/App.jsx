@@ -1,15 +1,16 @@
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/hanken-grotesk';
 import './App.css';
 import styled, { ThemeProvider } from "styled-components";
 import { useState } from "react";
-import { darkTheme } from "./utils/Themes"
+import { theme, adminTheme, c } from "./utils/Themes"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/HeroSection';
 import Skills from './components/Skills';
-import Education from './components/Education';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
-import Certifications from './components/Certifications';
+import Credentials from './components/Credentials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails'
@@ -17,17 +18,10 @@ import StatusGate from './components/StatusGate'
 import AdminApp from './pages/admin/AdminApp'
 
 const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${c('ink')};
+  color: ${c('text')};
   width: 100%;
-  overflow-x: hidden;
-`
-
-const Wrapper = styled.div`
-  background: 
-    linear-gradient(38.73deg, rgba(204, 0, 187, 0.15) 0%, rgba(201, 32, 184, 0) 50%), 
-    linear-gradient(141.27deg, rgba(0, 70, 209, 0) 50%, rgba(0, 70, 209, 0.15) 100%);
-  width: 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%,30% 98%, 0 100%);
+  overflow-x: clip;
 `
 
 function MainSite() {
@@ -39,16 +33,11 @@ function MainSite() {
       <Body>
         <main id="main" tabIndex={-1}>
           <Hero />
-          <Wrapper>
-            <Skills />
-            <Experience />
-          </Wrapper>
-          <Projects openModal={openModal} setOpenModal={setOpenModal}  />
-          <Certifications />
-          <Wrapper>
-            <Education />
-            <Contact />
-          </Wrapper>
+          <Projects openModal={openModal} setOpenModal={setOpenModal} />
+          <Experience />
+          <Skills />
+          <Credentials />
+          <Contact />
         </main>
         <Footer />
         {openModal.state &&
@@ -61,18 +50,22 @@ function MainSite() {
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Router>
-        <Routes>
-          <Route path="/admin/*" element={<AdminApp />} />
-          <Route path="*" element={
+    <Router>
+      <Routes>
+        <Route path="/admin/*" element={
+          <ThemeProvider theme={adminTheme}>
+            <AdminApp />
+          </ThemeProvider>
+        } />
+        <Route path="*" element={
+          <ThemeProvider theme={theme}>
             <StatusGate>
               <MainSite />
             </StatusGate>
-          } />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+          </ThemeProvider>
+        } />
+      </Routes>
+    </Router>
   );
 }
 

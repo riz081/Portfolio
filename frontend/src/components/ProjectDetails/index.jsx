@@ -1,42 +1,48 @@
-import { CloseRounded, GitHub, LinkedIn } from '@mui/icons-material';
 import { Modal } from '@mui/material';
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+import { LuExternalLink, LuX } from 'react-icons/lu'
+import { SiGithub } from 'react-icons/si'
+import { FaLinkedinIn } from 'react-icons/fa'
+import { c } from '../../utils/Themes'
+import { Button } from '../ui'
+import StackDiagram, { layersForProject } from '../StackDiagram'
+
+const enter = keyframes`
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+`;
 
 const Container = styled.div`
-width: 100%;
-height: 100%;
-position: absolute;
-top: 0;
-left: 0;
-background-color: #000000a7;
-display: flex;
-align-items: top;
-justify-content: center;
-overflow-y: scroll;
-transition: all 0.5s ease;
-&:focus {
-    outline: none;
-}
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    background-color: rgba(8, 12, 20, 0.72);
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 const Wrapper = styled.div`
-max-width: 800px;
-width: 100%;
-border-radius: 16px;
-margin: 50px 12px;
-height: min-content;
-background-color: ${({ theme }) => theme.card};
-color: ${({ theme }) => theme.text_primary};
-padding: 20px;
-display: flex;
-flex-direction: column;
-position: relative;
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    height: min-content;
+    margin: 48px 16px;
+    padding: 24px;
+    background-color: ${c('raised')};
+    border: 1px solid ${c('line')};
+    border-radius: 8px;
+    color: ${c('text')};
+    animation: ${enter} 220ms ${c('ease')} both;
 `;
 
 const CloseButton = styled.button`
     position: absolute;
-    top: 4px;
+    top: 8px;
     right: 8px;
     z-index: 1;
     display: flex;
@@ -44,168 +50,115 @@ const CloseButton = styled.button`
     justify-content: center;
     width: 44px;
     height: 44px;
-    padding: 0;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    color: ${({ theme }) => theme.text_primary};
+    border-radius: 6px;
+    color: ${c('text')};
+    font-size: 22px;
     cursor: pointer;
-`;
+    transition: color 180ms ease;
 
-const Title = styled.h2`
-  font-size: 28px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_primary};
-  margin: 8px 44px 0px 6px;
-  @media only screen and (max-width: 600px) {
-      font-size: 24px;
-      margin: 6px 44px 0px 6px;
-  }
-`;
-
-const Date = styled.div`
-    font-size: 16px;
-    margin: 2px 6px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary};
-    @media only screen and (max-width: 768px){
-        font-size: 12px;
+    &:hover {
+        color: ${c('accent')};
     }
-`
+`;
 
+const Cover = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: ${c('surface')};
+    border-radius: 6px;
 
-
-const Desc = styled.div`
-    font-size: 16px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_primary};
-    margin: 8px 6px;
-    @media only screen and (max-width: 600px) {
-        font-size: 14px;
-        margin: 6px 6px;
+    svg {
+        max-width: 440px;
     }
 `;
 
 const Image = styled.img`
+    display: block;
     width: 100%;
+    margin-bottom: 20px;
+    border-radius: 6px;
     object-fit: cover;
-    border-radius: 12px;
-    margin-top: 30px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+`;
+
+const Title = styled.h2`
+    margin-right: 44px;
+    font-family: ${c('fontDisplay')};
+    font-size: 30px;
+    font-weight: 650;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+`;
+
+const Meta = styled.p`
+    margin-top: 6px;
+    color: ${c('muted')};
+    font-size: 15px;
+`;
+
+const Desc = styled.p`
+    margin-top: 16px;
 `;
 
 const Label = styled.h3`
-    font-size: 20px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    margin: 8px 6px;
-    @media only screen and (max-width: 600px) {
-        font-size: 16px;
-        margin: 8px 6px;
-    }
+    margin-top: 24px;
+    font-size: 16px;
+    font-weight: 650;
 `;
 
-const Tags = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    margin: 8px 0px;
-    @media only screen and (max-width: 600px) {
-        margin: 4px 0px;
-    }
-`;
-
-const Tag = styled.div`
-    font-size: 14px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.text_accent};
-    margin: 4px;
-    padding: 4px 8px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.primary + 20};
-    @media only screen and (max-width: 600px) {
-        font-size: 12px;
-    }
-`;
-
-const Members = styled.div`
+const Members = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 6px;
-    flex-wrap: wrap;
-    margin: 12px 6px;
-    @media only screen and (max-width: 600px) {
-        margin: 4px 6px;
-    }
+    margin-top: 8px;
+    list-style: none;
 `;
 
-const Member = styled.div`
+const Member = styled.li`
     display: flex;
     align-items: center;
     gap: 12px;
-`;
 
-const MemberImage = styled.img`
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 4px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
-    @media only screen and (max-width: 600px) {
-        width: 32px;
-        height: 32px;
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    span {
+        flex: 1;
+        font-weight: 500;
+    }
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        color: ${c('muted')};
+        font-size: 20px;
+    }
+    a:hover {
+        color: ${c('accent')};
     }
 `;
 
-const MemberName = styled.div`
-    font-size: 16px;
-    font-weight: 500;
-    width: 200px;
-    color: ${({ theme }) => theme.text_primary};
-    @media only screen and (max-width: 600px) {
-        font-size: 14px;
-    }
-`;
-
-
-const ButtonGroup = styled.div`
+const Links = styled.div`
     display: flex;
-    justify-content: flex-end;
-    margin: 12px 0px;
+    flex-wrap: wrap;
     gap: 12px;
+    margin-top: 24px;
 `;
 
-const Button = styled.a`
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    padding: 12px 16px;
-    border-radius: 8px;
-    background-color: ${({ theme }) => theme.primary};
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.5s ease;
-    &:hover {
-        background-color: ${({ theme }) => theme.primary + 99};
-    }
-    ${({ $dull, theme }) => $dull && `
-        background-color: ${theme.bgLight};
-        color: ${theme.text_secondary};
-        &:hover {
-            background-color: ${theme.bg + 99};
-        }
-    `}
-    @media only screen and (max-width: 600px) {
-        font-size: 12px;
-    }
-`;
-
-
-const index = ({ openModal, setOpenModal }) => {
+const ProjectDetails = ({ openModal, setOpenModal }) => {
     const project = openModal?.project;
     const close = () => setOpenModal({ state: false, project: null });
+    const device = project?.category?.includes('mobile') ? 'mobile' : 'web';
     return (
         <Modal open={true} onClose={close}>
             <Container
@@ -219,51 +172,62 @@ const index = ({ openModal, setOpenModal }) => {
             >
                 <Wrapper>
                     <CloseButton type="button" aria-label="Close project details" onClick={close}>
-                        <CloseRounded />
+                        <LuX aria-hidden="true" />
                     </CloseButton>
-                    {project?.image_url && <Image src={project?.image_url} alt={`${project.title} preview`} />}
+                    {project?.image_url ? (
+                        <Image src={project.image_url} alt={`${project.title} preview`} />
+                    ) : (
+                        <Cover>
+                            <StackDiagram active={layersForProject(project)} device={device} title={project?.title} />
+                        </Cover>
+                    )}
                     <Title id="project-dialog-title">{project?.title}</Title>
-                    <Date>{project.date}</Date>
-                    <Tags>
-                        {project?.tags.map((tag) => (
-                            <Tag key={tag.id ?? tag.name}>{tag.name}</Tag>
-                        ))}
-                    </Tags>
+                    <Meta>{project?.date}</Meta>
                     <Desc id="project-dialog-description">{project?.description}</Desc>
+                    {project?.tags?.length > 0 && (
+                        <Meta>{project.tags.map((tag) => tag.name).join(', ')}</Meta>
+                    )}
                     {project?.members?.length > 0 && (
                         <>
                             <Label>Members</Label>
                             <Members>
-                                {project?.members.map((member) => (
+                                {project.members.map((member) => (
                                     <Member key={member.id ?? member.name}>
-                                        <MemberImage src={member.img_url} alt="" />
-                                        <MemberName>{member.name}</MemberName>
-                                        <a href={member.github_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on GitHub`} style={{textDecoration: 'none', color: 'inherit'}}>
-                                            <GitHub />
-                                        </a>
-                                        <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on LinkedIn`} style={{textDecoration: 'none', color: 'inherit'}}>
-                                            <LinkedIn />
-                                        </a>
+                                        <img src={member.img_url} alt="" />
+                                        <span>{member.name}</span>
+                                        {member.github_url && (
+                                            <a href={member.github_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on GitHub`}>
+                                                <SiGithub aria-hidden="true" />
+                                            </a>
+                                        )}
+                                        {member.linkedin_url && (
+                                            <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on LinkedIn`}>
+                                                <FaLinkedinIn aria-hidden="true" />
+                                            </a>
+                                        )}
                                     </Member>
                                 ))}
                             </Members>
                         </>
                     )}
                     {(project?.github_url || project?.webapp_url) && (
-                        <ButtonGroup>
-                            {project.github_url && (
-                                <Button $dull href={project.github_url} target="_blank" rel="noopener noreferrer">View Code</Button>
-                            )}
+                        <Links>
                             {project.webapp_url && (
-                                <Button href={project.webapp_url} target="_blank" rel="noopener noreferrer">View Live App</Button>
+                                <Button href={project.webapp_url} target="_blank" rel="noopener noreferrer">
+                                    <LuExternalLink aria-hidden="true" /> Open live app
+                                </Button>
                             )}
-                        </ButtonGroup>
+                            {project.github_url && (
+                                <Button $variant="secondary" href={project.github_url} target="_blank" rel="noopener noreferrer">
+                                    <SiGithub aria-hidden="true" /> View code
+                                </Button>
+                            )}
+                        </Links>
                     )}
                 </Wrapper>
             </Container>
-
         </Modal>
     )
 }
 
-export default index
+export default ProjectDetails

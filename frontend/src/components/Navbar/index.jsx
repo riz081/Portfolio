@@ -1,162 +1,167 @@
 import React from "react";
-import { Link as LinkR } from "react-router-dom"
-import styled from "styled-components"
-import { DiCssdeck } from "react-icons/di"
-import { FaBars, FaTimes } from "react-icons/fa"
+import styled, { keyframes } from "styled-components"
+import { LuMenu, LuX } from "react-icons/lu"
+import { SiGithub } from "react-icons/si"
+import { c } from "../../utils/Themes"
 
 const GITHUB_URL = "https://github.com/riz081";
 
 const NAV_ITEMS = [
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
+    { href: "#projects", label: "Work" },
     { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#certifications", label: "Certifications" },
-    { href: "#education", label: "Education" },
+    { href: "#skills", label: "Skills" },
+    { href: "#credentials", label: "Credentials" },
     { href: "#contact", label: "Contact" },
 ];
 
+const navIn = keyframes`
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+`;
+
 const Nav = styled.header`
-    background-color: ${({theme}) => theme.card_light};
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
+    animation: ${navIn} 500ms ${c('easeEnter')} both;
     position: sticky;
     top: 0;
     z-index: 10;
-`;
-const NavContainer = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  z-index: 1;
-  width: 100%;
-  padding: 0 24px;
-  max-width: 1200px;
+    height: ${c('navHeight')};
+    background-color: ${c('ink')};
+    border-bottom: 1px solid ${c('line')};
+    color: ${c('text')};
 `;
 
-const NavLogo = styled(LinkR)`
-    width: 80%;
-    padding: 0 6px;
+const NavContainer = styled.nav`
     display: flex;
-    justify-content: start;
     align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    @media (max-width: 768px) {
+        padding: 0 12px 0 20px;
+    }
+`;
+
+const Logo = styled.a`
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: ${c('text')};
+    font-family: ${c('fontDisplay')};
+    font-weight: 650;
+    font-size: 18px;
+    letter-spacing: -0.01em;
     text-decoration: none;
-    @media (max-width: 640px) {
-      padding: 0 0px;
-  }
+
+    svg {
+        transition: transform 280ms ${c('ease')};
+    }
+    &:hover svg {
+        transform: translateY(-2px);
+    }
+`;
+
+const NavItems = styled.ul`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+const NavLink = styled.a`
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+    color: ${c('muted')};
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 180ms ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 6px;
+        height: 2px;
+        background: ${c('accent')};
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 240ms ${c('ease')};
+    }
+
+    &:hover {
+        color: ${c('text')};
+    }
+    &:hover::after,
+    &[aria-current="location"]::after {
+        transform: scaleX(1);
+    }
+    &[aria-current="location"] {
+        color: ${c('text')};
+    }
+`;
+
+const GithubLink = styled.a`
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    color: ${c('text')};
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 180ms ease;
+
+    &:hover {
+        color: ${c('accent')};
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const MobileToggle = styled.button`
     display: none;
-    @media screen and (max-width: 768px) {
+    @media (max-width: 768px) {
         display: flex;
         flex-shrink: 0;
         align-items: center;
         justify-content: center;
         width: 44px;
         height: 44px;
-        padding: 0;
         background: transparent;
         border: none;
-        font-size: 1.5rem;
+        border-radius: 6px;
+        color: ${c('text')};
+        font-size: 24px;
         cursor: pointer;
-        color: ${({ theme }) => theme.text_primary};
     }
-`;
-
-const NavItems = styled.ul`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    list-style: none;
-
-    @media screen and (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const NavLink = styled.a`
-    color: ${({ theme }) => theme.text_primary};
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
-    &:hover {
-      color: ${({ theme }) => theme.text_accent};
-    }
-
-    &[aria-current="location"] {
-      color: ${({ theme }) => theme.text_accent};
-      border-bottom: 2px solid ${({ theme }) => theme.text_accent};
-    }
-`;
-
-const ButtonContainer = styled.div`
-  width: 80%;
-  height: 100%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  padding: 0 6px;
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const GithubButton = styled.a`
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    color: ${({ theme }) => theme.text_accent};
-    border: 1.8px solid ${({ theme }) => theme.primary};
-    border-radius: 20px;
-    padding: 8px 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-        background-color: ${({ theme }) => theme.primary};
-        color: ${({ theme }) => theme.white};
-    }
-`;
-
-const MobileGithubButton = styled(GithubButton)`
-    align-self: flex-start;
-    min-height: 44px;
-    margin-top: 8px;
-    background-color: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.white};
-`;
-
-const Span = styled.div`
-    padding: 0 4px;
-    font-weight: bold;
-    font-size: 18px;
 `;
 
 const MobileMenu = styled.nav`
     position: absolute;
-    top: 80px;
+    top: 100%;
     left: 0;
     right: 0;
     display: flex;
     flex-direction: column;
-    padding: 12px 24px 24px;
-    background: ${({ theme }) => theme.card_light};
-    border-radius: 0 0 20px 20px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 8px 20px 20px;
+    background: ${c('ink')};
+    border-bottom: 1px solid ${c('line')};
 
-    @media screen and (min-width: 769px) {
+    @media (min-width: 769px) {
         display: none;
     }
 `;
@@ -164,17 +169,15 @@ const MobileMenu = styled.nav`
 const MobileMenuLink = styled.a`
     display: flex;
     align-items: center;
-    min-height: 44px;
-    color: ${({ theme }) => theme.text_primary};
+    gap: 8px;
+    min-height: 48px;
+    color: ${c('text')};
+    font-size: 18px;
     font-weight: 500;
     text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-        color: ${({ theme }) => theme.text_accent};
-    }
+
     &[aria-current="location"] {
-        color: ${({ theme }) => theme.text_accent};
-        font-weight: 700;
+        color: ${c('accent')};
     }
 `;
 
@@ -183,14 +186,18 @@ const useActiveSection = () => {
     const [activeId, setActiveId] = React.useState(null);
 
     React.useEffect(() => {
+        const hero = document.getElementById("top");
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) setActiveId(entry.target.id);
+                    if (entry.isIntersecting) {
+                        setActiveId(entry.target === hero ? null : entry.target.id);
+                    }
                 });
             },
             { rootMargin: "-50% 0px -50% 0px" }
         );
+        if (hero) observer.observe(hero);
         NAV_ITEMS.forEach(({ href }) => {
             const section = document.querySelector(href);
             if (section) observer.observe(section);
@@ -200,6 +207,14 @@ const useActiveSection = () => {
 
     return activeId;
 };
+
+export const LogoMark = () => (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M16 18.5 28 24 16 29.5 4 24Z" stroke="#A3B0BF" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M16 10.5 28 16 16 21.5 4 16Z" fill="#101826" stroke="#EDF1F5" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M16 2.5 28 8 16 13.5 4 8Z" fill="#854CE6" stroke="#854CE6" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+);
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
@@ -223,11 +238,20 @@ const Navbar = () => {
     return (
         <Nav>
             <NavContainer aria-label="Main">
-                <NavLogo to='/'>
-                    <div style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
-                        <DiCssdeck size="3rem" /> <Span>Portfolio</Span>
-                    </div>
-                </NavLogo>
+                <Logo href="#top">
+                    <LogoMark />
+                    Rizqika Ibnu K
+                </Logo>
+                <NavItems>
+                    {NAV_ITEMS.map(({ href, label }) => (
+                        <li key={href}>
+                            <NavLink href={href} aria-current={activeId === href.slice(1) ? "location" : undefined}>{label}</NavLink>
+                        </li>
+                    ))}
+                </NavItems>
+                <GithubLink href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                    <SiGithub aria-hidden="true" /> GitHub
+                </GithubLink>
                 <MobileToggle
                     ref={toggleRef}
                     type="button"
@@ -236,20 +260,8 @@ const Navbar = () => {
                     aria-controls="mobile-menu"
                     onClick={() => setOpen((prev) => !prev)}
                 >
-                    {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
+                    {open ? <LuX aria-hidden="true" /> : <LuMenu aria-hidden="true" />}
                 </MobileToggle>
-                <NavItems>
-                    {NAV_ITEMS.map(({ href, label }) => (
-                        <li key={href}>
-                            <NavLink href={href} aria-current={activeId === href.slice(1) ? "location" : undefined}>{label}</NavLink>
-                        </li>
-                    ))}
-                </NavItems>
-                <ButtonContainer>
-                    <GithubButton href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
-                        Github Profile
-                    </GithubButton>
-                </ButtonContainer>
             </NavContainer>
             {open && (
                 <MobileMenu id="mobile-menu" aria-label="Mobile">
@@ -263,14 +275,9 @@ const Navbar = () => {
                             {label}
                         </MobileMenuLink>
                     ))}
-                    <MobileGithubButton
-                        href={GITHUB_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={closeMenu}
-                    >
-                        Github Profile
-                    </MobileGithubButton>
+                    <MobileMenuLink href={GITHUB_URL} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                        <SiGithub aria-hidden="true" /> GitHub
+                    </MobileMenuLink>
                 </MobileMenu>
             )}
         </Nav>
