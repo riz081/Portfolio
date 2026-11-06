@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Document = styled.img`
-    display: none;
     height: 70px;
     width: fit-content;
     background-color: #000;
@@ -20,17 +19,12 @@ const Description = styled.div`
     color: ${({ theme }) => theme.text_primary + 99};
     margin-bottom: 10px;
     @media only screen and (max-width: 768px){
-        font-size: 12px;
+        font-size: 14px;
     }
 `
 
 const Span = styled.span`
-overflow: hidden;
-display: -webkit-box;
-max-width: 100%;
--webkit-line-clamp: 4;
--webkit-box-orient: vertical;
-text-overflow: ellipsis;
+    display: block;
 `
 
 const Card = styled.div`
@@ -55,15 +49,6 @@ const Card = styled.div`
         width: 300px;
     }
 
-    &:hover ${Document}{
-        display: flex;
-    }
-
-    &:hover ${Span}{
-        overflow: visible;
-        -webkit-line-clamp: unset;
-
-    }
     border: 0.1px solid #854CE6;
 `
 
@@ -90,7 +75,7 @@ const Body = styled.div`
 `
 
 
-const Name = styled.div`
+const Name = styled.h3`
     font-size: 18px;
     font-weight: 600;
     color: ${({ theme }) => theme.text_primary + 99};
@@ -102,7 +87,7 @@ const Name = styled.div`
 const Degree = styled.div`
     font-size: 14px;
     font-weight: 500;
-    color: ${({ theme }) => theme.text_secondary + 99};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
         font-size: 12px;
     }
@@ -111,16 +96,16 @@ const Degree = styled.div`
 const Date = styled.div`
     font-size: 12px;
     font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 80};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
-        font-size: 10px;
+        font-size: 12px;
     }
 `
 
 const Grade = styled.div`
     font-size: 14px;
     font-weight: 500;
-    color: ${({ theme }) => theme.text_secondary + 99};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
         font-size: 12px;
     }
@@ -132,14 +117,14 @@ const EducationCard = ({ education }) => {
     return (
         <Card>
             <Top>
-                {education.img_url && <Image src={education.img_url} />}
+                {education.img_url && <Image src={education.img_url} alt="" />}
                 <Body>
                     <Name>{education.school}</Name>
                     <Degree>{education.degree}</Degree>
                     <Date>{education.date}</Date>
                 </Body>
             </Top>
-            <Grade><b>Grade: </b>{education.grade}</Grade>
+            {education.grade && <Grade><b>Grade: </b>{education.grade}</Grade>}
             <Description>
                 <Span>{education.desc}</Span>
             </Description>

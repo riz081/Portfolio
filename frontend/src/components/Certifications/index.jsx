@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { usePortfolio } from '../../context/PortfolioContext'
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   gap: 16px;
 `
 
-const Title = styled.div`
+const Title = styled.h2`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -67,7 +67,7 @@ const Card = styled.div`
   gap: 8px;
 `
 
-const CardTitle = styled.div`
+const CardTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
@@ -89,7 +89,7 @@ const Badge = styled.div`
   align-self: flex-start;
   font-size: 12px;
   font-weight: 600;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.text_accent};
   background: ${({ theme }) => theme.primary + '22'};
   padding: 4px 10px;
   border-radius: 20px;
@@ -99,9 +99,9 @@ const Certifications = () => {
   const { data } = usePortfolio();
   const certifications = data?.certifications || [];
   return (
-    <Container id="certifications">
+    <Container id="certifications" aria-labelledby="certifications-title">
       <Wrapper>
-        <Title>Certifications</Title>
+        <Title id="certifications-title">Certifications</Title>
         <Desc>Formal credentials in Android mobile security and penetration testing.</Desc>
         <Grid>
           {certifications.map((c) => (

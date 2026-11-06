@@ -15,6 +15,9 @@ align-items: top;
 justify-content: center;
 overflow-y: scroll;
 transition: all 0.5s ease;
+&:focus {
+    outline: none;
+}
 `;
 
 const Wrapper = styled.div`
@@ -31,14 +34,32 @@ flex-direction: column;
 position: relative;
 `;
 
-const Title = styled.div`
+const CloseButton = styled.button`
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: ${({ theme }) => theme.text_primary};
+    cursor: pointer;
+`;
+
+const Title = styled.h2`
   font-size: 28px;
   font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
-  margin: 8px 6px 0px 6px;
+  margin: 8px 44px 0px 6px;
   @media only screen and (max-width: 600px) {
       font-size: 24px;
-      margin: 6px 6px 0px 6px;
+      margin: 6px 44px 0px 6px;
   }
 `;
 
@@ -73,7 +94,7 @@ const Image = styled.img`
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
 `;
 
-const Label = styled.div`
+const Label = styled.h3`
     font-size: 20px;
     font-weight: 600;
     color: ${({ theme }) => theme.text_primary};
@@ -96,7 +117,7 @@ const Tags = styled.div`
 const Tag = styled.div`
     font-size: 14px;
     font-weight: 400;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_accent};
     margin: 4px;
     padding: 4px 8px;
     border-radius: 8px;
@@ -163,19 +184,19 @@ const Button = styled.a`
     padding: 12px 16px;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.primary};
-    ${({ $dull, theme }) => $dull && `
-        background-color: ${theme.bgLight};
-        color: ${theme.text_secondary};
-        &:hover {
-            background-color: ${({ theme }) => theme.bg + 99};
-        }
-    `}
     cursor: pointer;
     text-decoration: none;
     transition: all 0.5s ease;
     &:hover {
         background-color: ${({ theme }) => theme.primary + 99};
     }
+    ${({ $dull, theme }) => $dull && `
+        background-color: ${theme.bgLight};
+        color: ${theme.text_secondary};
+        &:hover {
+            background-color: ${theme.bg + 99};
+        }
+    `}
     @media only screen and (max-width: 600px) {
         font-size: 12px;
     }
@@ -184,40 +205,43 @@ const Button = styled.a`
 
 const index = ({ openModal, setOpenModal }) => {
     const project = openModal?.project;
+    const close = () => setOpenModal({ state: false, project: null });
     return (
-        <Modal open={true} onClose={() => setOpenModal({ state: false, project: null })}>
-            <Container>
+        <Modal open={true} onClose={close}>
+            <Container
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="project-dialog-title"
+                aria-describedby="project-dialog-description"
+                onClick={(event) => {
+                    if (event.target === event.currentTarget) close();
+                }}
+            >
                 <Wrapper>
-                    <CloseRounded
-                        style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "20px",
-                            cursor: "pointer",
-                        }}
-                        onClick={() => setOpenModal({ state: false, project: null })}
-                    />
-                    {project?.image_url && <Image src={project?.image_url} />}
-                    <Title>{project?.title}</Title>
+                    <CloseButton type="button" aria-label="Close project details" onClick={close}>
+                        <CloseRounded />
+                    </CloseButton>
+                    {project?.image_url && <Image src={project?.image_url} alt={`${project.title} preview`} />}
+                    <Title id="project-dialog-title">{project?.title}</Title>
                     <Date>{project.date}</Date>
                     <Tags>
                         {project?.tags.map((tag) => (
                             <Tag key={tag.id ?? tag.name}>{tag.name}</Tag>
                         ))}
                     </Tags>
-                    <Desc>{project?.description}</Desc>
-                    {project.members && (
+                    <Desc id="project-dialog-description">{project?.description}</Desc>
+                    {project?.members?.length > 0 && (
                         <>
                             <Label>Members</Label>
                             <Members>
                                 {project?.members.map((member) => (
                                     <Member key={member.id ?? member.name}>
-                                        <MemberImage src={member.img_url} />
+                                        <MemberImage src={member.img_url} alt="" />
                                         <MemberName>{member.name}</MemberName>
-                                        <a href={member.github_url} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
+                                        <a href={member.github_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on GitHub`} style={{textDecoration: 'none', color: 'inherit'}}>
                                             <GitHub />
                                         </a>
-                                        <a href={member.linkedin_url} target="new" style={{textDecoration: 'none', color: 'inherit'}}>
+                                        <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on LinkedIn`} style={{textDecoration: 'none', color: 'inherit'}}>
                                             <LinkedIn />
                                         </a>
                                     </Member>
@@ -225,10 +249,16 @@ const index = ({ openModal, setOpenModal }) => {
                             </Members>
                         </>
                     )}
-                    <ButtonGroup>
-                        <Button $dull href={project?.github_url} target='new'>View Code</Button>
-                        <Button href={project?.webapp_url} target='new'>View Live App</Button>
-                    </ButtonGroup>
+                    {(project?.github_url || project?.webapp_url) && (
+                        <ButtonGroup>
+                            {project.github_url && (
+                                <Button $dull href={project.github_url} target="_blank" rel="noopener noreferrer">View Code</Button>
+                            )}
+                            {project.webapp_url && (
+                                <Button href={project.webapp_url} target="_blank" rel="noopener noreferrer">View Live App</Button>
+                            )}
+                        </ButtonGroup>
+                    )}
                 </Wrapper>
             </Container>
 

@@ -2,10 +2,21 @@ import React from "react";
 import { Link as LinkR } from "react-router-dom"
 import styled from "styled-components"
 import { DiCssdeck } from "react-icons/di"
-import { FaBars } from "react-icons/fa"
-import { useTheme } from "@emotion/react";
+import { FaBars, FaTimes } from "react-icons/fa"
 
-const Nav = styled.div`
+const GITHUB_URL = "https://github.com/riz081";
+
+const NAV_ITEMS = [
+    { href: "#about", label: "About" },
+    { href: "#skills", label: "Skills" },
+    { href: "#experience", label: "Experience" },
+    { href: "#projects", label: "Projects" },
+    { href: "#certifications", label: "Certifications" },
+    { href: "#education", label: "Education" },
+    { href: "#contact", label: "Contact" },
+];
+
+const Nav = styled.header`
     background-color: ${({theme}) => theme.card_light};
     height: 80px;
     display: flex;
@@ -15,11 +26,8 @@ const Nav = styled.div`
     position: sticky;
     top: 0;
     z-index: 10;
-    @media (max-width: 960px) {
-        trastion: 0.8s all ease;
-    }
 `;
-const NavContainer = styled.div`
+const NavContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,7 +39,7 @@ const NavContainer = styled.div`
 `;
 
 const NavLogo = styled(LinkR)`
-    width: 80%;    
+    width: 80%;
     padding: 0 6px;
     display: flex;
     justify-content: start;
@@ -42,14 +50,18 @@ const NavLogo = styled(LinkR)`
   }
 `;
 
-const MobileIcon = styled.div`
+const MobileToggle = styled.button`
     display: none;
     @media screen and (max-width: 768px) {
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(-100%, 50%);
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        background: transparent;
+        border: none;
         font-size: 1.5rem;
         cursor: pointer;
         color: ${({ theme }) => theme.text_primary};
@@ -66,7 +78,7 @@ const NavItems = styled.ul`
 
     @media screen and (max-width: 768px) {
         display: none;
-    }   
+    }
 `;
 
 const NavLink = styled.a`
@@ -75,17 +87,18 @@ const NavLink = styled.a`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
-    :hover {
-      color: ${({ theme }) => theme.primary};
+    &:hover {
+      color: ${({ theme }) => theme.text_accent};
     }
 
-    &.active {
-      border-bottom: 2px solid ${({ theme }) => theme.primary};
+    &[aria-current="location"] {
+      color: ${({ theme }) => theme.text_accent};
+      border-bottom: 2px solid ${({ theme }) => theme.text_accent};
     }
 `;
 
 const ButtonContainer = styled.div`
-  width: 80%;  
+  width: 80%;
   height: 100%;
   display: flex;
   justify-content: end;
@@ -96,26 +109,33 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const GithubButton = styled.button`
-    background-color: transparent;
-    color: ${({ theme }) => theme.primary};
-    border: 1.8px solid ${({ theme }) => theme.primary};
-    border-radius: 20px;
+const GithubButton = styled.a`
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 20px;
+    background-color: transparent;
+    color: ${({ theme }) => theme.text_accent};
+    border: 1.8px solid ${({ theme }) => theme.primary};
+    border-radius: 20px;
+    padding: 8px 20px;
     font-size: 1rem;
     font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
-    height: 70%;
-    :hover {
+    transition: all 0.2s ease-in-out;
+    &:hover {
         background-color: ${({ theme }) => theme.primary};
         color: ${({ theme }) => theme.white};
     }
+`;
 
-    @media screen and (max-width: 640px) {
-        font-size: 0.8rem;
-    }
+const MobileGithubButton = styled(GithubButton)`
+    align-self: flex-start;
+    min-height: 44px;
+    margin-top: 8px;
+    background-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.white};
 `;
 
 const Span = styled.div`
@@ -124,109 +144,135 @@ const Span = styled.div`
     font-size: 18px;
 `;
 
-const MobileMenu = styled.div`
+const MobileMenu = styled.nav`
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 16px;
-    position: absolute:
-    top: 80;
-    right: 0;
-    width: 100%;
-    padding: 12 40px 24px 40px;
-    background: ${({ theme }) => theme.card_light+99}
-    transition: all 0.3s ease-in-out;
-    transform: ${({ $open }) => $open ? 'translateX(0)' : 'translateX(100%)'};
-    border-radius: 0 0 20 20px;
+    padding: 12px 24px 24px;
+    background: ${({ theme }) => theme.card_light};
+    border-radius: 0 0 20px 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    opacity: ${({ $open }) => ($open ? '1' : '0')};
-    z-index: ${({ $open }) => ($open ? "1" : "0")}
-`;
 
-const MobileMenuLinks = styled(LinkR)`
-    color: ${({ theme }) => theme.text_primary};
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-        color: ${({ theme }) => theme.primary}
+    @media screen and (min-width: 769px) {
+        display: none;
     }
 `;
 
+const MobileMenuLink = styled.a`
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: ${({ theme }) => theme.text_primary};
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        color: ${({ theme }) => theme.text_accent};
+    }
+    &[aria-current="location"] {
+        color: ${({ theme }) => theme.text_accent};
+        font-weight: 700;
+    }
+`;
+
+// Tracks which section crosses the vertical middle of the viewport.
+const useActiveSection = () => {
+    const [activeId, setActiveId] = React.useState(null);
+
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) setActiveId(entry.target.id);
+                });
+            },
+            { rootMargin: "-50% 0px -50% 0px" }
+        );
+        NAV_ITEMS.forEach(({ href }) => {
+            const section = document.querySelector(href);
+            if (section) observer.observe(section);
+        });
+        return () => observer.disconnect();
+    }, []);
+
+    return activeId;
+};
 
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
-    const theme = useTheme();
+    const activeId = useActiveSection();
+    const toggleRef = React.useRef(null);
+
+    React.useEffect(() => {
+        if (!open) return undefined;
+        const handleKeyDown = (event) => {
+            if (event.key === "Escape") {
+                setOpen(false);
+                toggleRef.current?.focus();
+            }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [open]);
+
+    const closeMenu = () => setOpen(false);
+
     return (
         <Nav>
-            <NavContainer>
+            <NavContainer aria-label="Main">
                 <NavLogo to='/'>
                     <div style={{ display: "flex", alignItems: "center", color: "white", cursor: 'pointer' }}>
                         <DiCssdeck size="3rem" /> <Span>Portfolio</Span>
                     </div>
                 </NavLogo>
-                <MobileIcon>
-                    <FaBars
-                        onClick={() => {
-                            setOpen(!open);
-                        }}
-                    />
-                </MobileIcon>
+                <MobileToggle
+                    ref={toggleRef}
+                    type="button"
+                    aria-label={open ? "Close menu" : "Open menu"}
+                    aria-expanded={open}
+                    aria-controls="mobile-menu"
+                    onClick={() => setOpen((prev) => !prev)}
+                >
+                    {open ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
+                </MobileToggle>
                 <NavItems>
-                    <NavLink href="#about" >About</NavLink>
-                    <NavLink href="#skills" >Skills</NavLink>
-                    <NavLink href="#experience" >Experience</NavLink>
-                    <NavLink href="#projects" >Projects</NavLink>
-                    <NavLink href="#certifications" >Certifications</NavLink>
-                    <NavLink href="#education" >Education</NavLink>
-                    <NavLink href="#contact" >Contact</NavLink>
+                    {NAV_ITEMS.map(({ href, label }) => (
+                        <li key={href}>
+                            <NavLink href={href} aria-current={activeId === href.slice(1) ? "location" : undefined}>{label}</NavLink>
+                        </li>
+                    ))}
                 </NavItems>
                 <ButtonContainer>
-                    <a href="https://github.com/riz081">
-                        <GithubButton>
-                            Github Profile 
-                        </GithubButton>
-                    </a>
+                    <GithubButton href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                        Github Profile
+                    </GithubButton>
                 </ButtonContainer>
             </NavContainer>
-            {
-                open && (
-                    <MobileMenu $open={open} >
-                        <MobileMenuLinks href="#about" onClick={() => {
-                            setOpen(!open)
-                            }}>About
-                        </MobileMenuLinks>
-                        <MobileMenuLinks href='#skills' onClick={() => {
-                            setOpen(!open)
-                            }}>Skills
-                        </MobileMenuLinks>
-                        <MobileMenuLinks href='#experience' onClick={() => {
-                            setOpen(!open)
-                            }}>Experience
-                        </MobileMenuLinks>
-                        <MobileMenuLinks href='#projects' onClick={() => {
-                            setOpen(!open)
-                            }}>Projects
-                        </MobileMenuLinks>
-                        <MobileMenuLinks href='#education' onClick={() => {
-                            setOpen(!open)
-                            }}>Education
-                        </MobileMenuLinks>
-                        <GithubButton 
-                            style={{
-                                padding: '10px 16px',
-                                background: `${theme.primary}`, 
-                                color: 'white',
-                                width: 'max-content'
-                            }} 
-                            href="/"
-                            target="_blank">
-                                Github Profile
-                        </GithubButton>
-                    </MobileMenu>
-                )
-            }
+            {open && (
+                <MobileMenu id="mobile-menu" aria-label="Mobile">
+                    {NAV_ITEMS.map(({ href, label }) => (
+                        <MobileMenuLink
+                            key={href}
+                            href={href}
+                            aria-current={activeId === href.slice(1) ? "location" : undefined}
+                            onClick={closeMenu}
+                        >
+                            {label}
+                        </MobileMenuLink>
+                    ))}
+                    <MobileGithubButton
+                        href={GITHUB_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMenu}
+                    >
+                        Github Profile
+                    </MobileGithubButton>
+                </MobileMenu>
+            )}
         </Nav>
     )
 }

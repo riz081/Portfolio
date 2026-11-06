@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { usePortfolio } from '../../context/PortfolioContext';
@@ -25,10 +25,10 @@ const FooterWrapper = styled.footer`
   color: ${({ theme }) => theme.text_primary};
 `;
 
-const Logo = styled.h1`
+const Logo = styled.p`
   font-weight: 600;
   font-size: 20px;
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.text_accent};
 `;
 
 const Nav = styled.nav`
@@ -50,11 +50,14 @@ const Nav = styled.nav`
 
 const NavLink = styled.a`
 color: ${({ theme }) => theme.text_primary};
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   text-decoration: none;
   font-size: 1.2rem;
   transition: color 0.2s ease-in-out;
   &:hover {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_accent};
   }
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -67,31 +70,41 @@ const SocialMediaIcons = styled.div`
 `;
 
 const SocialMediaIcon = styled.a`
-  display: inline-block;
-  margin: 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 0.25rem;
   font-size: 1.5rem;
   color: ${({ theme }) => theme.text_primary};
   transition: color 0.2s ease-in-out;
   &:hover {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_accent};
   }
 `;
 
 const Copyright = styled.p`
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.soft2};
+  color: ${({ theme }) => theme.text_secondary};
   text-align: center;
 `;
 
 const Footer = () => {
   const { data } = usePortfolio();
   const Bio = data?.bio || {};
+  const socialLinks = [
+    { href: Bio.github, label: 'GitHub', Icon: GitHubIcon },
+    { href: Bio.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
+    { href: Bio.facebook, label: 'Facebook', Icon: FacebookIcon },
+    { href: Bio.insta, label: 'Instagram', Icon: InstagramIcon },
+  ].filter(({ href }) => href);
   return (
     <FooterContainer>
       <FooterWrapper>
         <Logo>Rizqika Ibnu K</Logo>
-        <Nav>
+        <Nav aria-label="Footer">
           <NavLink href="#about">About</NavLink>
           <NavLink href="#skills">Skills</NavLink>
           <NavLink href="#experience">Experience</NavLink>
@@ -101,9 +114,11 @@ const Footer = () => {
           <NavLink href="#contact">Contact</NavLink>
         </Nav>
         <SocialMediaIcons>
-          <SocialMediaIcon href={Bio.facebook} target="display"><FacebookIcon /></SocialMediaIcon>
-          <SocialMediaIcon href={Bio.linkedin} target="display"><LinkedInIcon /></SocialMediaIcon>
-          <SocialMediaIcon href={Bio.insta} target="display"><InstagramIcon /></SocialMediaIcon>
+          {socialLinks.map(({ href, label, Icon }) => (
+            <SocialMediaIcon key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+              <Icon />
+            </SocialMediaIcon>
+          ))}
         </SocialMediaIcons>
         <Copyright>
           &copy; {new Date().getFullYear()} Rizqika Ibnu K. All rights reserved.

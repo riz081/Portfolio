@@ -4,6 +4,7 @@ import { usePortfolio } from "../../context/PortfolioContext"
 import Typewriter from "typewriter-effect"
 import HeroImg from "../../images/HeroImage.jpg"
 import HeroBgAnimation from "../HeroBgAnimation"
+import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion"
 
 const HeroContainer = styled.div`
   background-color: ${({ theme }) => theme.card_light};
@@ -31,7 +32,7 @@ const HeroBg = styled.div`
   right: 0;
   bottom: 0;
   width: 82%;
-  height: 100%;\
+  height: 100%;
   overflow: hidden;
   padding: 0 30px;
   top: 50%;
@@ -47,7 +48,7 @@ const HeroBg = styled.div`
 
 const HeroInnerContainer = styled.div`
   display: flex;
-  justify-content: space-between:
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   max-width: 1100px;
@@ -82,7 +83,7 @@ const HeroRightContainer = styled.div`
   order: 2;
   display: flex;
   justify-content: end;
-  gap: 12px
+  gap: 12px;
   @media screen and (max-width: 960px) {
     order: 1;
     justify-content: center;
@@ -96,7 +97,7 @@ const HeroRightContainer = styled.div`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   font-size: 50px;
   font-weight: 700;
   color: ${({ theme }) => theme.text_primary};
@@ -115,7 +116,7 @@ const Title = styled.div`
 
 const TextLoop = styled.div`
   font-size: 32px;
-  font-weight: 600px;
+  font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
   line-height: 68px;
   gap: 12px;
@@ -133,8 +134,7 @@ const TextLoop = styled.div`
 `;
 
 const Span = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
+  color: ${({ theme }) => theme.text_accent};
 `;
 
 const SubTitle = styled.div`
@@ -169,12 +169,7 @@ const ResumeButton = styled.a`
     font-size: 20px;
     font-weight: 600;
     transition: all 0.2s ease-in-out !important;
-    background: hsla(271, 100%, 50%, 1);
-    background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    box-shadow:  20px 20px 60px #1F2634,
-    -20px -20px 60px #1F2634;
+    background: ${({ theme }) => theme.primary};
     position: relative;
     z-index: 10;
 
@@ -182,7 +177,6 @@ const ResumeButton = styled.a`
     &:hover {
       transform: scale(1.05);
       transition: all 0.4s ease-in-out;
-      box-shadow: 20px 20px 60px #1F2634, -20px -20px 60px #1F2634;
       filter: brightness(1);
     }
      
@@ -219,36 +213,42 @@ const Image = styled.img`
 const Hero = () => {
   const { data } = usePortfolio();
   const Bio = data?.bio || {};
+  const reducedMotion = usePrefersReducedMotion();
   return (
-    <div id='about'>
+    <section id='about' aria-labelledby='about-title'>
       <HeroContainer>
-        <HeroBg>
-          <HeroBgAnimation/>
-        </HeroBg>
+        {!reducedMotion && (
+          <HeroBg aria-hidden="true">
+            <HeroBgAnimation/>
+          </HeroBg>
+        )}
         <HeroInnerContainer>
           <HeroLeftContainer>
-            <Title>Hi, I am <br/>{Bio.name}</Title>
-            <TextLoop>
+            <Title id='about-title'>Hi, I am <br/>{Bio.name}</Title>
+            <p className="sr-only">I am a {Bio.roles?.join(', ')}.</p>
+            <TextLoop aria-hidden="true">
               I am a
               <Span>
-                <Typewriter
-                  options={{
-                    strings: Bio.roles,
-                    autoStart: true,
-                    loop: true
-                  }}
-                />
+                {reducedMotion ? Bio.roles?.[0] : (
+                  <Typewriter
+                    options={{
+                      strings: Bio.roles,
+                      autoStart: true,
+                      loop: true
+                    }}
+                  />
+                )}
               </Span>
             </TextLoop>
             <SubTitle>{Bio.description}</SubTitle>
             <ResumeButton href={Bio.resume} target='display'>Check Resume</ResumeButton>
           </HeroLeftContainer>
           <HeroRightContainer>
-            <Image src={HeroImg} alt="Hero" />
+            <Image src={HeroImg} alt={`Portrait of ${Bio.name}`} />
           </HeroRightContainer>
         </HeroInnerContainer>
       </HeroContainer>
-    </div>
+    </section>
   );
 }
 

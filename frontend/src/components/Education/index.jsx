@@ -9,7 +9,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import EducationCard from '../Cards/EducationCard';
 import { usePortfolio } from '../../context/PortfolioContext';
 
-const Container = styled.div`
+const Container = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
     }
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
 font-size: 42px;
 text-align: center;
 font-weight: 600;
@@ -80,9 +80,9 @@ const index = () => {
     const { data } = usePortfolio();
     const education = data?.education || [];
     return (
-        <Container id="education">
+        <Container id="education" aria-labelledby="education-title">
             <Wrapper>
-                <Title>Education</Title>
+                <Title id="education-title">Education</Title>
                 <Desc>
                     My education has been a journey of self-discovery and growth. My educational details are as follows.
                 </Desc>

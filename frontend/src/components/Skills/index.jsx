@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { usePortfolio } from '../../context/PortfolioContext'
 
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Title = styled.div`
+const Title = styled.h2`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -80,7 +80,7 @@ const Skill = styled.div`
   }
 `
 
-const SkillTitle = styled.h2`
+const SkillTitle = styled.h3`
   font-size: 28px;
   font-weight: 600;
   color: ${({ theme }) => theme.text_secondary};
@@ -140,7 +140,7 @@ const SkillPlaceholder = styled.span`
 function SkillIcon({ name, src }) {
   const [failed, setFailed] = React.useState(false);
   if (src && !failed) {
-    return <SkillImage src={src} onError={() => setFailed(true)} />;
+    return <SkillImage src={src} alt="" onError={() => setFailed(true)} />;
   }
   return <SkillPlaceholder>{(name || '?').charAt(0).toUpperCase()}</SkillPlaceholder>;
 }
@@ -149,11 +149,11 @@ const Skills = () => {
   const { data } = usePortfolio();
   const skills = data?.skill_groups || [];
   return (
-    <Container id="skills">
+    <Container id="skills" aria-labelledby="skills-title">
       <Wrapper>
-        <Title>Skills</Title>
+        <Title id="skills-title">Skills</Title>
         <Desc>
-          Here are some of my skills on which I have been studies on for the past 2 years.
+          Here are the technologies and practices I work with.
         </Desc>
         <SkillsContainer>
           {skills.map((item) => (

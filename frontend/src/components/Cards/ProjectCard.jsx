@@ -15,7 +15,8 @@ const Button = styled.button`
     cursor: pointer;
     transition: all 0.8s ease-in-out;
 `
-const Card = styled.div`
+const Card = styled.article`
+    position: relative;
     width: 330px;
     height: 490px;
     background-color: ${({ theme }) => theme.card};
@@ -71,7 +72,7 @@ const Tags = styled.div`
 const Tag = styled.span`
     font-size: 12px;
     font-weight: 400;
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_accent};
     background-color: ${({ theme }) => theme.primary + 15};
     padding: 2px 8px;
     border-radius: 10px;
@@ -84,33 +85,51 @@ const Details = styled.div`
     gap: 0px;
     padding: 0px 2px;
 `
-const Title = styled.div`
+const Title = styled.h3`
     font-size: 20px;
     font-weight: 600;
-    color: ${({ theme }) => theme.text_secondary};
-    overflow: hidden;
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: ${({ theme }) => theme.text_primary};
+`
+
+// The ::after layer stretches the button over the card, so the whole card
+// stays clickable while keyboard and screen reader users get a real button.
+const OpenButton = styled.button`
+    padding: 0;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+    }
+    &:focus-visible {
+        outline: none;
+    }
+    &:focus-visible::after {
+        outline: 2px solid ${({ theme }) => theme.text_accent};
+        outline-offset: -2px;
+    }
 `
 
 const Date = styled.div`
     font-size: 12px;
     margin-left: 2px;
     font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 80};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
-        font-size: 10px;
+        font-size: 12px;
     }
 `
 
 
 const Description = styled.div`
     font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 99};
+    color: ${({ theme }) => theme.text_secondary};
     overflow: hidden;
     margin-top: 8px;
     display: -webkit-box;
@@ -137,10 +156,10 @@ const Avatar = styled.img`
 
 const ProjectCards = ({project,setOpenModal}) => {
     return (
-        <Card onClick={() => setOpenModal({state: true, project: project})}>
+        <Card>
             {project.image_url
-              ? <Image src={project.image_url}/>
-              : <CoverPlaceholder>{project.title?.charAt(0)}</CoverPlaceholder>
+              ? <Image src={project.image_url} alt={`${project.title} preview`} />
+              : <CoverPlaceholder aria-hidden="true">{project.title?.charAt(0)}</CoverPlaceholder>
             }
             <Tags>
                 {project.tags?.map((tag, index) => (
@@ -148,13 +167,17 @@ const ProjectCards = ({project,setOpenModal}) => {
                 ))}
             </Tags>
             <Details>
-                <Title>{project.title}</Title>
+                <Title>
+                    <OpenButton type="button" onClick={() => setOpenModal({state: true, project: project})}>
+                        {project.title}
+                    </OpenButton>
+                </Title>
                 <Date>{project.date}</Date>
                 <Description>{project.description}</Description>
             </Details>
             <Members>
                 {project.members?.map((member) => (
-                    <Avatar src={member.img_url}/>
+                    <Avatar key={member.id ?? member.name} src={member.img_url} alt={member.name} />
                 ))}
             </Members>
             {/* <Button>View Project</Button> */}

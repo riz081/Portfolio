@@ -5,7 +5,7 @@ import { useState } from 'react'
 import ProjectCard from '../Cards/ProjectCard'
 import { usePortfolio } from '../../context/PortfolioContext'
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Title = styled.div`
+const Title = styled.h2`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -57,7 +57,7 @@ const Desc = styled.div`
 const ToogleGroup = styled.div`
     display: flex;
     border: 1.5px solid ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_accent};
     font-size: 16px;
     border-radius: 12px;
     font-weight: 500;
@@ -65,13 +65,19 @@ const ToogleGroup = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 14px;
     }
 `
 
-const ToogleButton = styled.div`
+const ToogleButton = styled.button`
+    min-width: 44px;
+    min-height: 44px;
     padding: 8px 18px;
+    background: transparent;
+    border: none;
     border-radius: 6px;
+    color: inherit;
+    font: inherit;
     cursor: pointer;
     ${({ $active, theme }) =>
         $active && `
@@ -79,7 +85,7 @@ const ToogleButton = styled.div`
     `
     }
     &:hover {
-        background: ${({ theme }) => theme.primary + 8};
+        background: ${({ $active, theme }) => theme.primary + ($active ? '20' : '10')};
     }
     @media (max-width: 768px) {
         padding: 6px 8px;
@@ -112,71 +118,75 @@ const CardContainer = styled.div`
     }
 `;
 
+const EmptyState = styled.p`
+    padding: 48px 16px;
+    font-size: 16px;
+    text-align: center;
+    color: ${({ theme }) => theme.text_secondary};
+`;
+
 const Projects = ({ openModal, setOpenModal }) => {
     const { data } = usePortfolio();
     const projects = data?.projects || [];
     const [toggle, setToggle] = useState('all');
     
     // Define all possible categories
-    const categories = [
-        'all', 
+    const allCategories = [
         'ui/ux',
-        // 'machine learning', 
-        'frontend developer', 
-        'mobile frontend', 
-        'backend developer', 
+        // 'machine learning',
+        'frontend developer',
+        'mobile frontend',
+        'backend developer',
         'fullstack developer',
     ];
+    // Only offer filters that have at least one project behind them
+    const categories = [
+        'all',
+        ...allCategories.filter((category) => projects.some((item) => item.category === category)),
+    ];
+    const visibleProjects = toggle === 'all'
+        ? projects
+        : projects.filter((item) => item.category === toggle);
 
     return (
-      <Container id="projects">
+      <Container id="projects" aria-labelledby="projects-title">
         <Wrapper>
-          <Title>Projects</Title>
+          <Title id="projects-title">Projects</Title>
           <Desc>
             I have worked on various projects across different domains and technologies. Here are some of my projects.
           </Desc>
-          <ToogleGroup>
+          <ToogleGroup role="group" aria-label="Filter projects by category">
             {categories.map((category, index) => (
                 <React.Fragment key={category}>
-                    {toggle === category ? (
-                        <ToogleButton 
-                            $active 
-                            onClick={() => setToggle(category)}
-                        >
-                            {category.toUpperCase()}
-                        </ToogleButton>
-                    ) : (
-                        <ToogleButton 
-                            onClick={() => setToggle(category)}
-                        >
-                            {category.toUpperCase()}
-                        </ToogleButton>
-                    )}
+                    <ToogleButton
+                        type="button"
+                        $active={toggle === category}
+                        aria-pressed={toggle === category}
+                        onClick={() => setToggle(category)}
+                    >
+                        {category.toUpperCase()}
+                    </ToogleButton>
                     {index < categories.length - 1 && <Divider/>}
                 </React.Fragment>
             ))}
           </ToogleGroup>
-          <CardContainer>
-            {toggle === 'all' && projects
-              .map((project, index) => (
-                <ProjectCard 
-                    key={index} 
-                    project={project} 
-                    openModal={openModal} 
+          <p className="sr-only" aria-live="polite">
+            {visibleProjects.length} {visibleProjects.length === 1 ? 'project' : 'projects'} shown
+          </p>
+          {visibleProjects.length === 0 ? (
+            <EmptyState>No projects to show yet.</EmptyState>
+          ) : (
+            <CardContainer>
+              {visibleProjects.map((project) => (
+                <ProjectCard
+                    key={project.id}
+                    project={project}
+                    openModal={openModal}
                     setOpenModal={setOpenModal}
                 />
               ))}
-            {projects
-              .filter((item) => item.category === toggle)
-              .map((project, index) => (
-                <ProjectCard 
-                    key={index} 
-                    project={project} 
-                    openModal={openModal} 
-                    setOpenModal={setOpenModal}
-                />
-              ))}
-          </CardContainer>
+            </CardContainer>
+          )}
         </Wrapper>
       </Container>
     )

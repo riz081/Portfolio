@@ -34,19 +34,22 @@ function MainSite() {
   const [openModal, setOpenModal] = useState({ state: false, project: null });
   return (
     <>
+      <a className="skip-link" href="#main">Skip to main content</a>
       <Navbar />
       <Body>
-        <Hero />
-        <Wrapper>
-          <Skills />
-          <Experience />
-        </Wrapper>
-        <Projects openModal={openModal} setOpenModal={setOpenModal}  />
-        <Certifications />
-        <Wrapper>
-          <Education />
-          <Contact />
-        </Wrapper>
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <Wrapper>
+            <Skills />
+            <Experience />
+          </Wrapper>
+          <Projects openModal={openModal} setOpenModal={setOpenModal}  />
+          <Certifications />
+          <Wrapper>
+            <Education />
+            <Contact />
+          </Wrapper>
+        </main>
         <Footer />
         {openModal.state &&
           <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />

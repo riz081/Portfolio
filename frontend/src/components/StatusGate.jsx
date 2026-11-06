@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import { usePortfolio } from '../context/PortfolioContext';
 
 const Center = styled.div`
@@ -54,12 +55,12 @@ function LoadingView() {
 function ErrorView({ retry }) {
   return (
     <Center>
-      <div style={{ fontSize: '42px' }}>⚠️</div>
-      <h2>Gagal memuat konten</h2>
+      <FaExclamationTriangle size={42} aria-hidden="true" />
+      <h2>Couldn't load the content</h2>
       <p style={{ color: '#b1b2b3', textAlign: 'center' }}>
-        Tidak bisa menghubungi server. Periksa koneksi lalu coba lagi.
+        The server can't be reached. Check your connection and try again.
       </p>
-      <RetryButton onClick={retry}>Coba lagi</RetryButton>
+      <RetryButton onClick={retry}>Try again</RetryButton>
     </Center>
   );
 }

@@ -9,7 +9,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import ExperienceCard from '../Cards/ExperienceCard';
 import { usePortfolio } from '../../context/PortfolioContext';
 
-const Container = styled.div`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Title = styled.div`
+const Title = styled.h2`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -78,11 +78,12 @@ const Experience = () => {
   const { data } = usePortfolio();
   const experiences = data?.experiences || [];
   return (
-    <Container id="experience">
+    <Container id="experience" aria-labelledby="experience-title">
         <Wrapper>
-            <Title>Experience and Certification</Title>
-            <Desc>Here are some of my experiences and certification</Desc>
+            <Title id="experience-title">Experience</Title>
+            <Desc>Here is my professional experience so far.</Desc>
             <TimelineSection>
+              <Timeline>
                 {experiences.map((experience, index) => (
                     <TimelineItem key={index}>
                         <TimelineSeparator>
@@ -94,6 +95,7 @@ const Experience = () => {
                         </TimelineContent>
                     </TimelineItem>
                 ))}
+              </Timeline>
             </TimelineSection>
         </Wrapper>
     </Container>

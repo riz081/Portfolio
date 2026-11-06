@@ -3,7 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Document = styled.img`
-    display: none;
     height: 70px;
     width: fit-content;
     background-color: #000;
@@ -21,17 +20,12 @@ const Description = styled.div`
     color: ${({ theme }) => theme.text_primary + 99};
     margin-bottom: 10px;
     @media only screen and (max-width: 768px){
-        font-size: 12px;
+        font-size: 14px;
     }
 `
 
 const Span = styled.span`
-overflow: hidden;
-display: -webkit-box;
-max-width: 100%;
--webkit-line-clamp: 4;
--webkit-box-orient: vertical;
-text-overflow: ellipsis;
+    display: block;
 `
 
 const Card = styled.div`    
@@ -56,15 +50,6 @@ const Card = styled.div`
         width: 300px;
     }
 
-    &:hover ${Document}{
-        display: flex;
-    }
-
-    &:hover ${Span}{
-        overflow: visible;
-        -webkit-line-clamp: unset;
-
-    }
 
     border: 0.1px solid #306EE8;
     box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
@@ -93,7 +78,7 @@ const Body = styled.div`
 `
 
 
-const Role = styled.div`
+const Role = styled.h3`
     font-size: 18px;
     font-weight: 600;
     color: ${({ theme }) => theme.text_primary + 99};
@@ -105,7 +90,7 @@ const Role = styled.div`
 const Company = styled.div`
     font-size: 14px;
     font-weight: 500;
-    color: ${({ theme }) => theme.text_secondary + 99};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
         font-size: 12px;
     }
@@ -114,9 +99,9 @@ const Company = styled.div`
 const Date = styled.div`
     font-size: 12px;
     font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary + 80};
+    color: ${({ theme }) => theme.text_secondary};
     @media only screen and (max-width: 768px){
-        font-size: 10px;
+        font-size: 12px;
     }
 `
 
@@ -149,7 +134,7 @@ const ExperienceCard = ({ experience }) => {
     return (
         <Card>
             <Top>
-                {experience.img_url && <Image src={experience.img_url} />}
+                {experience.img_url && <Image src={experience.img_url} alt="" />}
                 <Body>
                     <Role>{experience.role}</Role>
                     <Company>{experience.company}</Company>
@@ -176,8 +161,8 @@ const ExperienceCard = ({ experience }) => {
                 }
             </Description>
             {experience.doc_url &&
-                <a href={experience.doc_url} target="new">
-                    <Document src={experience.doc_url} />
+                <a href={experience.doc_url} target="_blank" rel="noopener noreferrer">
+                    <Document src={experience.doc_url} alt={`Supporting document for ${experience.role}`} />
                 </a>
             }
         </Card>
