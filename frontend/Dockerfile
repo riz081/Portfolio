@@ -7,7 +7,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build
+# frontend/.env exists only for this step, so Vite can read it without it
+# being stored in an image layer. VITE_ values do end up in the public JS bundle.
+RUN --mount=type=secret,id=frontend_env,target=/app/.env npm run build
 
 # ---- runtime stage ----
 FROM nginx:1.27-alpine

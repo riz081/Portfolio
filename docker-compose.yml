@@ -60,12 +60,20 @@ services:
         condition: service_started
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      secrets:
+        - frontend_env
     restart: unless-stopped
     ports:
       - "9999:80"
     depends_on:
       - backend
+
+secrets:
+  # Copy frontend/.env.example to frontend/.env before building.
+  frontend_env:
+    file: ./frontend/.env
 
 volumes:
   pgdata:
