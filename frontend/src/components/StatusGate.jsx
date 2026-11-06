@@ -4,75 +4,137 @@ import { LuTriangleAlert } from 'react-icons/lu';
 import { usePortfolio } from '../context/PortfolioContext';
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion';
 import { c } from '../utils/Themes';
-import { LogoMark } from './Navbar';
 import { Button } from './ui';
 
-// The API can answer in milliseconds, so the splash holds long enough to register.
-const MIN_SPLASH_MS = 900;
-const EXIT_MS = 350;
+// The API can answer in milliseconds, so the intro holds long enough to register.
+const MIN_INTRO_MS = 1100;
+const WIPE_MS = 800;
+const WIPE_EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';
 
-const contentIn = keyframes`
-  from { opacity: 0; transform: translateY(12px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+const plateTop = keyframes`
+  from { opacity: 0; transform: translateY(-26px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const barSlide = keyframes`
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(260%); }
+const plateBottom = keyframes`
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
 
-const Splash = styled.div`
+const plateMiddle = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const nameIn = keyframes`
+  from { clip-path: inset(-20% 102% -20% -2%); }
+  to { clip-path: inset(-20% -2% -20% -2%); }
+`;
+
+const sweep = keyframes`
+  0%, 100% { transform: translateY(-6px); opacity: 0; }
+  15%, 85% { opacity: 1; }
+  50% { transform: translateY(78px); }
+`;
+
+const wipePanel = keyframes`
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(100% 0 0 0); }
+`;
+
+const wipeLine = keyframes`
+  from { transform: translateY(0); opacity: 1; }
+  95% { opacity: 1; }
+  to { transform: translateY(100dvh); opacity: 0; }
+`;
+
+const Intro = styled.div`
   position: fixed;
   inset: 0;
   z-index: 200;
+  pointer-events: ${({ $leaving }) => ($leaving ? 'none' : 'auto')};
+`;
+
+const Panel = styled.div`
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${c('ink')};
   color: ${c('text')};
-  opacity: ${({ $leaving }) => ($leaving ? 0 : 1)};
-  transition: opacity ${EXIT_MS}ms ease;
-  pointer-events: ${({ $leaving }) => ($leaving ? 'none' : 'auto')};
+  animation: ${({ $leaving }) => ($leaving ? wipePanel : 'none')} ${WIPE_MS}ms ${WIPE_EASE} both;
 `;
 
-const SplashContent = styled.div`
+const ScanLine = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: ${c('accent')};
+  box-shadow: 0 0 22px 3px ${c('primary')};
+  opacity: 0;
+  animation: ${({ $leaving }) => ($leaving ? wipeLine : 'none')} ${WIPE_MS}ms ${WIPE_EASE} both;
+`;
+
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22px;
-  animation: ${contentIn} 500ms ${c('easeEnter')} both;
+  gap: 20px;
 `;
 
-const Brand = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: ${c('fontDisplay')};
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+const Mark = styled.div`
+  position: relative;
+  width: 76px;
+  height: 76px;
 
   svg {
-    width: 44px;
-    height: 44px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  path {
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+  }
+  .top {
+    fill: ${c('primary')};
+    stroke: ${c('primary')};
+    animation: ${plateTop} 750ms ${c('easeEnter')} both;
+  }
+  .middle {
+    fill: ${c('ink')};
+    stroke: ${c('text')};
+    animation: ${plateMiddle} 500ms ease both;
+  }
+  .bottom {
+    fill: none;
+    stroke: ${c('muted')};
+    animation: ${plateBottom} 750ms ${c('easeEnter')} both;
   }
 `;
 
-const Track = styled.div`
-  position: relative;
-  width: 130px;
-  height: 3px;
-  overflow: hidden;
-  border-radius: 3px;
-  background: ${c('line')};
+// Keeps sweeping over the mark if the API takes longer than the intro.
+const MarkScan = styled.div`
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  top: 0;
+  height: 2px;
+  background: ${c('accent')};
+  box-shadow: 0 0 12px 1px ${c('primary')};
+  animation: ${sweep} 1500ms ease-in-out 450ms infinite both;
 `;
 
-const Fill = styled.div`
-  width: 38%;
-  height: 100%;
-  border-radius: 3px;
-  background: ${c('accent')};
-  animation: ${barSlide} 1100ms ease-in-out infinite;
+const Name = styled.p`
+  font-family: ${c('fontDisplay')};
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  animation: ${nameIn} 700ms ${c('easeEnter')} 280ms both;
 `;
 
 const ErrorPage = styled.div`
@@ -114,9 +176,9 @@ export default function StatusGate({ children }) {
   const { status, reload } = usePortfolio();
   const reducedMotion = usePrefersReducedMotion();
   const startedAt = useRef(Date.now());
-  // splash: content not mounted yet. leaving: content mounts and its entrance
-  // plays under the fading splash. done: splash removed.
-  const [phase, setPhase] = useState('splash');
+  // intro: content not mounted yet. leaving: content mounts and is uncovered
+  // by the scan line wiping the panel away. done: intro removed.
+  const [phase, setPhase] = useState('intro');
 
   useEffect(() => {
     if (status !== 'success') return undefined;
@@ -124,9 +186,9 @@ export default function StatusGate({ children }) {
       setPhase('done');
       return undefined;
     }
-    const remaining = Math.max(MIN_SPLASH_MS - (Date.now() - startedAt.current), 0);
+    const remaining = Math.max(MIN_INTRO_MS - (Date.now() - startedAt.current), 0);
     const leave = setTimeout(() => setPhase('leaving'), remaining);
-    const finish = setTimeout(() => setPhase('done'), remaining + EXIT_MS);
+    const finish = setTimeout(() => setPhase('done'), remaining + WIPE_MS);
     return () => {
       clearTimeout(leave);
       clearTimeout(finish);
@@ -135,19 +197,27 @@ export default function StatusGate({ children }) {
 
   if (status === 'error') return <ErrorView retry={reload} />;
 
+  const leaving = phase === 'leaving';
   return (
     <>
-      {phase !== 'splash' && children}
+      {phase !== 'intro' && children}
       {phase !== 'done' && (
-        <Splash $leaving={phase === 'leaving'} role="status" aria-label="Loading portfolio">
-          <SplashContent>
-            <Brand>
-              <LogoMark />
-              Rizqika Ibnu K
-            </Brand>
-            <Track><Fill /></Track>
-          </SplashContent>
-        </Splash>
+        <Intro $leaving={leaving} role="status" aria-label="Loading portfolio">
+          <Panel $leaving={leaving}>
+            <Content>
+              <Mark aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <path className="bottom" d="M16 18.5 28 24 16 29.5 4 24Z" />
+                  <path className="middle" d="M16 10.5 28 16 16 21.5 4 16Z" />
+                  <path className="top" d="M16 2.5 28 8 16 13.5 4 8Z" />
+                </svg>
+                {!leaving && <MarkScan />}
+              </Mark>
+              <Name>Rizqika Ibnu K</Name>
+            </Content>
+          </Panel>
+          <ScanLine $leaving={leaving} />
+        </Intro>
       )}
     </>
   );

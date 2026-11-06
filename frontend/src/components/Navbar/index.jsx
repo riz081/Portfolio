@@ -15,12 +15,12 @@ const NAV_ITEMS = [
 ];
 
 const navIn = keyframes`
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 `;
 
 const Nav = styled.header`
-    animation: ${navIn} 500ms ${c('easeEnter')} both;
+    animation: ${navIn} 400ms ease both;
     position: sticky;
     top: 0;
     z-index: 10;

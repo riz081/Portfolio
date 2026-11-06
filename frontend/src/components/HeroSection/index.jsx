@@ -23,14 +23,21 @@ const PROOF = [
   '94.2/100 in mobile penetration testing',
 ];
 
-const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(45px); }
-  to { opacity: 1; transform: translateY(0); }
+// Content is uncovered as the scan line passes, in keeping with the hero diagram.
+// The negative insets keep descenders, hover states, and focus rings from being clipped.
+const scanDown = keyframes`
+  from { clip-path: inset(-24px -24px 100% -24px); }
+  to { clip-path: inset(-24px -24px -24px -24px); }
 `;
 
-const slideUpScale = keyframes`
-  from { opacity: 0; transform: translateY(60px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+const scanAcross = keyframes`
+  from { clip-path: inset(-8% 102% -14% -2%); }
+  to { clip-path: inset(-8% -2% -14% -2%); }
+`;
+
+const stageIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
 `;
 
 const HeroRoot = styled.section`
@@ -57,7 +64,7 @@ const Copy = styled.div`
 `;
 
 const Reveal = styled.div`
-  animation: ${slideUp} 850ms ${c('easeEnter')} both;
+  animation: ${scanDown} 620ms ${c('easeEnter')} both;
   animation-delay: ${({ $delay }) => $delay}ms;
 `;
 
@@ -99,7 +106,7 @@ const Headline = styled.h1`
 const Line = styled.span`
   display: block;
   text-wrap: balance;
-  animation: ${slideUp} 850ms ${c('easeEnter')} both;
+  animation: ${scanAcross} 900ms ${c('easeEnter')} both;
   animation-delay: ${({ $delay }) => $delay}ms;
 `;
 
@@ -132,7 +139,7 @@ const ProofList = styled(Reveal)`
 const Stage = styled.div`
   position: relative;
   width: 100%;
-  animation: ${slideUpScale} 1000ms ${c('easeEnter')} 560ms both;
+  animation: ${stageIn} 500ms ease 200ms both;
   height: min(72vh, 640px);
   min-height: 460px;
 
@@ -279,7 +286,7 @@ const Hero = () => {
   return (
     <HeroRoot id="top" aria-labelledby="top-title">
       <Copy>
-        <Byline $delay={100}>
+        <Byline $delay={80}>
           <Portrait
             src={Bio.avatar_url || fallbackPortrait}
             alt={`Portrait of ${Bio.name}`}
@@ -292,17 +299,17 @@ const Hero = () => {
           </div>
         </Byline>
         <Headline id="top-title">
-          <Line $delay={220}>I build the whole stack,</Line>
-          <Line $delay={300}>then try to break it.</Line>
+          <Line $delay={180}>I build the whole stack,</Line>
+          <Line $delay={320}>then try to break it.</Line>
         </Headline>
-        <Reveal $delay={380}>
+        <Reveal $delay={420}>
           <Lede>
             Backends in Go, NestJS, and Laravel. Mobile apps in Flutter and React Native.
             Web platforms in React and Next.js. Trained in Android penetration testing,
             with OWASP and secure coding in my daily work.
           </Lede>
         </Reveal>
-        <Actions $delay={460}>
+        <Actions $delay={520}>
           <Button href="#projects">See my work</Button>
           {Bio.resume && (
             <Button $variant="secondary" href={Bio.resume} target="_blank" rel="noopener noreferrer">
@@ -320,7 +327,7 @@ const Hero = () => {
             </IconLink>
           )}
         </Actions>
-        <ProofList as="ul" $delay={540}>
+        <ProofList as="ul" $delay={620}>
           {PROOF.map((item) => <li key={item}>{item}</li>)}
         </ProofList>
       </Copy>

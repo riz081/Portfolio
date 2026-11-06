@@ -234,7 +234,7 @@ Bagian ini tidak bisa dikerjakan dari kode:
 - **Fase 0 dan 1:** selesai.
 - **Fase 2:** selesai, dengan perubahan dari usulan di bagian 3:
   - **Warna:** latar biru tinta `#101826` dengan primary ungu `#854CE6` sesuai permintaan, dan `#A78BFA` untuk teks serta garis aksen di atas latar gelap.
-  - **Load:** splash screen lalu staggered fade-up, polanya mengikuti rekandoku.com/e-kyc.
+  - **Load:** intro "scan": lapisan logo menyatu, garis scan menyapu layar dari atas ke bawah, lalu konten hero tersingkap bergantian.
   - **Font:** Bricolage Grotesque dan Hanken Grotesk, self-hosted, bukan Inter.
   - **Hero:** diagram 3D "exploded stack" (Three.js, chunk terpisah) dengan fallback SVG untuk reduced motion, data saver, dan browser tanpa WebGL.
   - **Struktur:** Hero, Work, Experience, Skills, Credentials, Contact. Certifications dan Education digabung jadi Credentials.
