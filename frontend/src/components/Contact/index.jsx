@@ -7,7 +7,7 @@ import { SiGithub } from 'react-icons/si'
 import { FaLinkedinIn } from 'react-icons/fa'
 import { usePortfolio } from '../../context/PortfolioContext'
 import { c } from '../../utils/Themes'
-import { Button, Section } from '../ui'
+import { Button, Reveal, Section } from '../ui'
 
 const PUBLIC_EMAIL = import.meta.env.VITE_CONTACT_EMAIL;
 
@@ -191,6 +191,7 @@ const Contact = () => {
       title="Contact"
       lede="Write to me about a role, a project, or a mobile app you want security tested. All fields are required."
     >
+      <Reveal>
       <Form ref={form} onSubmit={handleSubmit} noValidate>
         {FIELDS.map(({ name, label, multiline, wide, ...inputProps }) => {
           const Control = multiline ? Textarea : Input;
@@ -224,6 +225,8 @@ const Contact = () => {
           )}
         </Footer>
       </Form>
+      </Reveal>
+      <Reveal>
       <Direct>
         {PUBLIC_EMAIL && (
           <li><a href={`mailto:${PUBLIC_EMAIL}`}><LuMail aria-hidden="true" /> {PUBLIC_EMAIL}</a></li>
@@ -235,6 +238,7 @@ const Contact = () => {
           <li><a href={Bio.github} target="_blank" rel="noopener noreferrer"><SiGithub aria-hidden="true" /> GitHub</a></li>
         )}
       </Direct>
+      </Reveal>
       <Snackbar
         open={open}
         autoHideDuration={6000}

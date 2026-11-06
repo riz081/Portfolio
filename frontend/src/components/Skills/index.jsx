@@ -10,7 +10,7 @@ import {
 } from 'react-icons/lu'
 import { usePortfolio } from '../../context/PortfolioContext'
 import { c } from '../../utils/Themes'
-import { Section } from '../ui'
+import { Reveal, Section } from '../ui'
 
 const GROUP_ORDER = ['Security', 'Backend', 'Mobile', 'Frontend', 'Languages', 'DevOps / Workflow', 'AI & Tooling'];
 
@@ -25,7 +25,7 @@ const ICONS = {
   git: SiGit, 'agile/scrum': LuKanban, 'ci/cd': LuWorkflow, 'ci/cd (jenkins)': SiJenkins, 'code review': LuGitPullRequest, docker: SiDocker,
 };
 
-const Group = styled.div`
+const Group = styled(Reveal)`
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
   gap: 16px 24px;

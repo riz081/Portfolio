@@ -1,0 +1,25 @@
+# Production overrides for a shared server:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# Docker publishes ports past host firewalls, so nothing is exposed except the
+# frontend on loopback, for a reverse proxy on the host to forward to.
+services:
+  postgres:
+    ports: !reset []
+    mem_limit: 256m
+
+  minio:
+    ports: !reset []
+    mem_limit: 256m
+
+  backend:
+    ports: !reset []
+    mem_limit: 128m
+    environment:
+      # Relative, so uploads keep working when a domain is added later.
+      S3_PUBLIC_URL: /portfolio
+
+  frontend:
+    ports: !override
+      - "127.0.0.1:${FRONTEND_PORT:-9999}:80"
+    mem_limit: 64m

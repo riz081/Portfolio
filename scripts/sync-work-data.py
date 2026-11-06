@@ -81,7 +81,7 @@ PROJECTS = [
         "category": "mobile frontend",
         "featured": False,
         "tags": ["Flutter", "Android", "Google Play"],
-        "webapp_url": "",
+        "webapp_url": "https://play.google.com/store/apps/details?id=com.ideanet.app&hl=id",
         "github_url": "",
         "description": "ISP customer portal for managing internet services, live on Google Play. iOS release in progress.",
     },
@@ -117,7 +117,7 @@ PROJECTS = [
         "category": "mobile frontend",
         "featured": False,
         "tags": ["Flutter", "Google Play", "REST API"],
-        "webapp_url": "",
+        "webapp_url": "https://play.google.com/store/apps/details?id=co.id.aaindonesia&hl=id",
         "github_url": "",
         "description": (
             "Property marketplace for search, buy, sell, and rent. Built and shipped to Google Play as the "
@@ -130,7 +130,7 @@ PROJECTS = [
         "category": "mobile frontend",
         "featured": False,
         "tags": ["React Native", "Android", "Laravel", "Google Play"],
-        "webapp_url": "",
+        "webapp_url": "https://play.google.com/store/apps/details?id=com.bccare&hl=id",
         "github_url": "",
         "description": "Shipment tracking app for BCLogistics customers, live on Google Play, with REST APIs in Laravel.",
     },
