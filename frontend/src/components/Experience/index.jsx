@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { usePortfolio } from '../../context/PortfolioContext';
 import { c } from '../../utils/Themes'
-import { Section } from '../ui'
+import { Reveal, Section } from '../ui'
 
 const Timeline = styled.ol`
     list-style: none;
@@ -89,6 +89,7 @@ const Experience = () => {
         <Timeline>
             {experiences.map((experience) => (
                 <Item key={experience.id ?? experience.role} $current={/present/i.test(experience.date || '')}>
+                  <Reveal>
                     {experience.img_url && <Logo src={experience.img_url} alt="" loading="lazy" />}
                     <Heading>
                         <Role>{experience.role}</Role>
@@ -100,6 +101,7 @@ const Experience = () => {
                     {experience.doc_url && (
                         <Doc href={experience.doc_url} target="_blank" rel="noopener noreferrer">Open supporting document</Doc>
                     )}
+                  </Reveal>
                 </Item>
             ))}
         </Timeline>

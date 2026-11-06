@@ -7,15 +7,8 @@ import { usePortfolio } from "../../context/PortfolioContext"
 import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion"
 import { c } from "../../utils/Themes"
 import { Button, IconLink } from "../ui"
-import StackDiagram from "../StackDiagram"
 import fallbackPortrait from "../../images/portrait.jpg"
-
-const LABELS = [
-  { name: 'client', title: 'Client', detail: 'Flutter, React Native, Next.js, Angular' },
-  { name: 'api', title: 'API', detail: 'REST, Gin, Laravel' },
-  { name: 'services', title: 'Services', detail: 'Spring Boot, Go, NestJS, Laravel' },
-  { name: 'data', title: 'Data', detail: 'PostgreSQL, MySQL' },
-];
+import { canRunScene, loadOrbitScene } from "./sceneLoader"
 
 const PROOF = [
   '9+ production projects',
@@ -23,7 +16,7 @@ const PROOF = [
   '94.2/100 in mobile penetration testing',
 ];
 
-// Content is uncovered as the scan line passes, in keeping with the hero diagram.
+// Content is uncovered as the page intro's line passes.
 // The negative insets keep descenders, hover states, and focus rings from being clipped.
 const scanDown = keyframes`
   from { clip-path: inset(-24px -24px 100% -24px); }
@@ -42,25 +35,79 @@ const stageIn = keyframes`
 
 const HeroRoot = styled.section`
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  max-width: 1320px;
   min-height: calc(100dvh - ${c('navHeight')});
-  margin: 0 auto;
-  padding: 48px 32px 56px;
+  padding: 0 32px 40px;
+  overflow: hidden;
+  text-align: center;
 
-  @media (max-width: 960px) {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
-    padding: 32px 20px 40px;
+  @media (max-width: 640px) {
+    padding: 0 20px 32px;
   }
+`;
+
+// The object sits behind the copy and fades out before reaching the text,
+// so the headline overlaps it without losing contrast.
+const Stage = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(1180px, 100%);
+  height: clamp(340px, 66dvh, 640px);
+  transform: translateX(-50%);
+  animation: ${stageIn} 700ms ease 150ms both;
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 70%);
+  mask-image: linear-gradient(to bottom, #000 52%, transparent 70%);
+
+  canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: ${({ $ready }) => ($ready ? 1 : 0)};
+    transition: opacity 600ms ease;
+  }
+
+  @media (max-width: 640px) {
+    height: 400px;
+  }
+`;
+
+// Soft light behind the object. Stays in place with reduced motion too.
+const Halo = styled.div`
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: min(760px, 110%);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(133, 76, 230, 0.34), rgba(133, 76, 230, 0.1) 55%, transparent);
+  pointer-events: none;
+`;
+
+const Poster = styled.svg`
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: auto;
+  height: 82%;
+  transform: translate(-50%, -50%);
+  opacity: ${({ $hidden }) => ($hidden ? 0 : 1)};
+  transition: opacity 500ms ease;
 `;
 
 const Copy = styled.div`
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: clamp(250px, 41dvh, 400px);
+
+  @media (max-width: 640px) {
+    margin-top: 262px;
+  }
 `;
 
 const Reveal = styled.div`
@@ -68,16 +115,25 @@ const Reveal = styled.div`
   animation-delay: ${({ $delay }) => $delay}ms;
 `;
 
-const Byline = styled(Reveal)`
+const Credits = styled(Reveal)`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 32px;
+  margin-top: 22px;
+`;
+
+const Byline = styled.div`
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 28px;
+  gap: 12px;
+  text-align: left;
 `;
 
 const Portrait = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 1px solid ${c('line')};
   object-fit: cover;
@@ -97,7 +153,7 @@ const Role = styled.p`
 
 const Headline = styled.h1`
   font-family: ${c('fontDisplay')};
-  font-size: clamp(40px, 4.7vw, 68px);
+  font-size: clamp(38px, 5.2vw, 76px);
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.025em;
@@ -111,142 +167,36 @@ const Line = styled.span`
 `;
 
 const Lede = styled.p`
-  margin-top: 24px;
-  max-width: 54ch;
+  margin-top: 18px;
+  max-width: 68ch;
   color: ${c('muted')};
-  font-size: 18px;
+  font-size: 17px;
 `;
 
 const Actions = styled(Reveal)`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 24px;
 `;
 
-const ProofList = styled(Reveal)`
+const ProofList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 28px;
-  margin-top: 36px;
-  padding-top: 20px;
-  border-top: 1px solid ${c('line')};
+  justify-content: center;
+  gap: 6px 28px;
   list-style: none;
   font-size: 15px;
 `;
 
-const Stage = styled.div`
-  position: relative;
-  width: 100%;
-  animation: ${stageIn} 500ms ease 200ms both;
-  height: min(72vh, 640px);
-  min-height: 460px;
-
-  canvas {
-    position: absolute;
-    inset: 0;
-    display: block;
-    opacity: ${({ $ready }) => ($ready ? 1 : 0)};
-    transition: opacity 500ms ease;
-  }
-
-  @media (max-width: 960px) {
-    height: clamp(280px, 56vw, 380px);
-    min-height: 0;
-  }
-`;
-
-const Poster = styled.div`
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: ${({ $hidden }) => ($hidden ? 0 : 1)};
-  transition: opacity 400ms ease;
-  pointer-events: none;
-
-  svg {
-    max-width: 560px;
-  }
-`;
-
-const Label = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-left: 26px;
-  max-width: 170px;
-  opacity: ${({ $ready }) => ($ready ? 1 : 0)};
-  transition: opacity 500ms ease 900ms;
-  pointer-events: none;
-  will-change: transform;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 2px;
-    top: 50%;
-    width: 18px;
-    border-top: 1px solid currentColor;
-  }
-
-  color: ${c('muted')};
-  &[data-lit='true'] {
-    color: ${c('accent')};
-  }
-
-  strong {
-    display: block;
-    font-size: 15px;
-    font-weight: 650;
-    line-height: 1.25;
-    color: inherit;
-    transition: color 200ms ease;
-  }
-
-  span {
-    display: block;
-    font-size: 13px;
-    line-height: 1.3;
-  }
-
-  @media (max-width: 960px) {
-    span {
-      display: none;
-    }
-  }
-`;
-
-const ScanLabel = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-left: -150px;
-  width: 150px;
-  padding-right: 8px;
-  text-align: right;
-  font-size: 13px;
-  font-weight: 650;
-  color: ${c('accent')};
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform;
-
-  @media (max-width: 960px) {
-    display: none;
-  }
-`;
-
-const canUseWebGL = () => {
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-};
+const POSTER_RINGS = [
+  { rx: 230, ry: 96, rotate: -24, width: 30 },
+  { rx: 186, ry: 118, rotate: 38, width: 24 },
+  { rx: 146, ry: 66, rotate: 72, width: 20 },
+  { rx: 106, ry: 88, rotate: -58, width: 16 },
+];
 
 const Hero = () => {
   const { data } = usePortfolio();
@@ -256,23 +206,26 @@ const Hero = () => {
   const [sceneReady, setSceneReady] = React.useState(false);
 
   // The 3D scene is its own chunk. The SVG poster stays for reduced motion,
-  // data saver, no WebGL, and while the chunk loads.
+  // data saver, low-end devices, no WebGL, and while the chunk loads.
   React.useEffect(() => {
-    const saveData = navigator.connection?.saveData;
-    if (reducedMotion || saveData || !canUseWebGL()) {
+    if (reducedMotion || !canRunScene()) {
       setSceneReady(false);
       return undefined;
     }
     let dispose;
     let cancelled = false;
     const stage = stageRef.current;
-    import('./stackScene')
-      .then(({ createStackScene }) => {
+    loadOrbitScene()
+      .then(({ createOrbitScene }) => {
         if (cancelled) return;
-        dispose = createStackScene({
+        dispose = createOrbitScene({
           container: stage,
-          labelFor: (name) => stage.querySelector(`[data-layer="${name}"]`),
           onReady: () => setSceneReady(true),
+          onTooSlow: () => {
+            dispose?.();
+            dispose = null;
+            setSceneReady(false);
+          },
         });
       })
       .catch((error) => console.error('[hero] 3D scene unavailable:', error));
@@ -285,31 +238,41 @@ const Hero = () => {
 
   return (
     <HeroRoot id="top" aria-labelledby="top-title">
+      <Stage ref={stageRef} $ready={sceneReady} aria-hidden="true">
+        <Halo />
+        <Poster viewBox="-260 -260 520 520" fill="none" $hidden={sceneReady}>
+          <defs>
+            <linearGradient id="poster-ring" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#C4B1FF" />
+              <stop offset="0.55" stopColor="#854CE6" />
+              <stop offset="1" stopColor="#FF9FD0" />
+            </linearGradient>
+          </defs>
+          {POSTER_RINGS.map(({ rx, ry, rotate, width }) => (
+            <ellipse
+              key={rx}
+              rx={rx}
+              ry={ry}
+              transform={`rotate(${rotate})`}
+              stroke="url(#poster-ring)"
+              strokeWidth={width}
+            />
+          ))}
+        </Poster>
+      </Stage>
       <Copy>
-        <Byline $delay={80}>
-          <Portrait
-            src={Bio.avatar_url || fallbackPortrait}
-            alt={`Portrait of ${Bio.name}`}
-            width="64"
-            height="64"
-          />
-          <div>
-            <Name>{Bio.name}</Name>
-            <Role>Full stack developer</Role>
-          </div>
-        </Byline>
         <Headline id="top-title">
-          <Line $delay={180}>I build the whole stack,</Line>
-          <Line $delay={320}>then try to break it.</Line>
+          <Line $delay={120}>I build the whole stack,</Line>
+          <Line $delay={260}>then try to break it.</Line>
         </Headline>
-        <Reveal $delay={420}>
+        <Reveal $delay={380}>
           <Lede>
             Backends in Spring Boot, Go, NestJS, and Laravel. Mobile apps in Flutter and React Native.
             Web platforms in React, Next.js, and Angular. Trained in Android penetration testing,
             with OWASP and secure coding in my daily work.
           </Lede>
         </Reveal>
-        <Actions $delay={520}>
+        <Actions $delay={480}>
           <Button href="#projects">See my work</Button>
           {Bio.resume && (
             <Button $variant="secondary" href={Bio.resume} target="_blank" rel="noopener noreferrer">
@@ -327,22 +290,24 @@ const Hero = () => {
             </IconLink>
           )}
         </Actions>
-        <ProofList as="ul" $delay={620}>
-          {PROOF.map((item) => <li key={item}>{item}</li>)}
-        </ProofList>
+        <Credits $delay={580}>
+          <Byline>
+            <Portrait
+              src={Bio.avatar_url || fallbackPortrait}
+              alt={`Portrait of ${Bio.name}`}
+              width="52"
+              height="52"
+            />
+            <div>
+              <Name>{Bio.name}</Name>
+              <Role>Full stack developer</Role>
+            </div>
+          </Byline>
+          <ProofList>
+            {PROOF.map((item) => <li key={item}>{item}</li>)}
+          </ProofList>
+        </Credits>
       </Copy>
-      <Stage ref={stageRef} $ready={sceneReady} aria-hidden="true">
-        <Poster $hidden={sceneReady}>
-          <StackDiagram device="mobile" title="hero" />
-        </Poster>
-        {LABELS.map(({ name, title, detail }) => (
-          <Label key={name} data-layer={name} $ready={sceneReady}>
-            <strong>{title}</strong>
-            <span>{detail}</span>
-          </Label>
-        ))}
-        <ScanLabel data-layer="scan">OWASP checks</ScanLabel>
-      </Stage>
     </HeroRoot>
   );
 }

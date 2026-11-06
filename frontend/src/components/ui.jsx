@@ -1,5 +1,31 @@
 import styled, { css } from 'styled-components';
 import { c } from '../utils/Themes';
+import useReveal from '../hooks/useReveal';
+
+const OFFSET = { shown: '0', above: '-56px', below: '56px' };
+
+const RevealBox = styled.div`
+  opacity: ${({ $position }) => ($position === 'shown' ? 1 : 0)};
+  transform: translateY(${({ $position }) => OFFSET[$position]});
+  transition:
+    opacity 700ms ${c('easeEnter')} ${({ $position, $delay }) => ($position === 'shown' ? $delay : 0)}ms,
+    transform 800ms ${c('easeEnter')} ${({ $position, $delay }) => ($position === 'shown' ? $delay : 0)}ms;
+
+  @media print {
+    opacity: 1;
+    transform: none;
+  }
+`;
+
+// Hides content while it is off screen and shows it as it scrolls into view.
+export const Reveal = ({ delay = 0, children, ...rest }) => {
+  const [ref, position] = useReveal();
+  return (
+    <RevealBox ref={ref} $position={position} $delay={delay} {...rest}>
+      {children}
+    </RevealBox>
+  );
+};
 
 const SectionRoot = styled.section`
   border-top: 1px solid ${c('line')};
@@ -48,8 +74,10 @@ export const Section = ({ id, title, lede, children }) => (
   <SectionRoot id={id} aria-labelledby={`${id}-title`}>
     <SectionInner>
       <SectionHeader>
-        <SectionTitle id={`${id}-title`}>{title}</SectionTitle>
-        {lede && <SectionLede>{lede}</SectionLede>}
+        <Reveal>
+          <SectionTitle id={`${id}-title`}>{title}</SectionTitle>
+          {lede && <SectionLede>{lede}</SectionLede>}
+        </Reveal>
       </SectionHeader>
       <div>{children}</div>
     </SectionInner>

@@ -42,15 +42,15 @@ const Wrapper = styled.div`
 
 const CloseButton = styled.button`
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 32px;
+    right: 32px;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 44px;
     height: 44px;
-    background: transparent;
+    background: rgba(16, 24, 38, 0.88); /* stays visible over light screenshots */
     border: none;
     border-radius: 6px;
     color: ${c('text')};
@@ -214,7 +214,8 @@ const ProjectDetails = ({ openModal, setOpenModal }) => {
                         <Links>
                             {project.webapp_url && (
                                 <Button href={project.webapp_url} target="_blank" rel="noopener noreferrer">
-                                    <LuExternalLink aria-hidden="true" /> Open live app
+                                    <LuExternalLink aria-hidden="true" />
+                                    {project.webapp_url.includes('play.google.com') ? 'View on Google Play' : 'Open live site'}
                                 </Button>
                             )}
                             {project.github_url && (

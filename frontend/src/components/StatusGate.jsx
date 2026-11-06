@@ -1,15 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { LuTriangleAlert } from 'react-icons/lu';
 import { usePortfolio } from '../context/PortfolioContext';
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion';
 import { c } from '../utils/Themes';
+import { canRunScene, loadOrbitScene } from './HeroSection/sceneLoader';
 import { Button } from './ui';
 
 // The API can answer in milliseconds, so the intro holds long enough to register.
 const MIN_INTRO_MS = 1100;
 const WIPE_MS = 800;
 const WIPE_EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';
+const SCROLL_KEY = 'portfolio-scroll-y';
+
+// Sections that were merged keep their old links working.
+const HASH_ALIASES = { '#about': '#top', '#certifications': '#credentials', '#education': '#credentials' };
+
+// Content mounts after the intro, too late for the browser to restore scroll or
+// follow a #hash, so both are handled here once the page exists.
+const restoreScroll = () => {
+  const navigationType = performance.getEntriesByType('navigation')[0]?.type;
+  const saved = Number(sessionStorage.getItem(SCROLL_KEY));
+  if ((navigationType === 'reload' || navigationType === 'back_forward') && saved > 0) {
+    window.scrollTo({ top: saved, behavior: 'instant' });
+    return;
+  }
+  const { hash } = window.location;
+  if (hash) {
+    document.querySelector(HASH_ALIASES[hash] || hash)?.scrollIntoView({ behavior: 'instant' });
+  }
+};
 
 const plateTop = keyframes`
   from { opacity: 0; transform: translateY(-26px); }
@@ -179,6 +199,24 @@ export default function StatusGate({ children }) {
   // intro: content not mounted yet. leaving: content mounts and is uncovered
   // by the scan line wiping the panel away. done: intro removed.
   const [phase, setPhase] = useState('intro');
+
+  // Parses the 3D code while only the static intro is on screen, so it can't
+  // interrupt the hero's entrance.
+  useEffect(() => {
+    if (!reducedMotion && canRunScene()) loadOrbitScene().catch(() => {});
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    history.scrollRestoration = 'manual';
+    const saveScroll = () => sessionStorage.setItem(SCROLL_KEY, String(Math.round(window.scrollY)));
+    window.addEventListener('pagehide', saveScroll);
+    return () => window.removeEventListener('pagehide', saveScroll);
+  }, []);
+
+  const contentMounted = phase !== 'intro';
+  useLayoutEffect(() => {
+    if (contentMounted) restoreScroll();
+  }, [contentMounted]);
 
   useEffect(() => {
     if (status !== 'success') return undefined;

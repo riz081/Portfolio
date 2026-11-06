@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { LuAward, LuGraduationCap } from 'react-icons/lu'
 import { usePortfolio } from '../../context/PortfolioContext'
 import { c } from '../../utils/Themes'
-import { Section } from '../ui'
+import { Reveal, Section } from '../ui'
 
-const Group = styled.div`
+const Group = styled(Reveal)`
   & + & {
     margin-top: 48px;
   }

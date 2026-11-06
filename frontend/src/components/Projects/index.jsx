@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ProjectCard from '../Cards/ProjectCard'
 import { usePortfolio } from '../../context/PortfolioContext'
 import { c } from '../../utils/Themes'
-import { Section } from '../ui'
+import { Reveal, Section } from '../ui'
 
 const FILTERS = [
     { value: 'mobile frontend', label: 'Mobile' },
@@ -83,8 +83,9 @@ const Projects = ({ openModal, setOpenModal }) => {
         <Section
             id="projects"
             title="Work"
-            lede="Apps and platforms I've shipped. Each diagram shows the layers of the stack I worked on."
+            lede="Apps and platforms I've shipped. Where a screenshot can't be shown, a diagram marks the layers of the stack I worked on."
         >
+            <Reveal>
             <FilterGroup role="group" aria-label="Filter projects by category">
                 {filters.map(({ value, label, count }) => (
                     <FilterButton
@@ -98,6 +99,7 @@ const Projects = ({ openModal, setOpenModal }) => {
                     </FilterButton>
                 ))}
             </FilterGroup>
+            </Reveal>
             <p className="sr-only" aria-live="polite">
                 {visibleProjects.length} {visibleProjects.length === 1 ? 'project' : 'projects'} shown
             </p>
@@ -105,13 +107,14 @@ const Projects = ({ openModal, setOpenModal }) => {
                 <EmptyState>No projects to show yet.</EmptyState>
             ) : (
                 <CardGrid>
-                    {visibleProjects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            openModal={openModal}
-                            setOpenModal={setOpenModal}
-                        />
+                    {visibleProjects.map((project, index) => (
+                        <Reveal key={project.id} delay={index % 2 === 1 ? 120 : 0}>
+                            <ProjectCard
+                                project={project}
+                                openModal={openModal}
+                                setOpenModal={setOpenModal}
+                            />
+                        </Reveal>
                     ))}
                 </CardGrid>
             )}
