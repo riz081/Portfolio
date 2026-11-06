@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  SiAndroid, SiClaude, SiDart, SiDocker, SiFlutter, SiGit, SiGo, SiJavascript, SiLaravel,
-  SiNestjs, SiNextdotjs, SiOpenjdk, SiOwasp, SiPhp, SiReact, SiTypescript,
+  SiAndroid, SiAngular, SiClaude, SiDart, SiDocker, SiFlutter, SiGit, SiGo, SiJavascript, SiJenkins, SiLaravel,
+  SiNestjs, SiNextdotjs, SiOpenjdk, SiOwasp, SiPhp, SiReact, SiSpringboot, SiTypescript,
 } from 'react-icons/si'
 import {
   LuBinary, LuBrainCircuit, LuCircleDot, LuCode, LuDatabase, LuGitPullRequest, LuKanban,
@@ -15,14 +15,14 @@ import { Section } from '../ui'
 const GROUP_ORDER = ['Security', 'Backend', 'Mobile', 'Frontend', 'Languages', 'DevOps / Workflow', 'AI & Tooling'];
 
 const ICONS = {
-  'golang (gin)': SiGo, go: SiGo, nestjs: SiNestjs, laravel: SiLaravel, 'restful api': LuWaypoints,
+  'golang (gin)': SiGo, go: SiGo, 'java (spring boot)': SiSpringboot, nestjs: SiNestjs, laravel: SiLaravel, 'restful api': LuWaypoints,
   flutter: SiFlutter, 'react native': SiReact, 'java (android)': SiAndroid,
-  'react.js': SiReact, 'next.js': SiNextdotjs,
+  'react.js': SiReact, 'next.js': SiNextdotjs, angular: SiAngular,
   typescript: SiTypescript, javascript: SiJavascript, php: SiPhp, dart: SiDart, java: SiOpenjdk, sql: LuDatabase,
   'owasp mobile top 10': SiOwasp, 'owasp web top 10': SiOwasp, adb: LuTerminal,
   'apk reverse engineering': LuBinary, 'static & dynamic analysis': LuScanSearch, 'api security testing': LuShieldCheck,
   'claude code': SiClaude, opencode: LuCode, 'llm integration': LuBrainCircuit, 'prompt engineering': LuMessagesSquare,
-  git: SiGit, 'agile/scrum': LuKanban, 'ci/cd': LuWorkflow, 'code review': LuGitPullRequest, docker: SiDocker,
+  git: SiGit, 'agile/scrum': LuKanban, 'ci/cd': LuWorkflow, 'ci/cd (jenkins)': SiJenkins, 'code review': LuGitPullRequest, docker: SiDocker,
 };
 
 const Group = styled.div`

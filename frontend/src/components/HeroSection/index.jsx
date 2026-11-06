@@ -11,9 +11,9 @@ import StackDiagram from "../StackDiagram"
 import fallbackPortrait from "../../images/portrait.jpg"
 
 const LABELS = [
-  { name: 'client', title: 'Client', detail: 'Flutter, React Native, Next.js' },
+  { name: 'client', title: 'Client', detail: 'Flutter, React Native, Next.js, Angular' },
   { name: 'api', title: 'API', detail: 'REST, Gin, Laravel' },
-  { name: 'services', title: 'Services', detail: 'Go, NestJS, Laravel' },
+  { name: 'services', title: 'Services', detail: 'Spring Boot, Go, NestJS, Laravel' },
   { name: 'data', title: 'Data', detail: 'PostgreSQL, MySQL' },
 ];
 
@@ -304,8 +304,8 @@ const Hero = () => {
         </Headline>
         <Reveal $delay={420}>
           <Lede>
-            Backends in Go, NestJS, and Laravel. Mobile apps in Flutter and React Native.
-            Web platforms in React and Next.js. Trained in Android penetration testing,
+            Backends in Spring Boot, Go, NestJS, and Laravel. Mobile apps in Flutter and React Native.
+            Web platforms in React, Next.js, and Angular. Trained in Android penetration testing,
             with OWASP and secure coding in my daily work.
           </Lede>
         </Reveal>

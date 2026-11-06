@@ -240,6 +240,7 @@ Bagian ini tidak bisa dikerjakan dari kode:
   - **Struktur:** Hero, Work, Experience, Skills, Credentials, Contact. Certifications dan Education digabung jadi Credentials.
   - **Footer:** hanya GitHub dan LinkedIn.
 - **Temuan Fase 3 dan 4 yang ikut selesai:** kartu tanpa tinggi tetap (PJ8), cover diagram sebagai pengganti sementara screenshot asli (PJ1 sebagian), `@mui/lab` dan `@mui/icons-material` dilepas, font self-hosted (S4), favicon SVG, `loading="lazy"` pada gambar (S5 sebagian).
+- **Konten Work, Experience, dan Skills:** disusun dari analisa repo, disinkronkan lewat `scripts/sync-work-data.py`. Nama klien sengaja disamarkan.
 - **C4 (email langsung):** tampil jika `VITE_CONTACT_EMAIL` diisi.
 - **Fase 4 yang sudah selesai:** gzip nginx (S1). Key EmailJS kini ikut ter-build di Docker lewat BuildKit secret dari `frontend/.env`.
 - **Belum:** Fase 3 (studi kasus, field backend, deep link) dan sisa Fase 4 (lazy admin, meta SEO, URL resume publik).
