@@ -49,7 +49,7 @@ services:
       S3_SECRET_KEY: ${S3_SECRET_KEY:-minioadmin}
       S3_BUCKET: ${S3_BUCKET:-portfolio}
       S3_USE_SSL: "false"
-      S3_PUBLIC_URL: http://localhost:${MINIO_PORT:-9010}/portfolio
+      S3_PUBLIC_URL: ${S3_PUBLIC_URL:-http://localhost:${MINIO_PORT:-9010}/portfolio}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:9999,http://localhost:5173}
     ports:
       - "9998:9998"
@@ -69,6 +69,7 @@ services:
       - "9999:80"
     depends_on:
       - backend
+      - minio
 
 secrets:
   # Copy frontend/.env.example to frontend/.env before building.
