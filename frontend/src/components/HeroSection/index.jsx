@@ -155,6 +155,7 @@ const Role = styled.p`
   color: ${c('muted')};
   font-size: 15px;
   line-height: 1.3;
+  text-wrap: balance;
 `;
 
 const Headline = styled.h1`
@@ -309,7 +310,7 @@ const Hero = () => {
             />
             <div>
               <Name>{Bio.name}</Name>
-              <Role>{Bio.roles?.[0] || 'Full stack developer'}</Role>
+              <Role>{Bio.roles?.slice(0, 3).join(' · ') || 'Software Engineer'}</Role>
             </div>
           </Byline>
           <ProofList>

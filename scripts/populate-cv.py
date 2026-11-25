@@ -24,14 +24,11 @@ def icon(slug):
 # ---------- BIO ----------
 bio = {
     "name": "Rizqika Ibnu Khattab",
-    "roles": ["Fullstack Developer", "DevOps Engineer", "Backend Developer", "Software Engineer", "Android Security Practitioner"],
+    "roles": ["DevOps Engineer", "Backend Developer", "Software Engineer", "Full Stack Developer", "Android Security Practitioner"],
     "description": (
-        "Software Engineer with 3 years of experience building and operating production systems, now focusing on DevOps and backend engineering. "
-        "Contributed to 9+ production projects, including 3 Android apps on Google Play Store and 1 app on the App Store (logistics, ISP, property). "
-        "Backend: builds services with Go (Gin), NestJS, and Laravel — REST APIs, RBAC, multi-tenant architecture, and asynchronous workflows with BullMQ, Redis, and PostgreSQL. "
-        "DevOps: Docker Compose, Jenkins CI/CD, Linux VPS, Nginx/HTTPS, Flyway migrations, MinIO/S3, GCP, and automated backups. "
-        "Brings application-development context for diagnosing deployment, database, and queue issues, and applies secure coding practices grounded "
-        "in 3 certifications in Android mobile penetration testing (top score 94.2/100)."
+        "Software Engineer with 3 years of experience contributing to 9+ production projects, including 4 mobile apps published on Google Play and the App Store. "
+        "Focused on DevOps and backend engineering using Go, NestJS, Laravel, Docker, Jenkins, Linux, PostgreSQL, and Redis. "
+        "Applies secure coding practices backed by 3 Android security certifications."
     ),
     "headline": "I build the whole stack,\nthen try to break it.",
     "proof": [
