@@ -228,8 +228,8 @@ const Contact = () => {
       </Reveal>
       <Reveal>
       <Direct>
-        {PUBLIC_EMAIL && (
-          <li><a href={`mailto:${PUBLIC_EMAIL}`}><LuMail aria-hidden="true" /> {PUBLIC_EMAIL}</a></li>
+        {(Bio.email || PUBLIC_EMAIL) && (
+          <li><a href={`mailto:${Bio.email || PUBLIC_EMAIL}`}><LuMail aria-hidden="true" /> {Bio.email || PUBLIC_EMAIL}</a></li>
         )}
         {Bio.linkedin && (
           <li><a href={Bio.linkedin} target="_blank" rel="noopener noreferrer"><FaLinkedinIn aria-hidden="true" /> LinkedIn</a></li>

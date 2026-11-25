@@ -33,6 +33,14 @@ bio = {
         "Brings application-development context for diagnosing deployment, database, and queue issues, and applies secure coding practices grounded "
         "in 3 certifications in Android mobile penetration testing (top score 94.2/100)."
     ),
+    "headline": "I build the whole stack,\nthen try to break it.",
+    "proof": [
+        "9+ production projects",
+        "3 apps live on Google Play",
+        "94.2/100 in mobile penetration testing",
+    ],
+    "email": "rizqikaibnu@gmail.com",
+    "resumes": [],
     "github": "https://github.com/riz081",
     "resume": "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
     "linkedin": "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",

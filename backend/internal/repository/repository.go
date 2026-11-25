@@ -36,9 +36,13 @@ func (r *Repository) UpdateBio(in *model.Bio) (*model.Bio, error) {
 	if err := r.db.Model(&bio).Updates(map[string]any{
 		"name":        in.Name,
 		"roles":       in.Roles,
+		"headline":    in.Headline,
 		"description": in.Description,
+		"proof":       in.Proof,
+		"email":       in.Email,
 		"github":      in.Github,
 		"resume":      in.Resume,
+		"resumes":     in.Resumes,
 		"linkedin":    in.LinkedIn,
 		"insta":       in.Insta,
 		"facebook":    in.Facebook,

@@ -9,8 +9,14 @@ import { c } from "../../utils/Themes"
 import { Button, IconLink } from "../ui"
 import fallbackPortrait from "../../images/portrait.jpg"
 import { canRunScene, loadOrbitScene } from "./sceneLoader"
+import ResumeDialog from "../ResumeDialog"
 
-const PROOF = [
+const DEFAULT_HEADLINE = [
+  'I build the whole stack,',
+  'then try to break it.',
+];
+
+const DEFAULT_PROOF = [
   '9+ production projects',
   '3 apps live on Google Play',
   '94.2/100 in mobile penetration testing',
@@ -204,6 +210,15 @@ const Hero = () => {
   const reducedMotion = usePrefersReducedMotion();
   const stageRef = React.useRef(null);
   const [sceneReady, setSceneReady] = React.useState(false);
+  const [resumeOpen, setResumeOpen] = React.useState(false);
+
+  const headlineLines = (Bio.headline || '').split('\n').map((line) => line.trim()).filter(Boolean);
+  const lines = headlineLines.length > 0 ? headlineLines : DEFAULT_HEADLINE;
+  const proof = Bio.proof?.length > 0 ? Bio.proof : DEFAULT_PROOF;
+  const resumeDocs = Bio.resumes?.length > 0
+    ? Bio.resumes
+    : (Bio.resume ? [{ title: 'Resume', url: Bio.resume }] : []);
+  const openResume = resumeDocs.length > 1;
 
   // The 3D scene is its own chunk. The SVG poster stays for reduced motion,
   // data saver, low-end devices, no WebGL, and while the chunk loads.
@@ -262,8 +277,9 @@ const Hero = () => {
       </Stage>
       <Copy>
         <Headline id="top-title">
-          <Line $delay={120}>I build the whole stack,</Line>
-          <Line $delay={260}>then try to break it.</Line>
+          {lines.map((line, index) => (
+            <Line key={line} $delay={120 + index * 140}>{line}</Line>
+          ))}
         </Headline>
         <Reveal $delay={380}>
           <Lede>
@@ -272,11 +288,15 @@ const Hero = () => {
         </Reveal>
         <Actions $delay={480}>
           <Button href="#projects">See my work</Button>
-          {Bio.resume && (
-            <Button $variant="secondary" href={Bio.resume} target="_blank" rel="noopener noreferrer">
+          {resumeDocs.length > 0 && (openResume ? (
+            <Button $variant="secondary" as="button" type="button" onClick={() => setResumeOpen(true)}>
+              <LuFileText aria-hidden="true" /> Resumes
+            </Button>
+          ) : (
+            <Button $variant="secondary" href={resumeDocs[0].url} target="_blank" rel="noopener noreferrer">
               <LuFileText aria-hidden="true" /> Open resume
             </Button>
-          )}
+          ))}
           {Bio.github && (
             <IconLink href={Bio.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <SiGithub aria-hidden="true" />
@@ -302,10 +322,11 @@ const Hero = () => {
             </div>
           </Byline>
           <ProofList>
-            {PROOF.map((item) => <li key={item}>{item}</li>)}
+            {proof.map((item) => <li key={item}>{item}</li>)}
           </ProofList>
         </Credits>
       </Copy>
+      {resumeOpen && <ResumeDialog docs={resumeDocs} onClose={() => setResumeOpen(false)} />}
     </HeroRoot>
   );
 }
