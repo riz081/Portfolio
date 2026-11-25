@@ -26,7 +26,7 @@ const Hint = styled.span`
 
 const isImageUrl = (url) => /\.(jpe?g|png|webp|gif|svg)$/i.test(url || '');
 
-export default function Uploader({ value, onChange, folder = 'misc', accept = 'image/*' }) {
+export default function Uploader({ value, onChange, folder = 'misc', accept = 'image/*', kind = '' }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -39,8 +39,8 @@ export default function Uploader({ value, onChange, folder = 'misc', accept = 'i
     setBusy(true);
     setError('');
     try {
-      const res = await api.upload(file, folder);
-      onChange(res.data?.url ?? '');
+      const res = await api.upload(file, folder, kind);
+      onChange(res.data?.url ?? '', res.data || {});
     } catch (err) {
       setError(err.message);
     } finally {

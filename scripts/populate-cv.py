@@ -40,7 +40,6 @@ bio = {
         "94.2/100 in mobile penetration testing",
     ],
     "email": "rizqikaibnu@gmail.com",
-    "resumes": [],
     "github": "https://github.com/riz081",
     "resume": "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
     "linkedin": "https://www.linkedin.com/in/rizqika-ibnu-khattab-231714218/",

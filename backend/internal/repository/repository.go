@@ -42,7 +42,6 @@ func (r *Repository) UpdateBio(in *model.Bio) (*model.Bio, error) {
 		"email":       in.Email,
 		"github":      in.Github,
 		"resume":      in.Resume,
-		"resumes":     in.Resumes,
 		"linkedin":    in.LinkedIn,
 		"insta":       in.Insta,
 		"facebook":    in.Facebook,
@@ -51,6 +50,65 @@ func (r *Repository) UpdateBio(in *model.Bio) (*model.Bio, error) {
 		return nil, err
 	}
 	return r.GetBio()
+}
+
+// ---------- Resume Documents ----------
+
+func (r *Repository) ListResumeDocuments(activeOnly bool) ([]model.ResumeDocument, error) {
+	var docs []model.ResumeDocument
+	q := r.db.Order("sort asc, id asc")
+	if activeOnly {
+		q = q.Where("is_active = ?", true)
+	}
+	err := q.Find(&docs).Error
+	return docs, err
+}
+
+func (r *Repository) GetResumeDocument(id uint) (*model.ResumeDocument, error) {
+	var doc model.ResumeDocument
+	if err := r.db.First(&doc, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return &doc, nil
+}
+
+func (r *Repository) CreateResumeDocument(in *model.ResumeDocument) error {
+	return r.db.Create(in).Error
+}
+
+func (r *Repository) UpdateResumeDocument(id uint, in *model.ResumeDocument) error {
+	var existing model.ResumeDocument
+	if err := r.db.First(&existing, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return ErrNotFound
+		}
+		return err
+	}
+	return r.db.Model(&existing).Updates(map[string]any{
+		"title":        in.Title,
+		"role":         in.Role,
+		"description":  in.Description,
+		"file_url":     in.FileURL,
+		"external_url": in.ExternalURL,
+		"source_type":  in.SourceType,
+		"file_size":    in.FileSize,
+		"sort":         in.Sort,
+		"is_active":    in.IsActive,
+	}).Error
+}
+
+func (r *Repository) DeleteResumeDocument(id uint) error {
+	res := r.db.Delete(&model.ResumeDocument{}, id)
+	if res.Error != nil {
+		return res.Error
+	}
+	if res.RowsAffected == 0 {
+		return ErrNotFound
+	}
+	return nil
 }
 
 // ---------- Skill Groups ----------

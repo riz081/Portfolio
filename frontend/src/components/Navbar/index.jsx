@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components"
+import { Link, useLocation } from 'react-router-dom'
 import { LuMenu, LuX } from "react-icons/lu"
 import { SiGithub } from "react-icons/si"
 import { usePortfolio } from "../../context/PortfolioContext"
@@ -219,6 +220,8 @@ export const LogoMark = () => (
 
 const Navbar = () => {
     const { data } = usePortfolio();
+    const { pathname } = useLocation();
+    const isHome = pathname === '/';
     const githubUrl = data?.bio?.github || GITHUB_URL;
     const [open, setOpen] = React.useState(false);
     const activeId = useActiveSection();
@@ -241,16 +244,19 @@ const Navbar = () => {
     return (
         <Nav>
             <NavContainer aria-label="Main">
-                <Logo href="#top">
+                <Logo href={isHome ? '#top' : '/#top'}>
                     <LogoMark />
                     Rizqika Ibnu K
                 </Logo>
                 <NavItems>
                     {NAV_ITEMS.map(({ href, label }) => (
                         <li key={href}>
-                            <NavLink href={href} aria-current={activeId === href.slice(1) ? "location" : undefined}>{label}</NavLink>
+                            <NavLink href={isHome ? href : `/${href}`} aria-current={activeId === href.slice(1) ? "location" : undefined}>{label}</NavLink>
                         </li>
                     ))}
+                    <li>
+                        <NavLink as={Link} to="/resume" aria-current={pathname === '/resume' ? 'page' : undefined}>Resumes</NavLink>
+                    </li>
                 </NavItems>
                 <GithubLink href={githubUrl} target="_blank" rel="noopener noreferrer">
                     <SiGithub aria-hidden="true" /> GitHub
@@ -271,13 +277,16 @@ const Navbar = () => {
                     {NAV_ITEMS.map(({ href, label }) => (
                         <MobileMenuLink
                             key={href}
-                            href={href}
+                            href={isHome ? href : `/${href}`}
                             aria-current={activeId === href.slice(1) ? "location" : undefined}
                             onClick={closeMenu}
                         >
                             {label}
                         </MobileMenuLink>
                     ))}
+                    <MobileMenuLink as={Link} to="/resume" aria-current={pathname === '/resume' ? 'page' : undefined} onClick={closeMenu}>
+                        Resumes
+                    </MobileMenuLink>
                     <MobileMenuLink href={githubUrl} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
                         <SiGithub aria-hidden="true" /> GitHub
                     </MobileMenuLink>

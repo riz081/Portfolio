@@ -8,6 +8,7 @@ import ExperiencesPanel from './panels/ExperiencesPanel';
 import EducationPanel from './panels/EducationPanel';
 import ProjectsPanel from './panels/ProjectsPanel';
 import CertificationsPanel from './panels/CertificationsPanel';
+import ResumesPanel from './panels/ResumesPanel';
 
 const Layout = styled.div`
   display: flex;
@@ -62,6 +63,7 @@ const Header = styled.div`
 
 const PANELS = {
   bio: { label: 'Bio', component: BioPanel },
+  resumes: { label: 'Resumes', component: ResumesPanel },
   skills: { label: 'Skills', component: SkillsPanel },
   experiences: { label: 'Experiences', component: ExperiencesPanel },
   education: { label: 'Education', component: EducationPanel },

@@ -94,6 +94,8 @@ func (h *Handler) Register(e *echo.Echo) {
 	api.GET("/skills", h.ListSkills)
 	api.GET("/bio", h.GetBio)
 	api.GET("/certifications", h.ListCertifications)
+	api.GET("/resumes", h.ListResumes)
+	api.GET("/resumes/:id", h.GetResume)
 
 	// admin auth (public)
 	admin := api.Group("/admin")
@@ -105,6 +107,11 @@ func (h *Handler) Register(e *echo.Echo) {
 	admin.GET("/me", h.Me)
 
 	admin.PUT("/bio", h.UpdateBio)
+
+	admin.GET("/resumes", h.ListResumesAdmin)
+	admin.POST("/resumes", h.CreateResume)
+	admin.PUT("/resumes/:id", h.UpdateResume)
+	admin.DELETE("/resumes/:id", h.DeleteResume)
 
 	admin.GET("/projects", h.ListProjects)
 	admin.POST("/projects", h.CreateProject)

@@ -16,6 +16,7 @@ import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails'
 import StatusGate from './components/StatusGate'
 import AdminApp from './pages/admin/AdminApp'
+import ResumePage from './pages/Resume'
 
 const Body = styled.div`
   background-color: ${c('ink')};
@@ -55,6 +56,13 @@ function App() {
         <Route path="/admin/*" element={
           <ThemeProvider theme={adminTheme}>
             <AdminApp />
+          </ThemeProvider>
+        } />
+        <Route path="/resume" element={
+          <ThemeProvider theme={theme}>
+            <StatusGate>
+              <ResumePage />
+            </StatusGate>
           </ThemeProvider>
         } />
         <Route path="*" element={

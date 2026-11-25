@@ -34,6 +34,10 @@ func (h *Handler) GetPortfolio(c echo.Context) error {
 	if err != nil {
 		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load certifications")
 	}
+	resumes, err := h.repo.ListResumeDocuments(true)
+	if err != nil {
+		return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to load resumes")
+	}
 
 	return writeData(c, http.StatusOK, echo.Map{
 		"bio":            bio,
@@ -42,6 +46,7 @@ func (h *Handler) GetPortfolio(c echo.Context) error {
 		"education":      education,
 		"projects":       projects,
 		"certifications": certifications,
+		"resumes":        resumes,
 	})
 }
 

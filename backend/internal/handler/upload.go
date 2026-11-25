@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"io"
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
@@ -46,6 +47,20 @@ func (h *Handler) Upload(c echo.Context) error {
 		contentType = detectContentType(src, ext)
 	}
 
+	if c.FormValue("kind") == "resume" {
+		if ext != ".pdf" {
+			return writeError(c, http.StatusBadRequest, "UPLOAD_ERROR", "resume uploads must be a PDF")
+		}
+		head := make([]byte, 5)
+		n, _ := src.Read(head)
+		if _, err := src.Seek(0, io.SeekStart); err != nil {
+			return writeError(c, http.StatusInternalServerError, "INTERNAL_ERROR", "failed to read file")
+		}
+		if n < 5 || string(head) != "%PDF-" {
+			return writeError(c, http.StatusBadRequest, "UPLOAD_ERROR", "file is not a valid PDF")
+		}
+	}
+
 	folder := c.FormValue("folder")
 	if folder == "" {
 		folder = "misc"
@@ -57,7 +72,12 @@ func (h *Handler) Upload(c echo.Context) error {
 		return writeError(c, http.StatusInternalServerError, "UPLOAD_ERROR", "failed to upload file: "+err.Error())
 	}
 
-	return writeData(c, http.StatusCreated, echo.Map{"url": url})
+	return writeData(c, http.StatusCreated, echo.Map{
+		"url":          url,
+		"size":         file.Size,
+		"content_type": contentType,
+		"name":         file.Filename,
+	})
 }
 
 func detectContentType(file multipart.File, ext string) string {

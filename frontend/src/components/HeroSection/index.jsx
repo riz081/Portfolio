@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from "styled-components";
+import { Link } from 'react-router-dom'
 import { SiGithub } from "react-icons/si"
 import { FaLinkedinIn } from "react-icons/fa"
 import { LuFileText } from "react-icons/lu"
@@ -9,7 +10,6 @@ import { c } from "../../utils/Themes"
 import { Button, IconLink } from "../ui"
 import fallbackPortrait from "../../images/portrait.jpg"
 import { canRunScene, loadOrbitScene } from "./sceneLoader"
-import ResumeDialog from "../ResumeDialog"
 
 const DEFAULT_HEADLINE = [
   'I build the whole stack,',
@@ -210,15 +210,10 @@ const Hero = () => {
   const reducedMotion = usePrefersReducedMotion();
   const stageRef = React.useRef(null);
   const [sceneReady, setSceneReady] = React.useState(false);
-  const [resumeOpen, setResumeOpen] = React.useState(false);
 
   const headlineLines = (Bio.headline || '').split('\n').map((line) => line.trim()).filter(Boolean);
   const lines = headlineLines.length > 0 ? headlineLines : DEFAULT_HEADLINE;
   const proof = Bio.proof?.length > 0 ? Bio.proof : DEFAULT_PROOF;
-  const resumeDocs = Bio.resumes?.length > 0
-    ? Bio.resumes
-    : (Bio.resume ? [{ title: 'Resume', url: Bio.resume }] : []);
-  const openResume = resumeDocs.length > 1;
 
   // The 3D scene is its own chunk. The SVG poster stays for reduced motion,
   // data saver, low-end devices, no WebGL, and while the chunk loads.
@@ -288,15 +283,11 @@ const Hero = () => {
         </Reveal>
         <Actions $delay={480}>
           <Button href="#projects">See my work</Button>
-          {resumeDocs.length > 0 && (openResume ? (
-            <Button $variant="secondary" as="button" type="button" onClick={() => setResumeOpen(true)}>
-              <LuFileText aria-hidden="true" /> Resumes
+          {data?.resumes?.length > 0 && (
+            <Button $variant="secondary" as={Link} to="/resume">
+              <LuFileText aria-hidden="true" /> View resumes
             </Button>
-          ) : (
-            <Button $variant="secondary" href={resumeDocs[0].url} target="_blank" rel="noopener noreferrer">
-              <LuFileText aria-hidden="true" /> Open resume
-            </Button>
-          ))}
+          )}
           {Bio.github && (
             <IconLink href={Bio.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <SiGithub aria-hidden="true" />
@@ -326,7 +317,6 @@ const Hero = () => {
           </ProofList>
         </Credits>
       </Copy>
-      {resumeOpen && <ResumeDialog docs={resumeDocs} onClose={() => setResumeOpen(false)} />}
     </HeroRoot>
   );
 }

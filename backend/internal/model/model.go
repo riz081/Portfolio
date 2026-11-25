@@ -1,50 +1,26 @@
 package model
 
 import (
-	"database/sql/driver"
-	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/lib/pq"
 	"gorm.io/gorm"
 )
 
-// ResumeDoc is one downloadable document in the resume list.
-type ResumeDoc struct {
-	Title string `json:"title"`
-	URL   string `json:"url"`
-}
-
-// ResumeDocs stores the list as a JSON column while still binding as JSON over HTTP.
-type ResumeDocs []ResumeDoc
-
-func (d ResumeDocs) Value() (driver.Value, error) {
-	if len(d) == 0 {
-		return nil, nil
-	}
-	b, err := json.Marshal(d)
-	if err != nil {
-		return nil, err
-	}
-	return string(b), nil
-}
-
-func (d *ResumeDocs) Scan(src any) error {
-	if src == nil {
-		*d = nil
-		return nil
-	}
-	var b []byte
-	switch v := src.(type) {
-	case []byte:
-		b = v
-	case string:
-		b = []byte(v)
-	default:
-		return fmt.Errorf("cannot scan %T into ResumeDocs", src)
-	}
-	return json.Unmarshal(b, d)
+// ResumeDocument is one downloadable CV/resume in the public list.
+type ResumeDocument struct {
+	ID          uint      `gorm:"primaryKey" json:"id"`
+	Title       string    `json:"title"`
+	Role        string    `json:"role"`
+	Description string    `gorm:"type:text" json:"description"`
+	FileURL     string    `json:"file_url"`
+	ExternalURL string    `json:"external_url"`
+	SourceType  string    `json:"source_type"` // upload | external
+	FileSize    int64     `json:"file_size"`
+	Sort        int       `gorm:"default:0" json:"sort"`
+	IsActive    bool      `gorm:"default:true" json:"is_active"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 // Bio is a singleton row (id = 1).
@@ -57,8 +33,7 @@ type Bio struct {
 	Proof       pq.StringArray `gorm:"type:text[]" json:"proof"`
 	Email       string         `json:"email"`
 	Github      string         `json:"github"`
-	Resume      string         `json:"resume"`
-	Resumes     ResumeDocs     `gorm:"type:jsonb" json:"resumes"`
+	Resume      string         `json:"resume"` // deprecated: legacy single URL, kept until the document list fully replaces it
 	LinkedIn    string         `gorm:"column:linkedin" json:"linkedin"`
 	Insta       string         `json:"insta"`
 	Facebook    string         `json:"facebook"`
@@ -174,6 +149,7 @@ type Admin struct {
 func MigrateModels() []any {
 	return []any{
 		&Bio{},
+		&ResumeDocument{},
 		&SkillGroup{},
 		&Skill{},
 		&Experience{},

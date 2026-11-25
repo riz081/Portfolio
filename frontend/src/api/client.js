@@ -28,10 +28,11 @@ export const api = {
   login: (username, password) => api.post('/admin/auth/login', { username, password }),
   logout: () => api.post('/admin/auth/logout'),
   me: () => api.get('/admin/me'),
-  upload: async (file, folder = 'misc') => {
+  upload: async (file, folder = 'misc', kind = '') => {
     const fd = new FormData();
     fd.append('file', file);
     fd.append('folder', folder);
+    if (kind) fd.append('kind', kind);
     const res = await fetch(`${BASE_URL}/admin/upload`, {
       method: 'POST',
       credentials: 'include',

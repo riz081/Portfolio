@@ -24,21 +24,6 @@ export default function BioPanel() {
 
   const set = (k) => (e) => setBio((p) => ({ ...p, [k]: e.target.value }));
 
-  const setResume = (index, key, value) => setBio((p) => ({
-    ...p,
-    resumes: (p.resumes || []).map((doc, i) => (i === index ? { ...doc, [key]: value } : doc)),
-  }));
-
-  const addResume = () => setBio((p) => ({
-    ...p,
-    resumes: [...(p.resumes || []), { title: '', url: '' }],
-  }));
-
-  const removeResume = (index) => setBio((p) => ({
-    ...p,
-    resumes: (p.resumes || []).filter((_, i) => i !== index),
-  }));
-
   const save = async (e) => {
     e.preventDefault();
     setBusy(true);
@@ -50,7 +35,6 @@ export default function BioPanel() {
         roles: rolesText.split(',').map((s) => s.trim()).filter(Boolean),
         headline: headlineText,
         proof: proofText.split('\n').map((s) => s.trim()).filter(Boolean),
-        resumes: (bio.resumes || []).filter((doc) => doc.title && doc.url),
       };
       await api.put('/admin/bio', payload);
       setMsg('Bio tersimpan');
@@ -82,7 +66,7 @@ export default function BioPanel() {
         <Field style={{ flex: '1 1 240px' }}>GitHub<Input value={bio.github} onChange={set('github')} /></Field>
       </Row>
       <Row>
-        <Field style={{ flex: '1 1 240px' }}>Resume lama (fallback)<Input value={bio.resume || ''} onChange={set('resume')} /></Field>
+        <Field style={{ flex: '1 1 240px' }}>Resume lama (fallback, deprecated)<Input value={bio.resume || ''} onChange={set('resume')} /></Field>
       </Row>
       <Row>
         <Field style={{ flex: '1 1 240px' }}>LinkedIn<Input value={bio.linkedin} onChange={set('linkedin')} /></Field>
@@ -91,33 +75,6 @@ export default function BioPanel() {
       <Row>
         <Field style={{ flex: '1 1 240px' }}>Facebook<Input value={bio.facebook} onChange={set('facebook')} /></Field>
       </Row>
-      <Field>Daftar resume (link Google Docs / file PDF yang diunggah)
-        {(bio.resumes || []).map((doc, index) => (
-          <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: 12, border: '1px solid #2a2d34', borderRadius: 8, marginBottom: 8 }}>
-            <Row>
-              <Field style={{ flex: '1 1 200px' }}>Judul<Input value={doc.title} onChange={(e) => setResume(index, 'title', e.target.value)} placeholder="CV — DevOps Engineer" /></Field>
-              <Field style={{ flex: '2 1 320px' }}>URL<Input value={doc.url} onChange={(e) => setResume(index, 'url', e.target.value)} placeholder="https://docs.google.com/... atau hasil upload" /></Field>
-              <Field>
-                &nbsp;
-                <button
-                  type="button"
-                  onClick={() => removeResume(index)}
-                  style={{ padding: '8px 14px', borderRadius: 8, border: '1px solid #ff6b6b', background: 'transparent', color: '#ff6b6b', fontWeight: 600, cursor: 'pointer' }}
-                >
-                  Hapus
-                </button>
-              </Field>
-            </Row>
-            <Uploader
-              value={doc.url}
-              onChange={(url) => setResume(index, 'url', url)}
-              folder="resume"
-              accept=".pdf,.doc,.docx,application/pdf"
-            />
-          </div>
-        ))}
-        <Button type="button" onClick={addResume}>+ Tambah dokumen</Button>
-      </Field>
       <Field>Foto profil
         <Uploader value={bio.avatar_url} onChange={(url) => setBio((p) => ({ ...p, avatar_url: url }))} folder="bio" />
       </Field>

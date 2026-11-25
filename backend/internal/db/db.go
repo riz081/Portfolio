@@ -75,5 +75,25 @@ func Migrate(gormDB *gorm.DB, cfg *config.Config) error {
 		log.Printf("[seed] admin %q created", cfg.Admin.Username)
 	}
 
+	// Backfill: turn the legacy single resume URL into one document row.
+	var resumeCount int64
+	gormDB.Model(&model.ResumeDocument{}).Count(&resumeCount)
+	if resumeCount == 0 {
+		var legacy model.Bio
+		if err := gormDB.First(&legacy, 1).Error; err == nil && legacy.Resume != "" {
+			if err := gormDB.Create(&model.ResumeDocument{
+				Title:       "Resume",
+				Role:        "General",
+				ExternalURL: legacy.Resume,
+				SourceType:  "external",
+				Sort:        0,
+				IsActive:    true,
+			}).Error; err != nil {
+				return fmt.Errorf("backfill resume: %w", err)
+			}
+			log.Printf("[seed] legacy resume URL backfilled as document")
+		}
+	}
+
 	return nil
 }
