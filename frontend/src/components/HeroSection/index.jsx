@@ -267,9 +267,7 @@ const Hero = () => {
         </Headline>
         <Reveal $delay={380}>
           <Lede>
-            Backends in Spring Boot, Go, NestJS, and Laravel. Mobile apps in Flutter and React Native.
-            Web platforms in React, Next.js, and Angular. Trained in Android penetration testing,
-            with OWASP and secure coding in my daily work.
+            {Bio.description || 'Backends in Spring Boot, Go, NestJS, and Laravel. Mobile apps in Flutter and React Native. Web platforms in React, Next.js, and Angular. Trained in Android penetration testing, with OWASP and secure coding in my daily work.'}
           </Lede>
         </Reveal>
         <Actions $delay={480}>
@@ -300,7 +298,7 @@ const Hero = () => {
             />
             <div>
               <Name>{Bio.name}</Name>
-              <Role>Full stack developer</Role>
+              <Role>{Bio.roles?.[0] || 'Full stack developer'}</Role>
             </div>
           </Byline>
           <ProofList>

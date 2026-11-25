@@ -24,13 +24,14 @@ def icon(slug):
 # ---------- BIO ----------
 bio = {
     "name": "Rizqika Ibnu Khattab",
-    "roles": ["Full Stack Developer", "Android Security Practitioner", "Mobile Developer", "Backend Developer"],
+    "roles": ["Fullstack Developer", "DevOps Engineer", "Backend Developer", "Software Engineer", "Android Security Practitioner"],
     "description": (
-        "Full Stack Developer with 2+ years of experience building production systems across backend, mobile, and web. "
-        "Delivered 9+ production projects, including 3 Android apps live on Google Play Store (logistics, ISP, property). "
-        "Develops backend services with Golang (Gin), NestJS, and Laravel, and cross-platform apps with Flutter and React Native. "
-        "Holds 3 formal certifications in Android mobile penetration testing (top score 94.2/100) and applies OWASP Mobile Top 10 "
-        "and secure coding practices in daily development."
+        "Software Engineer with 3 years of experience building and operating production systems, now focusing on DevOps and backend engineering. "
+        "Contributed to 9+ production projects, including 3 Android apps on Google Play Store and 1 app on the App Store (logistics, ISP, property). "
+        "Backend: builds services with Go (Gin), NestJS, and Laravel — REST APIs, RBAC, multi-tenant architecture, and asynchronous workflows with BullMQ, Redis, and PostgreSQL. "
+        "DevOps: Docker Compose, Jenkins CI/CD, Linux VPS, Nginx/HTTPS, Flyway migrations, MinIO/S3, GCP, and automated backups. "
+        "Brings application-development context for diagnosing deployment, database, and queue issues, and applies secure coding practices grounded "
+        "in 3 certifications in Android mobile penetration testing (top score 94.2/100)."
     ),
     "github": "https://github.com/riz081",
     "resume": "https://drive.google.com/file/d/1ZO1Lb3BcomUXDmqIRAcXjP_lFBfpeM-y/view?usp=sharing",
