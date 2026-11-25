@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components"
 import { LuMenu, LuX } from "react-icons/lu"
 import { SiGithub } from "react-icons/si"
+import { usePortfolio } from "../../context/PortfolioContext"
 import { c } from "../../utils/Themes"
 
 const GITHUB_URL = "https://github.com/riz081";
@@ -217,6 +218,8 @@ export const LogoMark = () => (
 );
 
 const Navbar = () => {
+    const { data } = usePortfolio();
+    const githubUrl = data?.bio?.github || GITHUB_URL;
     const [open, setOpen] = React.useState(false);
     const activeId = useActiveSection();
     const toggleRef = React.useRef(null);
@@ -249,7 +252,7 @@ const Navbar = () => {
                         </li>
                     ))}
                 </NavItems>
-                <GithubLink href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                <GithubLink href={githubUrl} target="_blank" rel="noopener noreferrer">
                     <SiGithub aria-hidden="true" /> GitHub
                 </GithubLink>
                 <MobileToggle
@@ -275,7 +278,7 @@ const Navbar = () => {
                             {label}
                         </MobileMenuLink>
                     ))}
-                    <MobileMenuLink href={GITHUB_URL} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                    <MobileMenuLink href={githubUrl} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
                         <SiGithub aria-hidden="true" /> GitHub
                     </MobileMenuLink>
                 </MobileMenu>
